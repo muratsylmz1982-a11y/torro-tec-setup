@@ -1,0 +1,18 @@
+# Binärpakete & Artefakte
+/packages/
+/logs/
+*.log
+*.bak
+*.tmp
+*.msi
+*.exe
+*.zip
+*.7z
+*.iso
+*.lnk
+# System
+Thumbs.db
+.DS_Store
+# PowerShell
+*.ps1xml
+*.pssc
