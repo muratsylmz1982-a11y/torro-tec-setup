@@ -1,4 +1,4 @@
-# Übergabe – Torro Tec Setup & Management – Produktion
+﻿# Ãœbergabe â€“ Torro Tec Setup & Management â€“ Produktion
 
 
 **Datum:** <YYYY-MM-DD>
@@ -7,9 +7,9 @@
 
 ## 1) Projektkontext (kurz)
 - Zweck & Scope:
-- Geräte & Rollen: Terminal (Kiosk), Kasse (Desktop)
+- GerÃ¤te & Rollen: Terminal (Kiosk), Kasse (Desktop)
 - Kernpfad: `C:\Tiptorro`
-- Shop‑URL: https://shop.tiptorro.com
+- Shopâ€‘URL: https://shop.tiptorro.com
 
 
 ## 2) Aktueller Stand
@@ -18,38 +18,51 @@
 
 
 ## 3) Offene Punkte (Next Actions)
-- [ ] …
-- [ ] …
+- [ ] â€¦
+- [ ] â€¦
 
 
 ## 4) Risiken/Blocker
-- …
+- â€¦
 
 
 ## 5) Entscheidungen/Annahmen
-- …
+- â€¦
 
 
 ## 6) Artefakte/Orte
-- Repo/Branch: …
+- Repo/Branch: â€¦
 - Logs: `C:\Tiptorro\logs\` (keine Credentials)
 - Wichtige Skripte: `C:\Tiptorro\scripts\`
 
 
 ## 7) Wie starte ich lokal?
-- PowerShell als Admin → `docs/ops-playbook.md` folgen.
+- PowerShell als Admin â†’ `docs/ops-playbook.md` folgen.
 
 
-## 8) Nächste Prüfpunkte / Definition of Done
+## 8) NÃ¤chste PrÃ¼fpunkte / Definition of Done
 
 ---
 
-## Beispieleinträge (Stand 2025-09-10)
+## BeispieleintrÃ¤ge (Stand 2025-09-10)
 - [12:22] Star-Drucker eingerichtet: Queue **TT_Star**, Driver **Star TSP100 Cutter (TSP143)**, Port **USB007**, Test ASCII ok, als Standard gesetzt.
-- TeamViewer: Policy importiert (`policies\TeamViewer_Settings.reg`), Service läuft.
+- TeamViewer: Policy importiert (`policies\TeamViewer_Settings.reg`), Service lÃ¤uft.
 - DeviceManager: Dienst **DeviceManager.Bootstrapper** (Autostart), Fallback `net start/stop devicemanager` verifiziert.
 
-## Offene Punkte (Next Actions – Vorlage)
-- [ ] Epson/Hwasung vor Ort anschließen; Queue per `Printers_Forms.ps1 -Action Install` anlegen; ggf. Prefs sichern (`SavePrefs`).
-- [ ] Geldgeräte (Phase 5): Dienst stoppen → `cctalkDevices.exe` (30–45 s) → Dienst starten; Recovery via `cctalk.exe` + 2× `moneysystemsettings` löschen.
-- [ ] Edge/Policies (Phase 6): Popups/Assistenten aus; persistente Cookies (Terminal/Kasse) überprüfen.
+## Offene Punkte (Next Actions â€“ Vorlage)
+- [ ] Epson/Hwasung vor Ort anschlieÃŸen; Queue per `Printers_Forms.ps1 -Action Install` anlegen; ggf. Prefs sichern (`SavePrefs`).
+- [ ] GeldgerÃ¤te (Phase 5): Dienst stoppen â†’ `cctalkDevices.exe` (30â€“45 s) â†’ Dienst starten; Recovery via `cctalk.exe` + 2Ã— `moneysystemsettings` lÃ¶schen.
+- [ ] Edge/Policies (Phase 6): Popups/Assistenten aus; persistente Cookies (Terminal/Kasse) Ã¼berprÃ¼fen.
+---
+
+## Start here (fuer den naechsten Chat) – 2025-09-10
+- Bitte NICHT neu aufsetzen. Lies zuerst README.md (Projektstand) und docs/ops-playbook.md (Phasen 3/4).
+- Fuehre die Punkte unter "Offene Punkte / Next Actions" fort (Phase 5 Geldgeraete oder Phase 6 Edge/Policies).
+- Falls Drucker-Themen: Star ist eingerichtet (TT_Star auf USB007). Epson/Hwasung nur gestaged (keine Queues).
+
+## Anhaenge (bei Rueckfragen beilegen)
+- README.md
+- docs/ops-playbook.md
+- docs/handover-template.md
+- Relevante Logs aus C:\Tiptorro\logs\* (z. B. printers_forms_*.log, devicemanager_*.log, teamviewer_setup_*.log)
+- Skripte unter C:\Tiptorro\scripts\*

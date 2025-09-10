@@ -1,61 +1,70 @@
-# Torro Tec Setup & Management – Produktion
+﻿<!-- START-HERE BANNER (auto) -->
+> WICHTIG fuer den naechsten Chat (Handover): Bitte NICHT neu aufsetzen oder Dateien neu erzeugen.
+> 1) Zuerst README.md (diese Datei) lesen, dann docs/ops-playbook.md (Phasen 3/4) und docs/handover-template.md.
+> 2) Weiterfuehren ab hier: Phase 5 (Geldgeraete) ODER Phase 6 (Edge/Policies).
+> 3) Aktueller Stand: Star ok (Queue TT_Star, Treiber Star TSP100 Cutter (TSP143), Port USB007, Default gesetzt); Epson/Hwasung nur gestaged.
+> 4) Kurzcheck:
+>    Get-Printer | ? Name -like 'TT_*' | select Name,DriverName,PortName
+>    (Get-CimInstance Win32_Printer | ? Default).Name
+<!-- END START-HERE BANNER -->
+# Torro Tec Setup & Management â€“ Produktion
 
-**Ziel:** Vollständige, reproduzierbare Einrichtung und Verwaltung von *Terminal (Kiosk)* und *Kasse (Desktop)* unter Windows 10/11 Pro.
+**Ziel:** VollstÃ¤ndige, reproduzierbare Einrichtung und Verwaltung von *Terminal (Kiosk)* und *Kasse (Desktop)* unter WindowsÂ 10/11Â Pro.
 
 **Kernpfad:** `C:\Tiptorro`  (Tool legt alles selbst an; alle Pakete offline enthalten)
 
 **Shop-URL:** https://shop.tiptorro.com
 
-## Geräte & Rollen
-- **Terminal (Kiosk):** Assigned Access, Standardinhalt Shop, UI‑Umschalter „Live‑TV“; Änderungen wirksam nach *manuellem Neustart*.
-- **Kasse (Desktop):** Desktop‑App/Shortcut, Autostart aktiviert.
+## GerÃ¤te & Rollen
+- **Terminal (Kiosk):** Assigned Access, Standardinhalt Shop, UIâ€‘Umschalter â€žLiveâ€‘TVâ€œ; Ã„nderungen wirksam nach *manuellem Neustart*.
+- **Kasse (Desktop):** Desktopâ€‘App/Shortcut, Autostart aktiviert.
 
 ## Standardpakete
-- TeamViewer (Standard‑PW, dyn. PW *aus*, Autostart *an*, ID wird geloggt)
-- Device Manager (MSI): Deinstall → Ordner löschen → Neustart nur per Button → Neuinstall → Health‑Check (≤120 s)
+- TeamViewer (Standardâ€‘PW, dyn. PW *aus*, Autostart *an*, ID wird geloggt)
+- Device Manager (MSI): Deinstall â†’ Ordner lÃ¶schen â†’ Neustart nur per Button â†’ Neuinstall â†’ Healthâ€‘Check (â‰¤120Â s)
 - Drucker: Star/Epson/Hwasung (Formulare: `TT_Star_72mm`, `TT_Epson_80x297`, `TT_Hwasung_80x400`)
-- Geldgeräte (Terminal): Dienst stoppen → `cctalkDevices.exe` (30–45 s) → Dienst starten; Recovery: `cctalk.exe` + 2× `moneysystemsettings` löschen
+- GeldgerÃ¤te (Terminal): Dienst stoppen â†’ `cctalkDevices.exe` (30â€“45Â s) â†’ Dienst starten; Recovery: `cctalk.exe` + 2Ã— `moneysystemsettings` lÃ¶schen
 
 ## Edge/Policies
-- Pop‑ups/Assistenten aus; persistente Cookies (Terminal & Kasse).
+- Popâ€‘ups/Assistenten aus; persistente Cookies (Terminal & Kasse).
 
 ## Monitore
-- **Monitor 2 (falls vorhanden):** 1920×1080 / 100 % Skalierung. Standard: *Live‑TV* auf Screen 2, sonst *Shop* auf Screen 1.
-- **Live‑TV‑Links:** TXT‑Profile unter `C:\Tiptorro\packages\LiveTVLinks\` (Import vom Altordner möglich). Bei Screen 2: `C:\Tiptorro\livetv.lnk` erzeugen (öffnet auf Screen 2).
+- **MonitorÂ 2 (falls vorhanden):** 1920Ã—1080 / 100Â % Skalierung. Standard: *Liveâ€‘TV* auf ScreenÂ 2, sonst *Shop* auf ScreenÂ 1.
+- **Liveâ€‘TVâ€‘Links:** TXTâ€‘Profile unter `C:\Tiptorro\packages\LiveTVLinks\` (Import vom Altordner mÃ¶glich). Bei ScreenÂ 2: `C:\Tiptorro\livetv.lnk` erzeugen (Ã¶ffnet auf ScreenÂ 2).
 
 ## Shortcuts & Branding
 - `C:\Tiptorro Terminal.lnk`, `C:\Tiptorro Kasse.lnk`, `C:\tiptorro.jpg`
-- Kasse: zusätzlich Desktop‑Icon + Autostart „Tiptorro Kasse“.
+- Kasse: zusÃ¤tzlich Desktopâ€‘Icon + Autostart â€žTiptorro Kasseâ€œ.
 
 ## Diagnose/Repair
-Vollcheck + Ein‑Klick‑Fix für: Druckdichte, Codepage, Dienststatus, COM‑Ports, Drucker, Policies, Live‑TV‑Test.
+Vollcheck + Einâ€‘Klickâ€‘Fix fÃ¼r: Druckdichte, Codepage, Dienststatus, COMâ€‘Ports, Drucker, Policies, Liveâ€‘TVâ€‘Test.
 
 ## Sicherheit
-PIN‑Schutz; signierte Payloads; Logs/Audit; keine Credentials speichern.
+PINâ€‘Schutz; signierte Payloads; Logs/Audit; keine Credentials speichern.
 
 ---
 
-### How‑To starten
+### Howâ€‘To starten
 1) **Repo klonen/initialisieren** in `C:\Tiptorro`.
-2) `docs/ops-playbook.md` Schritt für Schritt ausführen.
-3) Nach großen Änderungen: `git add . && git commit -m "feat: …" && git push`.
+2) `docs/ops-playbook.md` Schritt fÃ¼r Schritt ausfÃ¼hren.
+3) Nach groÃŸen Ã„nderungen: `git add . && git commit -m "feat: â€¦" && git push`.
 
 ---
 
 ## Aktueller Projektstand (Kurz)
-- **TeamViewer:** installiert, Service *TeamViewer* läuft; Golden Settings liegen als `policies\TeamViewer_Settings.reg`.
+- **TeamViewer:** installiert, Service *TeamViewer* lÃ¤uft; Golden Settings liegen als `policies\TeamViewer_Settings.reg`.
 - **DeviceManager:** MSI installiert; Dienstname **DeviceManager.Bootstrapper**; Autostart aktiv; Fallback **`net start devicemanager`** im Skript.
 - **Drucker (Phase 4):** Star produktiv (Queue **TT_Star**, Treiber **Star TSP100 Cutter (TSP143)**, Port **USB007**, als Standard gesetzt).
   - Benutzerdefinierte Formate: `TT_Star_72mm`, `TT_Epson_80x297`, `TT_Hwasung_80x400` (**Admin erforderlich**).
-  - **Epson/Hwasung:** Treiber nur gestaged (kein Gerät vor Ort) → aktuell **keine** Queues.
+  - **Epson/Hwasung:** Treiber nur gestaged (kein GerÃ¤t vor Ort) â†’ aktuell **keine** Queues.
 
 ## Wichtige Skripte & Pfade
-- `C:\Tiptorro\scripts\DeviceManager.ps1` – Install/FirstRun/Start/Stop/Status/Reinstall/HealthCheck (Fallback: `net start/stop devicemanager`).
-- `C:\Tiptorro\scripts\Printers_Forms.ps1` – Detect, **AddForms (Admin)**, **Install (nur Targets & nur wenn erkannt)**, TestASCII, SavePrefs/LoadPrefs.
-- `C:\Tiptorro\scripts\Scan-PrinterPackages.ps1` – Prüft `*.inf` (Klasse=Printer, NTamd64/x64, Katalog/Signatur).
+- `C:\Tiptorro\scripts\DeviceManager.ps1` â€“ Install/FirstRun/Start/Stop/Status/Reinstall/HealthCheck (Fallback: `net start/stop devicemanager`).
+- `C:\Tiptorro\scripts\Printers_Forms.ps1` â€“ Detect, **AddForms (Admin)**, **Install (nur Targets & nur wenn erkannt)**, TestASCII, SavePrefs/LoadPrefs.
+- `C:\Tiptorro\scripts\Scan-PrinterPackages.ps1` â€“ PrÃ¼ft `*.inf` (Klasse=Printer, NTamd64/x64, Katalog/Signatur).
 - Logs: `C:\Tiptorro\logs\*`
 
-## Quickstart – Drucker (Star-Beispiel)
+## Quickstart â€“ Drucker (Star-Beispiel)
 ```powershell
 & C:\Tiptorro\scripts\Printers_Forms.ps1 -Action Detect
 Start-Process PowerShell -Verb RunAs -ArgumentList '-ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Printers_Forms.ps1" -Action AddForms'
@@ -66,3 +75,4 @@ Start-Process PowerShell -Verb RunAs -ArgumentList '-ExecutionPolicy Bypass -Fil
 & C:\Tiptorro\scripts\Printers_Forms.ps1 -Action TestASCII -PrinterName 'TT_Star'
 rundll32 printui.dll,PrintUIEntry /y /n "TT_Star"
 ```
+
