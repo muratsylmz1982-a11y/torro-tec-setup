@@ -71,45 +71,57 @@ Add-Form 'TT_Hwasung_80x400' 80 400
 
 Hwasung in Diagnose: FormFeed+2 â†’ Partial Cut, Skalierung 100Â %, UTFâ€‘8 (Fallback CPâ€‘858), Dichte Â±1.
 
-PhaseÂ 5 â€“ GeldgerÃ¤te (Terminal)
+### Phase 5 – Geldgeräte (Terminal)
 
-Dienst stoppen (Name anpassen, z.â€¯B. TipTorro.MoneySystem):
+**Ziel:** Dienst sauber stoppen → **ccTalk Devices.exe** ~30–45 s → Dienst starten.  
+**Recovery:** Settings löschen → erneut **ccTalk Devices.exe** → Dienst starten.
 
-Stop-Service -Name 'TipTorro.MoneySystem' -ErrorAction SilentlyContinue
+**Service (Produktiv):** `DeviceManager.Bootstrapper`  
+**ToolsPath:** `C:\Tiptorro\packages\cctalk`  
+**Settings-Dateien:**  
+- `C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings.xml`  
+- `C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings_save.xml`
 
-cctalkDevices.exe 30â€“45Â s laufen lassen, dann Dienst starten:
+**Rescan (Standardfall):**
+```powershell
+$svc = 'DeviceManager.Bootstrapper'
+Stop-Service $svc -Force
+Start-Process 'C:\Tiptorro\packages\cctalk\ccTalk Devices.exe'
+Start-Sleep -Seconds 45
+Start-Service $svc
 
-Start-Process "C:\Tiptorro\packages\cctalk\cctalkDevices.exe" -Wait
-Start-Service -Name 'TipTorro.MoneySystem'
+$svc = 'DeviceManager.Bootstrapper'
+$settings = @(
+  'C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings.xml',
+  'C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings_save.xml'
+)
+Stop-Service $svc -Force
+Remove-Item -LiteralPath $settings -Force -ErrorAction SilentlyContinue
+Start-Process 'C:\Tiptorro\packages\cctalk\ccTalk Devices.exe'
+Start-Sleep -Seconds 45
+Start-Service $svc
 
-Recovery: cctalk.exe ausfÃ¼hren + zweimal moneysystemsettings lÃ¶schen.
 
-PhaseÂ 6 â€“ Edge/Policies (Popâ€‘ups/Assistenten aus, Cookies persistent)
+Phase 6 – Edge/Policies (Pop-ups/Assistenten aus, Cookies persistent)
 
-Gruppe-Richtlinien (GUI): Computerkonfiguration â†’ Administrative Vorlagen â†’ Microsoft Edge
+Registry (HKLM): SOFTWARE\Policies\Microsoft\Edge
 
-â€žErsteâ€‘Schritte/Assistentenâ€œ deaktivieren
+Werte setzen:
 
-â€žPopâ€‘upsâ€œ blockieren
+DefaultPopupsSetting=2
 
-â€žBrowsingdaten beim Beenden lÃ¶schenâ€œ Deaktiviert
+HideFirstRunExperience=1
 
-â€žDrittanbieterâ€‘Cookies blockierenâ€œ Deaktiviert
+DefaultCookiesSetting=1
 
-Optional â€žCookies fÃ¼r bestimmte Sites zulassenâ€œ: https://shop.tiptorro.com
+ClearBrowsingDataOnExit=0
 
-Alternativ (Regâ€‘Beispiel, Version prÃ¼fen/ggf. anpassen):
+BlockThirdPartyCookies=0
 
-policies/edge-policies.reg erstellen:
+CookiesAllowedForUrls=https://shop.tiptorro.com
 
-Windows Registry Editor Version 5.00
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
-"HideFirstRunExperience"=dword:00000001
-"DefaultPopupsSetting"=dword:00000002
-"ClearBrowsingDataOnExit"=dword:00000000
-"BlockThirdPartyCookies"=dword:00000000
-
-Anwenden: reg import C:\Tiptorro\policies\edge-policies.reg
+Verifikation: In Edge edge://policy öffnen → alle obenstehenden Policies Status = OK.
+Bereinigung bei Anomalien: leeren „(Standard)“-Wert und nicht erkannte Policies entfernen; Richtlinien neu laden.
 
 PhaseÂ 7 â€“ Kiosk (Terminal) Assigned Access
 

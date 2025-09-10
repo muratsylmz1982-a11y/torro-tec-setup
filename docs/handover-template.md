@@ -44,25 +44,26 @@
 
 ---
 
-## BeispieleintrÃ¤ge (Stand 2025-09-10)
-- [12:22] Star-Drucker eingerichtet: Queue **TT_Star**, Driver **Star TSP100 Cutter (TSP143)**, Port **USB007**, Test ASCII ok, als Standard gesetzt.
-- TeamViewer: Policy importiert (`policies\TeamViewer_Settings.reg`), Service lÃ¤uft.
+# Beispieleinträge (Stand 2025-09-10)
+- [Phase 5] Geldgeräte-Rescan durchgeführt: Dienst **DeviceManager.Bootstrapper** gestoppt, **ccTalk Devices.exe** (~45 s) gestartet, Dienst wieder gestartet. Recovery: `moneysystem_settings*.xml` gelöscht; Backend hat Dateien neu erzeugt.
+- [Phase 6] Edge/Policies gesetzt: Popups blocken, First-Run aus, Cookies persistent, 3rd-Party nicht blockieren, Allowlist `https://shop.tiptorro.com`. Anzeige in `edge://policy` = OK.
+- [Drucker] Star produktiv: Queue **TT_Star**, Driver **Star TSP100 Cutter (TSP143)**, Port **USB007**, ASCII-Test ok, als Standard gesetzt.
+- TeamViewer: Policy importiert (`policies\TeamViewer_Settings.reg`), Service läuft.
 - DeviceManager: Dienst **DeviceManager.Bootstrapper** (Autostart), Fallback `net start/stop devicemanager` verifiziert.
 
-## Offene Punkte (Next Actions â€“ Vorlage)
-- [ ] Epson/Hwasung vor Ort anschlieÃŸen; Queue per `Printers_Forms.ps1 -Action Install` anlegen; ggf. Prefs sichern (`SavePrefs`).
-- [ ] GeldgerÃ¤te (Phase 5): Dienst stoppen â†’ `cctalkDevices.exe` (30â€“45 s) â†’ Dienst starten; Recovery via `cctalk.exe` + 2Ã— `moneysystemsettings` lÃ¶schen.
-- [ ] Edge/Policies (Phase 6): Popups/Assistenten aus; persistente Cookies (Terminal/Kasse) Ã¼berprÃ¼fen.
----
+## Offene Punkte (Next Actions – Vorlage)
+- [ ] Epson/Hwasung vor Ort anschließen; Queue per `Printers_Forms.ps1 -Action Install` anlegen; ggf. Prefs sichern (`SavePrefs`).
+- [ ] Monitor 2 (falls vorhanden): `C:\Tiptorro\livetv.lnk` erzeugen und Ziel für Live-TV konfigurieren.
+- [ ] Optional: HealthCheck/Repair-Skripte ergänzen (Dichte/Codepage/COM).
 
-## Start here (fuer den naechsten Chat) – 2025-09-10
-- Bitte NICHT neu aufsetzen. Lies zuerst README.md (Projektstand) und docs/ops-playbook.md (Phasen 3/4).
-- Fuehre die Punkte unter "Offene Punkte / Next Actions" fort (Phase 5 Geldgeraete oder Phase 6 Edge/Policies).
-- Falls Drucker-Themen: Star ist eingerichtet (TT_Star auf USB007). Epson/Hwasung nur gestaged (keine Queues).
+## Start here (für den nächsten Chat) – 2025-09-10
+- Bitte nicht neu aufsetzen. Lies zuerst README.md (Projektstand) und docs/ops-playbook.md (Phasen 3/4/5/6 – umgesetzt).
+- Weiterführen: Phase 7 (Kiosk/Assigned Access), Phase 8 (Monitor 2 & Live-TV) **oder** Drucker-Queues für Epson/Hwasung erzeugen.
+- Star ist eingerichtet (TT_Star auf USB007). Epson/Hwasung nur gestaged (keine Queues).
 
-## Anhaenge (bei Rueckfragen beilegen)
+## Anhänge (bei Rückfragen beilegen)
 - README.md
 - docs/ops-playbook.md
 - docs/handover-template.md
-- Relevante Logs aus C:\Tiptorro\logs\* (z. B. printers_forms_*.log, devicemanager_*.log, teamviewer_setup_*.log)
-- Skripte unter C:\Tiptorro\scripts\*
+- Relevante Logs aus `C:\Tiptorro\logs\*` (z. B. printers_forms_*.log, devicemanager_*.log, edge-policies.reg)
+- Skripte unter `C:\Tiptorro\scripts\*`

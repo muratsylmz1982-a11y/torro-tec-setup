@@ -1,14 +1,8 @@
 ﻿# START-HERE.md (Handover Kurzanleitung) – 2025-09-10
 
-Nicht neu bauen. Weiterfuehren ab Phase 5 (Geldgeraete) oder Phase 6 (Edge/Policies).
-Vorher: README lesen (Projektstand), ops-playbook Phase 3/4 ueberfliegen, handover-template Offene Punkte.
-Kurzcheck:
-  Get-Printer | ? Name -like 'TT_*' | select Name,DriverName,PortName
-  (Get-CimInstance Win32_Printer | ? Default).Name
-Star ist eingerichtet: TT_Star (Driver 'Star TSP100 Cutter (TSP143)', Port 'USB007', Default).
-Epson/Hwasung: nur gestaged, keine Queues.
+**Nicht neu bauen.** Weiterführen ab **Phase 7 (Kiosk/Assigned Access)** oder **Phase 8 (Monitor 2 & Live-TV)**; alternativ: Drucker-Queues für Epson/Hwasung anlegen.
 
-Siehe:
-- README.md – Abschnitt "Aktueller Projektstand (Kurz)" und "Wichtige Skripte & Pfade"
-- docs/ops-playbook.md – Phasen 3/4 mit konkreten Befehlen
-- docs/handover-template.md – Offene Punkte / Next Actions
+**Status Kurz:**  
+- Phase 5 (Geldgeräte) erledigt: Rescan/Recovery etabliert; Settings werden nach Backend-Konfig neu erzeugt.  
+- Phase 6 (Edge/Policies) erledigt: Popups blocken, First-Run aus, Cookies persistent, 3rd-Party nicht blockiert, Allowlist `https://shop.tiptorro.com`.  
+- Star produktiv: TT_Star (Driver „Star TSP100 Cutter (TSP143)“, Port „USB007“, Default). Epson/Hwasung gestaged (keine Queues).

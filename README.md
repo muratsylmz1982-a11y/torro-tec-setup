@@ -75,4 +75,18 @@ Start-Process PowerShell -Verb RunAs -ArgumentList '-ExecutionPolicy Bypass -Fil
 & C:\Tiptorro\scripts\Printers_Forms.ps1 -Action TestASCII -PrinterName 'TT_Star'
 rundll32 printui.dll,PrintUIEntry /y /n "TT_Star"
 ```
+## Phase 5 & 6 – Umsetzung (Kurz) – Stand 2025-09-10
+
+**Phase 5 – Geldgeräte**  
+- Service: `DeviceManager.Bootstrapper`  
+- ToolsPath: `C:\Tiptorro\packages\cctalk` (gefunden: **ccTalk Devices.exe**)  
+- Rescan: Dienst stoppen → `ccTalk Devices.exe` (~45 s) → Dienst starten.  
+- Recovery (bei Bedarf): Settings löschen und Rescan.  
+  - Settings: `C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings.xml` und `moneysystem_settings_save.xml`  
+  - Hinweis: Die Dateien werden nach der Backend-Konfiguration durch den Support wieder neu erzeugt.
+
+**Phase 6 – Edge/Policies**  
+- Registry: `HKLM\SOFTWARE\Policies\Microsoft\Edge`  
+- Werte: `DefaultPopupsSetting=2`, `HideFirstRunExperience=1`, `DefaultCookiesSetting=1`, `ClearBrowsingDataOnExit=0`, `BlockThirdPartyCookies=0`, `CookiesAllowedForUrls=https://shop.tiptorro.com`  
+- Verifikation: `edge://policy` → alle Werte **OK**.
 
