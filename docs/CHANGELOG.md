@@ -3,19 +3,9 @@
 
 ## [Unreleased]
 ### Added
-- …
+- `scripts/Printers_Forms.ps1`: ASCII-Test, Custom-Forms (Admin), gezielte Installation nur erkannter Drucker.
+- `scripts/Scan-PrinterPackages.ps1`: INF-Prüfer (Klasse/Architektur/Katalog/Signatur).
+- Doku-Erweiterungen: README „Aktueller Projektstand“ & „Wichtige Skripte & Pfade“, ops-playbook Phase 4 konkretisiert, handover-Template Beispiele.
+
 ### Changed
-- …
-### Fixed
-- …
-
-
-## v1.0.0 – YYYY-MM-DD
-- Initiale Struktur, Playbook, Vorlagen.
-
-Nützliche Git‑Snippets
-# Commit nach großen Änderungen
-git add .
-git commit -m "feat: <kurze Beschreibung>"
-# Falls Remote vorhanden
-git push origin main
+- DeviceManager-Playbook: Dienstname **DeviceManager.Bootstrapper** + Fallback `net start/stop devicemanager` ausdrücklich dokumentiert.

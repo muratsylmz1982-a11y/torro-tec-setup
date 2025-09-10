@@ -192,3 +192,44 @@ Get-ChildItem C:\Tiptorro\packages -Recurse -Include *.exe,*.msi | \
   ForEach-Object{ $sig=Get-AuthenticodeSignature $_; if($sig.Status -ne 'Valid'){ Write-Warning "Unsig.: $($_.FullName)" } }
 
 Audit‑Logs in C:\Tiptorro\logs\ schreiben (keine Credentials im Klartext ablegen).
+
+---
+
+## PHASE-UPDATES (2025-09-10)
+
+### Phase 3 – DeviceManager (Präzisierung)
+- Dienstname: **DeviceManager.Bootstrapper** (DisplayName „DeviceManager“).
+- Start-Absicherung: ServiceController + Fallback **`net start devicemanager`** / **`net stop devicemanager`**.
+- HealthCheck ≤120s nach Install/FirstRun.
+
+### Phase 4 – Drucker & Formate (konkret)
+**Erkennung & Treiberpakete prüfen**
+```powershell
+& C:\Tiptorro\scripts\Scan-PrinterPackages.ps1 -Paths `
+  'C:\Tiptorro\packages\printers\epson\driver\Tm-T 88V', `
+  'C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV', `
+  'C:\Tiptorro\packages\printers\star', `
+  'C:\Tiptorro\packages\printers\hwasung'
+```
+
+**Formate anlegen (Admin erforderlich)**
+```powershell
+Start-Process PowerShell -Verb RunAs -ArgumentList '-ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Printers_Forms.ps1" -Action AddForms'
+```
+
+**Nur erkannte Targets installieren (Beispiel Star)**
+```powershell
+& C:\Tiptorro\scripts\Printers_Forms.ps1 -Action Detect
+& C:\Tiptorro\scripts\Printers_Forms.ps1 -Action Install -Targets Star `
+  -StarInf 'C:\Tiptorro\packages\printers\star\smjt100.inf' `
+  -StarDriverName 'Star TSP100 Cutter (TSP143)' `
+  -StarPort 'USB007'
+& C:\Tiptorro\scripts\Printers_Forms.ps1 -Action TestASCII -PrinterName 'TT_Star'
+rundll32 printui.dll,PrintUIEntry /y /n "TT_Star"   # Standarddrucker setzen
+```
+
+**Epson/Hwasung (ohne Gerät vor Ort)**
+```powershell
+pnputil /add-driver "C:\Tiptorro\packages\printers\epson\driver\Tm-T 88V\*.inf" /install
+pnputil /add-driver "C:\Tiptorro\packages\printers\hwasung\*.inf" /install
+```

@@ -16,3 +16,6 @@ Thumbs.db
 # PowerShell
 *.ps1xml
 *.pssc
+# TeamViewer secrets
+policies/teamviewer-*.reg
+policies/*secret*
