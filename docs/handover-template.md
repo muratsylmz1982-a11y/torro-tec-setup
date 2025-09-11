@@ -1,46 +1,38 @@
-﻿# Ãœbergabe â€“ Torro Tec Setup & Management â€“ Produktion
+﻿```markdown
+# Übergabe – Torro Tec Setup & Management – Produktion
 
-
-**Datum:** <YYYY-MM-DD>
+**Datum:** <YYYY-MM-DD>  
 **Kontakt/Owner:** <Name, E-Mail>
-
 
 ## 1) Projektkontext (kurz)
 - Zweck & Scope:
-- GerÃ¤te & Rollen: Terminal (Kiosk), Kasse (Desktop)
+- Geräte & Rollen: Terminal (Kiosk), Kasse (Desktop)
 - Kernpfad: `C:\Tiptorro`
-- Shopâ€‘URL: https://shop.tiptorro.com
-
+- Shop-URL: https://shop.tiptorro.com
 
 ## 2) Aktueller Stand
 - Letzte Schritte (Zeitstempel + kurze Beschreibung):
 - Erreichte Meilensteine:
 
-
 ## 3) Offene Punkte (Next Actions)
-- [ ] â€¦
-- [ ] â€¦
-
+- [ ] …
+- [ ] …
 
 ## 4) Risiken/Blocker
-- â€¦
-
+- …
 
 ## 5) Entscheidungen/Annahmen
-- â€¦
-
+- …
 
 ## 6) Artefakte/Orte
-- Repo/Branch: â€¦
+- Repo/Branch: …
 - Logs: `C:\Tiptorro\logs\` (keine Credentials)
 - Wichtige Skripte: `C:\Tiptorro\scripts\`
 
-
 ## 7) Wie starte ich lokal?
-- PowerShell als Admin â†’ `docs/ops-playbook.md` folgen.
+- PowerShell als Admin → `docs/ops-playbook.md` folgen.
 
-
-## 8) NÃ¤chste PrÃ¼fpunkte / Definition of Done
+## 8) Nächste Prüfpunkte / Definition of Done
 
 ---
 
@@ -57,7 +49,7 @@
 - [ ] Optional: HealthCheck/Repair-Skripte ergänzen (Dichte/Codepage/COM).
 
 ## Start here (für den nächsten Chat) – 2025-09-10
-- Bitte nicht neu aufsetzen. Lies zuerst README.md (Projektstand) und docs/ops-playbook.md (Phasen 3/4/5/6 – umgesetzt).
+- Bitte nicht neu aufsetzen. Lies zuerst README.md (Projektstand) und `docs/ops-playbook.md` (Phasen 3/4/5/6 – umgesetzt).
 - Weiterführen: Phase 7 (Kiosk/Assigned Access), Phase 8 (Monitor 2 & Live-TV) **oder** Drucker-Queues für Epson/Hwasung erzeugen.
 - Star ist eingerichtet (TT_Star auf USB007). Epson/Hwasung nur gestaged (keine Queues).
 
@@ -65,11 +57,11 @@
 - README.md
 - docs/ops-playbook.md
 - docs/handover-template.md
-- Relevante Logs aus `C:\Tiptorro\logs\*` (z. B. printers_forms_*.log, devicemanager_*.log, edge-policies.reg)
+- Relevante Logs aus `C:\Tiptorro\logs\*` (z. B. `printers_forms_*.log`, `devicemanager_*.log`, `edge-policies.reg`)
 - Skripte unter `C:\Tiptorro\scripts\*`
 
-
-- **Drucker – OneClick-Logik:** Star/Hwasung auto (Queue = **Original-Treibername**).
-  Wenn **kein** Star/Hwasung erkannt → **Epson via Dialog** (Modellwahl **TM-T88V**/**TM-T88IV**, Installer-EXE), danach **Testseite** & **Standarddrucker**.
+- **Drucker – OneClick-Logik:** Star/Hwasung auto (Queue = **Original-Treibername**).  
+  Wenn **kein** Star/Hwasung erkannt → **Epson via Dialog** (Modellwahl **TM-T88V**/**TM-T88IV**, Installer-EXE), danach **Testseite** & **Standarddrucker**.  
   _Legacy:_ vorhandene `TT_*`-Queues bleiben gültig.
 <!-- Marker: OneClick-Logik: Star/Hwasung auto (Original-Name) -->
+```

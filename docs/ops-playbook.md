@@ -1,61 +1,65 @@
 ﻿<!-- CONTINUE-HERE BANNER (auto) -->
-> Hinweis: Dieses Playbook wird fortgefuehrt. Bitte keine Grundgerueste/Dateien duplizieren.
-> Nach Lektuere von README.md und docs/handover-template.md direkt mit Phase 5 oder 6 weitermachen.
+> Hinweis: Dieses Playbook wird fortgeführt. Bitte keine Grundgerüste/Dateien duplizieren.
+> Nach Lektüre von README.md und docs/handover-template.md direkt mit Phase 5 oder 6 weitermachen.
 <!-- END CONTINUE-HERE BANNER -->
-PhaseÂ 1 â€“ Basis vorbereiten
+
+# Phase 1 – Basis vorbereiten
 
 Ordnerstruktur anlegen (falls nicht vorhanden):
 
+```powershell
 $root = 'C:\Tiptorro'
 $dirs = 'scripts','packages','policies','shortcuts','profiles','logs','docs'
 foreach($d in $dirs){ New-Item -ItemType Directory -Force -Path (Join-Path $root $d) | Out-Null }
+Logo/Branding ablegen: C:\tiptorro.jpg (wird für Shortcuts verwendet).
 
-Logo/Branding ablegen: C:\tiptorro.jpg (wird fÃ¼r Shortcuts verwendet).
+Offline-Pakete in packages/ kopieren (Git ignoriert diese).
 
-Offlineâ€‘Pakete in packages/ kopieren (Git ignoriert diese).
+Phase 2 – TeamViewer standardisieren
+Falls vorhanden: Einstellungen prüfen/anpassen.
 
-PhaseÂ 2 â€“ TeamViewer standardisieren
+Sonst installieren (Offline-Paket):
 
-Falls vorhanden: Einstellungen prÃ¼fen/anpassen.
-
-Sonst installieren (Offlineâ€‘Paket):
-
+powershell
+Code kopieren
 Start-Process "C:\Tiptorro\packages\teamviewer\TeamViewer_Setup.exe" -ArgumentList "/S" -Wait
-
-Einstellungen skripten (Beispiele â€“ je nach Version prÃ¼fen):
+Einstellungen skripten (Beispiele – je nach Version prüfen):
 
 Dynamisches PW aus, Autostart an.
 
-Standardâ€‘Passwort setzen (Policies/Export).
+Standard-Passwort setzen (Policies/Export).
 
 ID in Log schreiben:
 
+powershell
+Code kopieren
 $id = (Get-Content "$env:ProgramFiles\TeamViewer\TeamViewer.ini" -ErrorAction SilentlyContinue | Select-String -Pattern 'ClientID').ToString()
 Add-Content C:\Tiptorro\logs\teamviewer_id.log "$(Get-Date -Format o) $id"
-
-PhaseÂ 3 â€“ Device Manager (MSI) Neuaufbau
-
+Phase 3 – Device Manager (MSI) Neuaufbau
 Deinstallieren (Produktname/GUID anpassen):
 
+powershell
+Code kopieren
 $prod = Get-ItemProperty 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*' | Where-Object {$_.DisplayName -like '*TipTorro Device Manager*'}
 if($prod){ & msiexec.exe /x $prod.PSChildName /qn }
+Ordner löschen: C:\Program Files (x86)\TipTorro.
 
-Ordner lÃ¶schen: C:\Program Files (x86)\TipTorro.
-
-Neustart nur bei Button: Biete Benutzerâ€‘Prompt an (kein Autoâ€‘Reboot).
+Neustart nur bei Button: Benutzer-Prompt anbieten (kein Auto-Reboot).
 
 Neuinstallieren:
 
+powershell
+Code kopieren
 Start-Process msiexec.exe -ArgumentList "/i `"C:\Tiptorro\packages\device-manager\DeviceManager.msi`" /qn" -Wait
+Health-Check (≤120 s) – siehe scripts/HealthCheck.ps1 (unten).
 
-Healthâ€‘Check (â‰¤120Â s) â€“ siehe scripts/HealthCheck.ps1 (unten).
-
-PhaseÂ 4 â€“ Drucker + Formulare
-
+Phase 4 – Drucker + Formulare
 Treiber installieren (Star/Epson/Hwasung) via printui.exe /ia oder Add-PrinterDriver.
 
 Formulare anlegen (Beispiele):
 
+powershell
+Code kopieren
 # Erfordert Admin. Legt benutzerdef. Formate an.
 function Add-Form([string]$name,[int]$wMm,[int]$hMm){
   $w = [int]($wMm*1000); $h = [int]($hMm*1000)
@@ -68,28 +72,33 @@ function Add-Form([string]$name,[int]$wMm,[int]$hMm){
 Add-Form 'TT_Star_72mm' 72 200
 Add-Form 'TT_Epson_80x297' 80 297
 Add-Form 'TT_Hwasung_80x400' 80 400
+Hwasung in Diagnose: FormFeed+2 → Partial Cut, Skalierung 100 %, UTF-8 (Fallback CP-858), Dichte ±1.
 
-Hwasung in Diagnose: FormFeed+2 â†’ Partial Cut, Skalierung 100Â %, UTFâ€‘8 (Fallback CPâ€‘858), Dichte Â±1.
+Phase 5 – Geldgeräte (Terminal)
+Ziel: Dienst sauber stoppen → ccTalk Devices.exe ~30–45 s → Dienst starten.
+Recovery: Settings löschen → erneut ccTalk Devices.exe → Dienst starten.
 
-### Phase 5 – Geldgeräte (Terminal)
+Service (Produktiv): DeviceManager.Bootstrapper
+ToolsPath: C:\Tiptorro\packages\cctalk
+Settings-Dateien:
 
-**Ziel:** Dienst sauber stoppen → **ccTalk Devices.exe** ~30–45 s → Dienst starten.  
-**Recovery:** Settings löschen → erneut **ccTalk Devices.exe** → Dienst starten.
+C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings.xml
 
-**Service (Produktiv):** `DeviceManager.Bootstrapper`  
-**ToolsPath:** `C:\Tiptorro\packages\cctalk`  
-**Settings-Dateien:**  
-- `C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings.xml`  
-- `C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings_save.xml`
+C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings_save.xml
 
-**Rescan (Standardfall):**
-```powershell
+Rescan (Standardfall):
+
+powershell
+Code kopieren
 $svc = 'DeviceManager.Bootstrapper'
 Stop-Service $svc -Force
 Start-Process 'C:\Tiptorro\packages\cctalk\ccTalk Devices.exe'
 Start-Sleep -Seconds 45
 Start-Service $svc
+Recovery (Settings löschen + Rescan):
 
+powershell
+Code kopieren
 $svc = 'DeviceManager.Bootstrapper'
 $settings = @(
   'C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings.xml',
@@ -100,10 +109,7 @@ Remove-Item -LiteralPath $settings -Force -ErrorAction SilentlyContinue
 Start-Process 'C:\Tiptorro\packages\cctalk\ccTalk Devices.exe'
 Start-Sleep -Seconds 45
 Start-Service $svc
-
-
 Phase 6 – Edge/Policies (Pop-ups/Assistenten aus, Cookies persistent)
-
 Registry (HKLM): SOFTWARE\Policies\Microsoft\Edge
 
 Werte setzen:
@@ -123,35 +129,36 @@ CookiesAllowedForUrls=https://shop.tiptorro.com
 Verifikation: In Edge edge://policy öffnen → alle obenstehenden Policies Status = OK.
 Bereinigung bei Anomalien: leeren „(Standard)“-Wert und nicht erkannte Policies entfernen; Richtlinien neu laden.
 
-PhaseÂ 7 â€“ Kiosk (Terminal) Assigned Access
+Phase 7 – Kiosk (Terminal) Assigned Access
+Manuell (UI): Einstellungen → Konten → Familie & andere Benutzer → Kiosk einrichten (Assigned Access)
 
-Manuell (UI): Einstellungen â†’ Konten â†’ Familie & andere Benutzer â†’ Kiosk einrichten (Assigned Access)
+Kiosk-Benutzer anlegen (z. B. kiosk)
 
-Kioskâ€‘Benutzer anlegen (z.â€¯B. kiosk)
+Microsoft Edge als App, Modus „Kiosk (Digital Signage)“
 
-Microsoft Edge als App, Modus â€žKiosk (Digital Signage)â€œ
-
-Startâ€‘URL: https://shop.tiptorro.com
+Start-URL: https://shop.tiptorro.com
 
 Wirksam nach manuellem Neustart.
 
-PhaseÂ 8 â€“ MonitorÂ 2 & Liveâ€‘TV
+Phase 8 – Monitor 2 & Live-TV
+Wenn zweiter Monitor erkannt wird (1920×1080 @ 100 % einstellen): Anzeigeeinstellungen → Erweiterte Anzeige.
 
-Wenn zweiter Monitor erkannt wird (1920Ã—1080 @ 100Â % einstellen): Anzeigeeinstellungen â†’ Erweiterte Anzeige.
+Live-TV-Profile (.txt) nach C:\Tiptorro\packages\LiveTVLinks\ kopieren (Import Altordner möglich).
 
-Liveâ€‘TVâ€‘Profile (.txt) nach C:\Tiptorro\packages\LiveTVLinks\ kopieren (Import Altordner mÃ¶glich).
+Shortcut C:\Tiptorro\livetv.lnk erzeugen (öffnet Live-TV auf Screen 2):
 
-Shortcut C:\Tiptorro\livetv.lnk erzeugen (Ã¶ffnet Liveâ€‘TV auf ScreenÂ 2):
-
+powershell
+Code kopieren
 $wsh = New-Object -ComObject WScript.Shell
 $sc = $wsh.CreateShortcut('C:\Tiptorro\livetv.lnk')
 $sc.TargetPath = 'powershell.exe'
 $sc.Arguments   = '-ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Start-LiveTV.ps1"'
 $sc.IconLocation= 'C:\Tiptorro\shortcuts\livetv.ico'
 $sc.Save()
+scripts/Start-LiveTV.ps1 (Beispiel – bewegt Fenster auf Monitor 2):
 
-scripts/Start-LiveTV.ps1 (Beispiel â€“ bewegt Fenster auf MonitorÂ 2):
-
+powershell
+Code kopieren
 Add-Type -AssemblyName System.Windows.Forms
 $hasTwo = [System.Windows.Forms.Screen]::AllScreens.Count -ge 2
 if(-not $hasTwo){ Start-Process 'msedge.exe' 'https://shop.tiptorro.com'; exit }
@@ -159,12 +166,12 @@ if(-not $hasTwo){ Start-Process 'msedge.exe' 'https://shop.tiptorro.com'; exit }
 $p = Start-Process 'msedge.exe' '--kiosk https://live.example/' -PassThru
 Start-Sleep 2
 # Fenster nach Screen 2 verschieben (vereinfachtes Beispiel, ggf. Hilfstool verwenden)
-# Tipp: Tools wie nircmd/moveontop kÃ¶nnen hier prÃ¤ziser steuern.
+# Tipp: Tools wie nircmd/moveontop können hier präziser steuern.
+Phase 9 – Shortcuts & Autostart
+Terminal/Kasse-Verknüpfungen erstellen:
 
-PhaseÂ 9 â€“ Shortcuts & Autostart
-
-Terminal/Kasse VerknÃ¼pfungen erstellen:
-
+powershell
+Code kopieren
 function New-Link($path,$target,$args='',$icon='C:\tiptorro.jpg'){
   $w = New-Object -ComObject WScript.Shell
   $s = $w.CreateShortcut($path)
@@ -172,15 +179,15 @@ function New-Link($path,$target,$args='',$icon='C:\tiptorro.jpg'){
 }
 New-Link 'C:\Tiptorro Terminal.lnk' 'msedge.exe' '--kiosk https://shop.tiptorro.com'
 New-Link 'C:\Tiptorro Kasse.lnk'    'C:\Tiptorro\packages\kasse\TiptorroKasse.exe'
-# Autostart fÃ¼r Kasse
+# Autostart für Kasse
 $startup = [Environment]::GetFolderPath('Startup')
 Copy-Item 'C:\Tiptorro Kasse.lnk' (Join-Path $startup 'Tiptorro Kasse.lnk') -Force
+Phase 10 – Diagnose/Repair
+Ein-Klick-Check (≤120 s) – scripts/HealthCheck.ps1:
 
-PhaseÂ 10 â€“ Diagnose/Repair
-
-Ein-Klickâ€‘Check (â‰¤120Â s) â€“ scripts/HealthCheck.ps1:
-
-# Pseudo-Beispiel: PrÃ¼ft Dienste, Drucker, Policies, COM, Live-TV
+powershell
+Code kopieren
+# Pseudo-Beispiel: Prüft Dienste, Drucker, Policies, COM, Live-TV
 $log = 'C:\Tiptorro\logs\healthcheck_'+(Get-Date -Format yyyyMMdd_HHmmss)+'.log'
 function Log($m){ "$((Get-Date).ToString('o')) $m" | Tee-Object -FilePath $log -Append }
 Log 'Start HealthCheck'
@@ -195,46 +202,46 @@ if(Test-Path $k){ Log 'Edge Policies vorhanden' } else { Log 'WARN: Edge Policie
 # COM-Ports (Beispiel)
 Get-CimInstance Win32_SerialPort | ForEach-Object{ Log "COM: $($_.DeviceID) $($_.Name)" }
 Log 'HealthCheck Ende'
+Repair: Teilskripte für Druckdichte/Codepage, Dienst-Reset, Policy-Reimport etc. separat in scripts/repair-*.ps1 pflegen.
 
-Repair: Teilskripte fÃ¼r Druckdichte/Codepage, Dienstâ€‘Reset, Policyâ€‘Reimport etc. separat in scripts/repair-*.ps1 pflegen.
+Phase 11 – Sicherheit
+PIN-Schutz in UI der Kasse/Terminal-Switcher vorsehen.
 
-PhaseÂ 11 â€“ Sicherheit
+Signaturen prüfen vor Ausführung:
 
-PINâ€‘Schutz in UI der Kasse/Terminalâ€‘Switcher vorsehen.
-
-Signaturen prÃ¼fen vor AusfÃ¼hrung:
-
-Get-ChildItem C:\Tiptorro\packages -Recurse -Include *.exe,*.msi | \
+powershell
+Code kopieren
+Get-ChildItem C:\Tiptorro\packages -Recurse -Include *.exe,*.msi | `
   ForEach-Object{ $sig=Get-AuthenticodeSignature $_; if($sig.Status -ne 'Valid'){ Write-Warning "Unsig.: $($_.FullName)" } }
+Audit-Logs in C:\Tiptorro\logs\ schreiben (keine Credentials im Klartext ablegen).
 
-Auditâ€‘Logs in C:\Tiptorro\logs\ schreiben (keine Credentials im Klartext ablegen).
+PHASE-UPDATES (2025-09-10)
+Phase 3 – DeviceManager (Präzisierung)
+Dienstname: DeviceManager.Bootstrapper (DisplayName „DeviceManager“).
 
----
+Start-Absicherung: ServiceController + Fallback net start devicemanager / net stop devicemanager.
 
-## PHASE-UPDATES (2025-09-10)
+HealthCheck ≤120 s nach Install/FirstRun.
 
-### Phase 3 â€“ DeviceManager (PrÃ¤zisierung)
-- Dienstname: **DeviceManager.Bootstrapper** (DisplayName â€žDeviceManagerâ€œ).
-- Start-Absicherung: ServiceController + Fallback **`net start devicemanager`** / **`net stop devicemanager`**.
-- HealthCheck â‰¤120s nach Install/FirstRun.
+Phase 4 – Drucker & Formate (konkret)
+Erkennung & Treiberpakete prüfen
 
-### Phase 4 â€“ Drucker & Formate (konkret)
-**Erkennung & Treiberpakete prÃ¼fen**
-```powershell
+powershell
+Code kopieren
 & C:\Tiptorro\scripts\Scan-PrinterPackages.ps1 -Paths `
   'C:\Tiptorro\packages\printers\epson\driver\Tm-T 88V', `
   'C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV', `
   'C:\Tiptorro\packages\printers\star', `
   'C:\Tiptorro\packages\printers\hwasung'
-```
+Formate anlegen (Admin erforderlich)
 
-**Formate anlegen (Admin erforderlich)**
-```powershell
+powershell
+Code kopieren
 Start-Process PowerShell -Verb RunAs -ArgumentList '-ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Printers_Forms.ps1" -Action AddForms'
-```
+Nur erkannte Targets installieren (Beispiel Star)
 
-**Nur erkannte Targets installieren (Beispiel Star)**
-```powershell
+powershell
+Code kopieren
 & C:\Tiptorro\scripts\Printers_Forms.ps1 -Action Detect
 & C:\Tiptorro\scripts\Printers_Forms.ps1 -Action Install -Targets Star `
   -StarInf 'C:\Tiptorro\packages\printers\star\smjt100.inf' `
@@ -242,30 +249,30 @@ Start-Process PowerShell -Verb RunAs -ArgumentList '-ExecutionPolicy Bypass -Fil
   -StarPort 'USB007'
 & C:\Tiptorro\scripts\Printers_Forms.ps1 -Action TestASCII -PrinterName 'TT_Star'
 rundll32 printui.dll,PrintUIEntry /y /n "TT_Star"   # Standarddrucker setzen
-```
+Epson/Hwasung (ohne Gerät vor Ort)
 
-**Epson/Hwasung (ohne GerÃ¤t vor Ort)**
-```powershell
+powershell
+Code kopieren
 pnputil /add-driver "C:\Tiptorro\packages\printers\epson\driver\Tm-T 88V\*.inf" /install
 pnputil /add-driver "C:\Tiptorro\packages\printers\hwasung\*.inf" /install
-```
+Phase 4 – OneClick (Star/Hwasung auto; Epson nur bei Bedarf)
+Ablauf:
 
+Erkennen: Star/Hwasung angeschlossen → Installation mit Original-Treibernamen, optional SavePrefs/LoadPrefs.
 
+Wenn nein: Benutzer-Prompt → Epson installieren? → Modell TM-T88V oder TM-T88IV → Installer-EXE aus C:\Tiptorro\packages\printers\epson\installer wird silent ausgeführt.
 
-### Phase 4 – OneClick (Star/Hwasung auto; Epson nur bei Bedarf)
-**Ablauf:**
-1. Erkennen: **Star/Hwasung** angeschlossen → Installation mit **Original-Treibernamen**, optional `SavePrefs/LoadPrefs`.
-2. Wenn **nein**: Benutzer-Prompt → **Epson installieren?** → Modell **TM-T88V** oder **TM-T88IV** → Installer-EXE aus `C:\Tiptorro\packages\printers\epson\installer` wird silent ausgeführt.
-3. Danach: **Testseite** senden, **Standarddrucker** setzen.
+Danach: Testseite senden, Standarddrucker setzen.
 
-**Aufruf:**
-```powershell
+Aufruf:
+
+powershell
+Code kopieren
 PowerShell -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Printers_Forms.ps1" -Action OneClick `
   -StarInf   "C:\Tiptorro\packages\printers\star\smjt100.inf" `
   -StarDriverName "Star TSP100 Cutter (TSP143)" `
   -HwasungInf "C:\Tiptorro\packages\printers\hwasung\HWASUNG_64bit_v400.INF" `
   -HwasungDriverName "HWASUNG HMK-072"
-```
+Hinweis: Queues werden mit Original-Treibernamen angelegt (keine TT_*). Legacy-Queues bleiben funktionsfähig.
 
-_Hinweis:_ Queues werden mit **Original-Treibernamen** angelegt (keine `TT_*`). Legacy-Queues bleiben funktionsfähig.
 <!-- Marker: Phase 4 – OneClick -->

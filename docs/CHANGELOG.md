@@ -23,9 +23,9 @@
 ## [Unreleased]
 ### Changed
 - `Printers_Forms.ps1` **OneClick**: Star/Hwasung werden automatisch mit **Original-Treibernamen** installiert.
-  Nur wenn **kein** Star/Hwasung erkannt wird: interaktive **Epson**-Installation (Modellwahl **TM-T88V**/**TM-T88IV**) direkt über die EXE unter `C:\Tiptorro\packages\printers\epson\installer`.
+  Nur wenn **kein** Star/Hwasung erkannt wird: interaktive **Epson**-Installation (Modellwahl **TM-T88V**/**TM-T88IV**) direkt Ã¼ber die EXE unter `C:\Tiptorro\packages\printers\epson\installer`.
   Danach **Testseite** & **Standarddrucker**.
 
 ### Added
-- Doku: Quickstart „OneClick“ und Hinweis auf Queue-Namen (Original statt `TT_*`).
+- Doku: Quickstart ï¿½OneClickï¿½ und Hinweis auf Queue-Namen (Original statt `TT_*`).
 <!-- Marker: OneClick: Original-Treibernamen + Epson via EXE -->
