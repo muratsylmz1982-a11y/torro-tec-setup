@@ -157,3 +157,9 @@ Für Tickets bitte **Event 307** (Druck) + **Phase‑8 Snapshot** aus `C:\Tipto
 * Assigned‑Access‑Hinweise entfernt; Edge‑Kiosk final dokumentiert.
 * Phase‑8 Verhalten/Policies/Autostart ergänzt.
 * Pfade/Skripte vereinheitlicht; Quickstart/Verifikation/TS gebündelt.
+
+
+---
+
+### Manuelle Shortcuts (Kasse)
+Für Kassen-Rollen werden `LiveTV (Monitor 2)` und `Torro Maintenance` als **manuelle** Shortcuts bereitgestellt (siehe *Phase 9*). Autostart ist optional und kann entfernt werden.

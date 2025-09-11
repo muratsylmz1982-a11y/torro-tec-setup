@@ -216,14 +216,68 @@ PowerShell -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Start-Maintenance.
 
 ## Phase 9 – Shortcuts & Autostart (legacy/optional)
 
-Wird durch `OneClick-Phase8.ps1` bereits erledigt. Nur nötig für Sonderfälle/Debug.
+**Ziel (ergänzend, nicht ersetzend):**  
+*Bestehende Phase-8-Logik bleibt unberührt.* Wir liefern nur manuelle Shortcuts nach und stellen Autostart **falls fehlend** sicher.
+
+**Ergebnis:**
+- `LiveTV (Monitor 2).lnk` auf **Public Desktop** und **C:\Tiptorro\livetv.lnk** (Doppelklick startet LiveTV auf M2)
+- `Torro Maintenance.lnk` auf **Public Desktop**
+- Autostart-Shortcuts nur **anlegen, wenn nicht vorhanden**
+
+> **Rollen-Hinweis:**  
+> **Terminal (Kiosk):** Autostart belassen.  
+> **Kasse (Desktop):** Autostart i. d. R. entfernen (nur manuelle Shortcuts verwenden).
+
+### Umsetzung (idempotent)
 
 ```powershell
-$startup = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup'
-# Beispiel: weitere Tools verlinken
-```
+# Phase 9 – Shortcuts & Autostart (ergänzend)
+$root   = 'C:\Tiptorro'
+$psExe  = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
+$ws     = New-Object -ComObject WScript.Shell
+$desk   = "$env:PUBLIC\Desktop"
+$startu = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup'
 
----
+function New-Shortcut($Path, $Target, $Arguments, $Icon=$null){
+  if(Test-Path $Path){ return } # nichts überschreiben
+  $sc = $ws.CreateShortcut($Path)
+  $sc.TargetPath       = $Target
+  $sc.Arguments        = [string]$Arguments
+  $sc.WorkingDirectory = Split-Path $Target
+  if($Icon){ $sc.IconLocation = $Icon }
+  try { $sc.Save() }
+  catch [System.UnauthorizedAccessException] {
+    throw "Zugriff verweigert: $Path  (Konsole als Administrator starten oder Fallback auf User-Desktop nutzen)"
+  }
+}
+
+# Arguments
+$argLiveTV = "-ExecutionPolicy Bypass -File `"$root\scripts\Start-LiveTV.ps1`" -MonitorIndex 2"
+$argShop   = "-ExecutionPolicy Bypass -File `"$root\scripts\Start-ShopKiosk.ps1`" -Mode Kiosk"
+$argMaint  = "-ExecutionPolicy Bypass -File `"$root\scripts\Start-Maintenance.ps1`""
+
+# Manuelle Shortcuts
+New-Shortcut (Join-Path $desk 'LiveTV (Monitor 2).lnk') $psExe $argLiveTV
+New-Shortcut (Join-Path $root 'livetv.lnk')             $psExe $argLiveTV
+New-Shortcut (Join-Path $desk 'Torro Maintenance.lnk')  $psExe $argMaint
+
+# Autostart nur sicherstellen (falls Phase 8 nicht bereits gesetzt hat)
+New-Shortcut (Join-Path $startu 'Torro Shop Kiosk.lnk')   $psExe $argShop
+New-Shortcut (Join-Path $startu 'Torro LiveTV Kiosk.lnk') $psExe $argLiveTV
+$userDesk = Join-Path $env:USERPROFILE 'Desktop'
+New-Shortcut (Join-Path $userDesk 'LiveTV (Monitor 2).lnk') $psExe $argLiveTV
+New-Shortcut (Join-Path $userDesk 'Torro Maintenance.lnk')  $psExe $argMaint
+# später mit Adminrechten kopieren:
+Copy-Item (Join-Path $userDesk 'LiveTV (Monitor 2).lnk') "$env:PUBLIC\Desktop\LiveTV (Monitor 2).lnk" -Force
+Copy-Item (Join-Path $userDesk 'Torro Maintenance.lnk')  "$env:PUBLIC\Desktop\Torro Maintenance.lnk" -Force
+@(
+  "$env:PUBLIC\Desktop\LiveTV (Monitor 2).lnk",
+  "C:\Tiptorro\livetv.lnk",
+  "$env:PUBLIC\Desktop\Torro Maintenance.lnk",
+  "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Torro Shop Kiosk.lnk",
+  "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Torro LiveTV Kiosk.lnk"
+) | ForEach-Object { '{0} : {1}' -f $_, (Test-Path $_) }$startup = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup'
+Get-ChildItem $startup -Filter 'Torro *.lnk' -ErrorAction SilentlyContinue | Remove-Item -Force
 
 ## Phase 10 – Diagnose/Repair
 
