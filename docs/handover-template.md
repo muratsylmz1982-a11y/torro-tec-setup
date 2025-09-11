@@ -67,3 +67,9 @@
 - docs/handover-template.md
 - Relevante Logs aus `C:\Tiptorro\logs\*` (z. B. printers_forms_*.log, devicemanager_*.log, edge-policies.reg)
 - Skripte unter `C:\Tiptorro\scripts\*`
+
+
+- **Drucker – OneClick-Logik:** Star/Hwasung auto (Queue = **Original-Treibername**).
+  Wenn **kein** Star/Hwasung erkannt → **Epson via Dialog** (Modellwahl **TM-T88V**/**TM-T88IV**, Installer-EXE), danach **Testseite** & **Standarddrucker**.
+  _Legacy:_ vorhandene `TT_*`-Queues bleiben gültig.
+<!-- Marker: OneClick-Logik: Star/Hwasung auto (Original-Name) -->

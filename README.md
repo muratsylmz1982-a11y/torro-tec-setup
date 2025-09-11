@@ -90,3 +90,18 @@ rundll32 printui.dll,PrintUIEntry /y /n "TT_Star"
 - Werte: `DefaultPopupsSetting=2`, `HideFirstRunExperience=1`, `DefaultCookiesSetting=1`, `ClearBrowsingDataOnExit=0`, `BlockThirdPartyCookies=0`, `CookiesAllowedForUrls=https://shop.tiptorro.com`  
 - Verifikation: `edge://policy` → alle Werte **OK**.
 
+
+
+## Quickstart – OneClick
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Printers_Forms.ps1" -Action OneClick `
+  -StarInf   "C:\Tiptorro\packages\printers\star\smjt100.inf" `
+  -StarDriverName "Star TSP100 Cutter (TSP143)" `
+  -HwasungInf "C:\Tiptorro\packages\printers\hwasung\HWASUNG_64bit_v400.INF" `
+  -HwasungDriverName "HWASUNG HMK-072"
+
+
+### Hinweis Drucker-Queues
+- Ab **2025-09-11** nutzt *OneClick* **Original-Treibernamen** als Queue-Namen (z. B. „HWASUNG HMK-072“, „Star TSP100 Cutter (TSP143)“, „EPSON TM-T88V Receipt5“).
+- Ältere Installationen mit `TT_*` bleiben funktionsfähig (Legacy).
+<!-- Marker: Hinweis Drucker-Queues -->

@@ -250,3 +250,22 @@ pnputil /add-driver "C:\Tiptorro\packages\printers\epson\driver\Tm-T 88V\*.inf" 
 pnputil /add-driver "C:\Tiptorro\packages\printers\hwasung\*.inf" /install
 ```
 
+
+
+### Phase 4 – OneClick (Star/Hwasung auto; Epson nur bei Bedarf)
+**Ablauf:**
+1. Erkennen: **Star/Hwasung** angeschlossen → Installation mit **Original-Treibernamen**, optional `SavePrefs/LoadPrefs`.
+2. Wenn **nein**: Benutzer-Prompt → **Epson installieren?** → Modell **TM-T88V** oder **TM-T88IV** → Installer-EXE aus `C:\Tiptorro\packages\printers\epson\installer` wird silent ausgeführt.
+3. Danach: **Testseite** senden, **Standarddrucker** setzen.
+
+**Aufruf:**
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Printers_Forms.ps1" -Action OneClick `
+  -StarInf   "C:\Tiptorro\packages\printers\star\smjt100.inf" `
+  -StarDriverName "Star TSP100 Cutter (TSP143)" `
+  -HwasungInf "C:\Tiptorro\packages\printers\hwasung\HWASUNG_64bit_v400.INF" `
+  -HwasungDriverName "HWASUNG HMK-072"
+```
+
+_Hinweis:_ Queues werden mit **Original-Treibernamen** angelegt (keine `TT_*`). Legacy-Queues bleiben funktionsfähig.
+<!-- Marker: Phase 4 – OneClick -->
