@@ -19,3 +19,7 @@ Thumbs.db
 # TeamViewer secrets
 policies/teamviewer-*.reg
 policies/*secret*
+
+state/
+
+LiveTv.txt
