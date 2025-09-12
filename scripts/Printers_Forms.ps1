@@ -1,4 +1,4 @@
-# Torro Tec - Printer & Forms Helper (v1.2 ASCII)
+﻿# Torro Tec - Printer & Forms Helper (v1.2 ASCII)
 
 [CmdletBinding()]
 param(
@@ -17,6 +17,83 @@ param(
   [string]$HwasungPort,
   [string]$PrinterName
 )
+# --- Printer Auto-Detect (Hardware/PnP) ---
+function Get-ConnectedPrinterModel {
+  $patterns = @(
+    @{ Model='Star TSP100/TSP143';  Match=@('Star TSP1*','TSP100*','TSP143*'); Vendor='Star'    },
+    @{ Model='Hwasung HMK-072';     Match=@('HWASUNG*','HMK-072*');            Vendor='Hwasung' },
+    @{ Model='Epson TM-T88V';       Match=@('EPSON TM-T88V*','TM-T88V*');      Vendor='Epson'   },
+    @{ Model='Epson TM-T88IV';      Match=@('EPSON TM-T88IV*','TM-T88IV*');    Vendor='Epson'   }
+  )
+
+  $hits = @()
+  try {
+    # Physisch/präsent (auch wenn (noch) kein Windows-Druckerobjekt existiert):
+    $pnp = Get-PnpDevice -ErrorAction SilentlyContinue
+    foreach($p in $patterns){
+      foreach($m in $p.Match){
+        $hits += ($pnp | Where-Object { $_.FriendlyName -like $m -or $_.Name -like $m } |
+          Select-Object -First 1 | ForEach-Object {
+            [pscustomobject]@{ Vendor=$p.Vendor; Model=$p.Model; Pattern=$m; Source='PnP' }
+          })
+      }
+    }
+  } catch {}
+
+  # Fallback: Bereits installierte Windows-Drucker als Hinweis
+  if(-not $hits -or $hits.Count -eq 0){
+    try {
+      $prt = Get-Printer -ErrorAction SilentlyContinue
+      foreach($p in $patterns){
+        foreach($m in $p.Match){
+          $hits += ($prt | Where-Object { $_.Name -like $m } | Select-Object -First 1 | ForEach-Object {
+            [pscustomobject]@{ Vendor=$p.Vendor; Model=$p.Model; Pattern=$m; Source='InstalledPrinter' }
+          })
+        }
+      }
+    } catch {}
+  }
+
+  # Deduplicate & bewerten
+  $hits = $hits | Where-Object { $_ } | Sort-Object Model -Unique
+  if($hits.Count -eq 1){ return @{ Status='Single';  Pick=$hits[0]; All=$hits } }
+  elseif($hits.Count -gt 1){ return @{ Status='Multiple'; Pick=$null; All=$hits } }
+  else { return @{ Status='None'; Pick=$null; All=@() } }
+}
+
+function Install-DetectedPrinter($det){
+  $vendor = $det.Pick.Vendor
+  switch($vendor){
+    'Star' {
+      $inf = 'C:\Tiptorro\packages\printers\star\smjt100.inf'
+      pnputil /add-driver "$inf" /install | Out-Null
+      # Druckername kann variieren – den mit Star-Treiber als Standard setzen:
+      $p = Get-Printer -ErrorAction SilentlyContinue | Where-Object { $_.DriverName -like 'Star TSP100*' } | Select-Object -First 1
+      if($p){ Set-Printer -Name $p.Name -IsDefault $true; rundll32 printui.dll,PrintUIEntry /k /n "$($p.Name)" }
+      return "Installed:Star"
+    }
+    'Hwasung' {
+      $inf = 'C:\Tiptorro\packages\printers\hwasung\HWASUNG_64bit_v400.INF'
+      pnputil /add-driver "$inf" /install | Out-Null
+      $p = Get-Printer -ErrorAction SilentlyContinue | Where-Object { $_.DriverName -like 'HWASUNG*' } | Select-Object -First 1
+      if($p){ Set-Printer -Name $p.Name -IsDefault $true; rundll32 printui.dll,PrintUIEntry /k /n "$($p.Name)" }
+      return "Installed:Hwasung"
+    }
+    'Epson' {
+      # Deine Vorgabe: **EXE-Installer öffnen** (kein INF); Auswahl je Modell
+      $instDir = 'C:\Tiptorro\packages\printers\epson\installer'
+      $exe = if($det.Pick.Model -eq 'Epson TM-T88V'){
+        Join-Path $instDir 'APD_513_T88V.exe'
+      } else {
+        # generischer APD – z.B. für T88IV
+        Join-Path $instDir 'APD_459aE.exe'
+      }
+      if(Test-Path $exe){ Start-Process $exe }  # (UI-Installer, bewusst nicht silent)
+      return "Launched:EpsonInstaller"
+    }
+  }
+  return "UnknownVendor"
+}
 
 $Root  = 'C:\Tiptorro'
 $LogDir= Join-Path $Root 'logs'
@@ -27,11 +104,19 @@ function Log($m){ ('{0} {1}' -f (Get-Date).ToString('o'), $m) | Tee-Object -File
 function Detect-Printers {
   $det = [ordered]@{ Star=$false; Epson=$false; Hwasung=$false; Raw=@() }
   try{
-    $pnp = Get-CimInstance Win32_PnPEntity -ErrorAction SilentlyContinue | Where-Object { $_.PNPClass -eq 'Printer' -or $_.ClassGuid -eq '{4d36e979-e325-11ce-bfc1-08002be10318}' }
+    # Bestehende, "breite" Sicht (PnP-Printer-Class + Win32_Printer)
+    $pnp = Get-CimInstance Win32_PnPEntity -ErrorAction SilentlyContinue |
+           Where-Object { $_.PNPClass -eq 'Printer' -or $_.ClassGuid -eq '{4d36e979-e325-11ce-bfc1-08002be10318}' }
     $win = Get-CimInstance Win32_Printer -ErrorAction SilentlyContinue
+
     $all = @()
-    if($pnp){ $all += $pnp | Select-Object @{n='Source';e={'PnP'}}, Name, Manufacturer, HardwareID }
-    if($win){ $all += $win | Select-Object @{n='Source';e={'Win32_Printer'}}, Name, @{n='Manufacturer';e={$_.DriverName}}, @{n='HardwareID';e={$null}} }
+    if($pnp){
+      $all += $pnp | Select-Object @{n='Source';e={'PnP'}}, Name, Manufacturer, HardwareID
+    }
+    if($win){
+      $all += $win | Select-Object @{n='Source';e={'Win32_Printer'}}, Name, @{n='Manufacturer';e={$_.DriverName}}, @{n='HardwareID';e={$null}}
+    }
+
     foreach($i in $all){
       $name = (''+$i.Name); $man = (''+$i.Manufacturer); $hid = ($i.HardwareID -join ';')
       $det.Raw += [pscustomobject]@{ Source=$i.Source; Name=$name; Manufacturer=$man; HardwareID=$hid }
@@ -39,9 +124,30 @@ function Detect-Printers {
       if($name -match '(?i)\bepson\b|TM\-'        -or $man -match '(?i)\bepson\b'){ $det.Epson = $true }
       if($name -match '(?i)hwasung|hs\-printer'   -or $man -match '(?i)hwasung'){   $det.Hwasung = $true }
     }
+
+    # --- ROBUST: Star zusätzlich über Get-PnpDevice + WMI-PnP, unabhängig von PNPClass ---
+    $starDetected = $false
+    try{
+      $starPnP = Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object {
+        $_.FriendlyName -match '(?i)Star.*TSP|TSP1(00|43)' -or
+        $_.InstanceId   -match '(?i)^USBPRINT\\STARTSP'
+      }
+      if(($starPnP | Measure-Object).Count -gt 0){ $starDetected = $true }
+    } catch {}
+
+    if(-not $starDetected){
+      $starWmi = Get-CimInstance Win32_PnPEntity -ErrorAction SilentlyContinue | Where-Object {
+        $_.Name -match '(?i)Star.*TSP|TSP1(00|43)' -or
+        (($_.HardwareID -join ';') -match '(?i)USBPRINT\\STARTSP')
+      }
+      if(($starWmi | Measure-Object).Count -gt 0){ $starDetected = $true }
+    }
+
+    if($starDetected){ $det.Star = $true }
   } catch {}
   return $det
 }
+
 function Dump-Detections($det){
   Log ('Detected Star:    ' + $det.Star)
   Log ('Detected Epson:   ' + $det.Epson)
@@ -66,9 +172,17 @@ function Ensure-Form {
 function Ensure-DriverFromInf { param([string]$InfPath)
   if(-not $InfPath){ return }
   if(-not (Test-Path $InfPath)){ throw 'INF not found: ' + $InfPath }
+  $dir = Split-Path -Parent $InfPath
   Log ('Installing driver from INF: ' + $InfPath)
-  Start-Process pnputil.exe -ArgumentList ('/add-driver "'+$InfPath+'" /install') -Wait -NoNewWindow
+  # /subdirs sorgt dafür, dass alle referenzierten Dateien im Ordner gefunden werden
+  $p = Start-Process pnputil.exe -ArgumentList ('/add-driver "'+$InfPath+'" /subdirs /install') -Wait -PassThru -NoNewWindow
+  if($p -and $p.ExitCode -ne 0){
+    # Fallback: Vendor-Setup (silent), falls vorhanden
+    $exe = Join-Path $dir 'setup_x64.exe'
+    if(Test-Path $exe){ Start-Process $exe -ArgumentList '/S' -Wait | Out-Null }
+  }
 }
+
 
 function Ensure-Printer { param([string]$PrinterName,[string]$DriverName,[string]$PortName)
   if(-not $PrinterName -or -not $DriverName -or -not $PortName){ return }
@@ -235,92 +349,93 @@ switch($Action){
     Load-PrinterPrefs -Name $PrinterName
   }
     'OneClick' {
-    Log 'OneClick (Star/Hwasung oder interaktives Epson) START'
+  Log 'OneClick (Star/Hwasung oder interaktives Epson) START'
 
-    # 0) Port-Präferenz vorbereiten
-    $usbPort = (Get-PrinterPort | Where-Object { $_.Name -match '^USB\d+' } |
-                Sort-Object Name -Descending | Select-Object -First 1 -Expand Name)
-    if(-not $usbPort){ $usbPort = 'USB001' }
+  # 0) USB-Port-Präferenz
+  $usbPort = (Get-PrinterPort | Where-Object { $_.Name -match '^USB\d+' } |
+              Sort-Object Name -Descending | Select-Object -First 1 -ExpandProperty Name)
+  if(-not $usbPort){ $usbPort = 'USB001' }
 
-    # 1) Erkennung (Star/Hwasung)
-    $det = Detect-Printers
-    Dump-Detections -det $det
+  # 1) Erkennung
+  $det = Detect-Printers
+  try { Dump-Detections -det $det } catch {}
 
-    $created = @()
+  $created = @()
 
-    # --- HWASUNG: Originalname verwenden ---
-    if($det.Hwasung -and $HwasungDriverName){
-      $p = if($HwasungPort){ $HwasungPort } else { $usbPort }
-      Ensure-DriverFromInf -InfPath $HwasungInf
-      Ensure-Printer -PrinterName $HwasungDriverName -DriverName $HwasungDriverName -PortName $p
-      try { Load-PrinterPrefs -Name $HwasungDriverName } catch {}
-      $created += $HwasungDriverName
-    }
-
-    # --- STAR: Originalname verwenden ---
-    if($det.Star -and $StarDriverName){
-      $p = if($StarPort){ $StarPort } else { $usbPort }
-      Ensure-DriverFromInf -InfPath $StarInf
-      Ensure-Printer -PrinterName $StarDriverName -DriverName $StarDriverName -PortName $p
-      $created += $StarDriverName
-    }
-
-    # 2) Wenn weder Star noch Hwasung -> Nutzer fragen für Epson
-    if($created.Count -eq 0){
-      $ans = Read-Host 'Kein Hwasung/Star erkannt. Epson installieren? (J/N)'
-      if($ans -match '^(j|y)'){
-        $choice = Read-Host 'Welches Modell? [V]=TM-T88V, [IV]=TM-T88IV'
-        $model  = if($choice -match '(?i)IV'){ 'T88IV' } else { 'T88V' }
-
-        $installerDir = 'C:\Tiptorro\packages\printers\epson\installer'
-        $exe = Get-ChildItem $installerDir -File -Filter *.exe |
-               Where-Object { $_.Name -match $model } |
-               Sort-Object LastWriteTime -Descending |
-               Select-Object -First 1
-        if(-not $exe){ Log "Epson-Installer für $model nicht gefunden unter $installerDir"; break }
-
-        Log ("Starte Epson-Installer: " + $exe.FullName)
-        $p = Start-Process -FilePath $exe.FullName -ArgumentList '/s' -PassThru -Wait -WindowStyle Hidden
-        if($p -and $p.ExitCode -ne 0){
-          Start-Process -FilePath $exe.FullName -ArgumentList '/quiet' -Wait -WindowStyle Hidden | Out-Null
-        }
-
-        pnputil /scan-devices | Out-Null
-        Start-Sleep 2
-
-        # Treiber- und Portauswahl
-        $drvPattern = if($model -eq 'T88IV'){ 'TM-?T88IV' } else { 'TM-?T88V' }
-        $drv = (Get-PrinterDriver | Sort Name |
-                Where-Object { $_.Name -match $drvPattern -or $_.Name -match 'Receipt' } |
-                Select-Object -First 1 -Expand Name)
-        if(-not $drv){ Log "Epson-Treiber $model nicht gefunden."; break }
-
-        $port = (Get-PrinterPort | Where-Object Name -match '^ESDPRT' |
-                 Select-Object -First 1 -Expand Name)
-        if(-not $port){ $port = (Get-PrinterPort | Where-Object Name -match '^USB\d+' |
-                                 Sort-Object Name -Descending | Select-Object -First 1 -Expand Name) }
-        if(-not $port){ Log 'Kein ESDPRT/USB-Port gefunden – bitte USB kurz neu stecken und OneClick erneut laufen lassen.'; break }
-
-        # Queue mit Originalnamen (Treibername) anlegen
-        Ensure-Printer -PrinterName $drv -DriverName $drv -PortName $port
-        $created += $drv
-      } else {
-        Log 'Epson-Installation abgebrochen (Nutzerantwort).'
-      }
-    }
-
-    # 3) Standard setzen & Testseite drucken (für die erste angelegte Queue)
-    if($created.Count -gt 0){
-      $q = $created[0]
-      try { Start-Process rundll32.exe -ArgumentList ('printui.dll,PrintUIEntry /y /n "'+$q+'"') -Wait } catch {}
-      try { Start-Process rundll32.exe -ArgumentList ('printui.dll,PrintUIEntry /k /n "'+$q+'"') -Wait } catch {}
-      Log ('Default gesetzt & Testseite gesendet: ' + $q)
-    } else {
-      Log 'OneClick: Keine Queue angelegt.'
-    }
-
-    Log 'OneClick END'
+  # --- HWASUNG (Originalname) ---
+  if($det.Hwasung -and $HwasungDriverName){
+    $p = if($HwasungPort){ $HwasungPort } else { $usbPort }
+    Ensure-DriverFromInf -InfPath $HwasungInf
+    Ensure-Printer -PrinterName $HwasungDriverName -DriverName $HwasungDriverName -PortName $p
+    try { Load-PrinterPrefs -Name $HwasungDriverName } catch {}
+    $created += $HwasungDriverName
   }
+
+  # --- STAR (Originalname) ---
+  if($det.Star -and $StarDriverName){
+    $p = if($StarPort){ $StarPort } else { $usbPort }
+    Ensure-DriverFromInf -InfPath $StarInf
+    Ensure-Printer -PrinterName $StarDriverName -DriverName $StarDriverName -PortName $p
+    $created += $StarDriverName
+  }
+
+  # 2) Falls weder Star noch Hwasung -> Epson interaktiv
+  if($created.Count -eq 0){
+    $ans = Read-Host 'Kein Hwasung/Star erkannt. Epson installieren? (J/N)'
+    if($ans -match '^(j|y)'){
+      $choice = Read-Host 'Welches Modell? [V]=TM-T88V, [IV]=TM-T88IV'
+      $model  = if($choice -match '(?i)IV'){ 'T88IV' } else { 'T88V' }
+
+      $installerDir = 'C:\Tiptorro\packages\printers\epson\installer'
+      $exe = Get-ChildItem $installerDir -File -Filter *.exe -ErrorAction SilentlyContinue |
+             Where-Object { $_.Name -match $model } |
+             Sort-Object LastWriteTime -Descending |
+             Select-Object -First 1
+      if(-not $exe){ Log ("Epson-Installer fuer {0} nicht gefunden unter {1}" -f $model,$installerDir); break }
+
+      Log ("Starte Epson-Installer: {0}" -f $exe.FullName)
+      $proc = Start-Process -FilePath $exe.FullName -ArgumentList '/s' -PassThru -Wait -WindowStyle Hidden
+      if($proc -and $proc.ExitCode -ne 0){
+        Start-Process -FilePath $exe.FullName -ArgumentList '/quiet' -Wait -WindowStyle Hidden | Out-Null
+      }
+
+      pnputil /scan-devices | Out-Null
+      Start-Sleep 2
+
+      $drvPattern = if($model -eq 'T88IV'){ 'TM-?T88IV' } else { 'TM-?T88V' }
+      $drv = (Get-PrinterDriver | Sort-Object Name |
+              Where-Object { $_.Name -match $drvPattern -or $_.Name -match 'Receipt' } |
+              Select-Object -First 1 -ExpandProperty Name)
+      if(-not $drv){ Log ("Epson-Treiber {0} nicht gefunden." -f $model); break }
+
+      $port = (Get-PrinterPort | Where-Object Name -match '^ESDPRT' |
+               Select-Object -First 1 -ExpandProperty Name)
+      if(-not $port){
+        $port = (Get-PrinterPort | Where-Object Name -match '^USB\d+' |
+                 Sort-Object Name -Descending | Select-Object -First 1 -ExpandProperty Name)
+      }
+      if(-not $port){ Log 'Kein ESDPRT/USB-Port gefunden. Bitte USB neu stecken und OneClick erneut starten.'; break }
+
+      Ensure-Printer -PrinterName $drv -DriverName $drv -PortName $port
+      $created += $drv
+    } else {
+      Log 'Epson-Installation abgebrochen (Nutzerantwort).'
+    }
+  }
+
+  # 3) Standard & Testseite
+  if($created.Count -gt 0){
+    $q = $created[0]
+    try { Start-Process rundll32.exe -ArgumentList ("printui.dll,PrintUIEntry /y /n `"$q`"") -Wait } catch {}
+    try { Start-Process rundll32.exe -ArgumentList ("printui.dll,PrintUIEntry /k /n `"$q`"") -Wait } catch {}
+    Log ("Default gesetzt & Testseite gesendet: {0}" -f $q)
+  } else {
+    Log 'OneClick: Keine Queue angelegt.'
+  }
+
+  Log 'OneClick END'
+}
+
 
 }
 

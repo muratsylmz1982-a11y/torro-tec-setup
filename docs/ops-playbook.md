@@ -1,364 +1,360 @@
-﻿<!-- CONTINUE-HERE BANNER (auto) -->
+﻿TipTorro – Setup & Operations Playbook
 
-> Dieses Playbook ist die maßgebliche Betriebsanleitung. Keine Grundgerüste/Dateien duplizieren.
-> Nach kurzer Sicht auf **README.md** direkt hier arbeiten.
+Stand: aktuell, Windows 10/11, reine Offline-Tauglichkeit. Rollen: Terminal (Kiosk + Geldgeräte) und Kasse (Desktop, ohne Geldgeräte).
 
-<!-- END CONTINUE-HERE BANNER -->
+0) Überblick & Voraussetzungen
 
-# Ops Playbook – Torro Tec Setup & Management
+Adminrechte erforderlich (PowerShell „Als Administrator“).
 
-**Stand:** 11.09.2025
-**Ziel:** Reproduzierbare Einrichtung/Support für **Terminal (Kiosk)** & **Kasse (Desktop)** unter Windows 10/11 Pro.
+Lokale Pakete vorhanden unter C:\Tiptorro\packages\…
 
-Root-Pfad: `C:\Tiptorro`
-Profile/Edge: `C:\ttedge\...`
-Shop: `https://shop.tiptorro.com`
+Alle Skripte unter C:\Tiptorro\scripts\…
 
----
+Logs unter C:\Tiptorro\logs\…
 
-## Inhaltsverzeichnis
+Zweiter Monitor (TV) wird, wenn angeschlossen, für LiveTV (1920×1080 @ 100 %) genutzt.
 
-* [Phase 1 – Basis vorbereiten](#phase-1--basis-vorbereiten)
-* [Phase 2 – TeamViewer (optional)](#phase-2--teamviewer-optional)
-* [Phase 3 – Device Manager (MSI) Neuaufbau](#phase-3--device-manager-msi-neuaufbau)
-* [Phase 4 – Drucker & Formulare & OneClick](#phase-4--drucker--formulare--oneclick)
-* [Phase 5 – Geldgeräte (Terminal)](#phase-5--geldgeräte-terminal)
-* [Phase 6 – Edge/Policies (Popups aus, Cookies erlaubt)](#phase-6--edgepolicies-popups-aus-cookies-erlaubt)
-* [Phase 7 – Assigned Access (optional/nicht genutzt)](#phase-7--assigned-access-optionalnicht-genutzt)
-* [Phase 8 – Kiosk/Support final (Monitor 2 & LiveTV)](#phase-8--kiosksupport-final-monitor2--livetv)
-* [Phase 9 – Shortcuts & Autostart (legacy/optional)](#phase-9--shortcuts--autostart-legacyoptional)
-* [Phase 10 – Diagnose/Repair](#phase-10--diagnoserepair)
-* [Phase 11 – Sicherheit](#phase-11--sicherheit)
-* [Anhang – Verifikation & Snapshots](#anhang--verifikation--snapshots)
+Links für LiveTV liegen in C:\Tiptorro\links.json (bzw. Symlink auf packages\LiveTvLinks\links.json).
 
----
+Auswahl LiveTV wird persistent gespeichert in C:\Tiptorro\state\livetv.selected.json.
 
-## Phase 1 – Basis vorbereiten
+Schnellstart (Bedienoberfläche „Torro-Panel“)
+Start-Process powershell.exe -Verb runas -ArgumentList `
+  '-NoProfile -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Torro-Panel.ps1"'
 
-Ordnerstruktur anlegen (falls nicht vorhanden) und **Offline-Pakete** in `packages\` kopieren:
 
-```powershell
-$root = 'C:\Tiptorro'
-$dirs = 'scripts','packages','logs','state','shortcuts','docs'
-foreach($d in $dirs){ New-Item -ItemType Directory -Force -Path (Join-Path $root $d) | Out-Null }
-# Branding/Icon optional:
-# Copy-Item .\tiptorro.jpg C:\Tiptorro\tiptorro.jpg -Force
-```
+Im Panel gibt es eigene Reiter für Setup, Terminal, Kasse, Status, Diagnostics, Security, Tools. Alle Hauptabläufe sind als Buttons verfügbar.
 
----
+1) Einmal-Setup (One-Click) – empfohlene Reihenfolge
+1.1 Terminal (Kiosk-System)
 
-## Phase 2 – TeamViewer (optional)
+Panel öffnen (Admin) – siehe Befehl oben.
 
-**Wenn** verwendet: silent installieren, ID protokollieren. Sonst Phase überspringen.
+Reiter Terminal → „OneClick Setup (Phase 8, Admin)”
 
-```powershell
-Start-Process 'C:\Tiptorro\packages\teamviewer\TeamViewer_Setup.exe' -ArgumentList '/S' -Wait
-$id = (Get-Content "$env:ProgramFiles\TeamViewer\TeamViewer.ini" -ErrorAction SilentlyContinue | Select-String 'ClientID').ToString()
-Add-Content C:\Tiptorro\logs\teamviewer_id.log "$(Get-Date -Format o) $id"
-```
+Fragt (bei erkannten 2 Monitoren) den gewünschten LiveTV-Link ab.
 
----
+Speichert Auswahl nach state\livetv.selected.json.
 
-## Phase 3 – Device Manager (MSI) Neuaufbau
+Richtet Autostart für LiveTV/Shop (Shortcuts im Startup) ein, sofern gewünscht.
 
-* Dienstname: **DeviceManager.Bootstrapper** (DisplayName „DeviceManager“)
-* HealthCheck ≤120 s nach Install/FirstRun
+Startet LiveTV Test auf Monitor 2.
 
-```powershell
-# Deinstall
-$prod = Get-ItemProperty 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*' | Where-Object { $_.DisplayName -like '*TipTorro Device Manager*' }
-if($prod){ & msiexec.exe /x $prod.PSChildName /qn }
-Remove-Item 'C:\Program Files (x86)\TipTorro' -Recurse -Force -ErrorAction SilentlyContinue
+„Device Manager installieren/aktualisieren (Admin)”
 
-# Neuinstall
-Start-Process msiexec.exe -ArgumentList "/i `"C:\Tiptorro\packages\device-manager\DeviceManager.msi`" /qn" -Wait
+Nutzt MSI (packages\device-manager\DeviceManager.Service.Setup.msi) oder setup.exe.
 
-# Health-Check (Platzhalter: eigenes Script
-# PowerShell -ExecutionPolicy Bypass -File 'C:\Tiptorro\scripts\HealthCheck.ps1'
-```
+Startet Dienst DeviceManager.Bootstrapper.
 
----
+Geldgeräte (optional jetzt/sonst später)
 
-## Phase 4 – Drucker & Formulare & OneClick
+„Geldgeräte-Assistent (ccTalk)” → MoneyDevices.ps1 bzw. ccTalk Devices.exe.
 
-**Strategie:** Original-Treiber-Namen verwenden (Legacy `TT_*` bleibt funktionsfähig).
+Prüfen: Status-Reiter (Health/Audit), LiveTV startet, Shop öffnet im Kiosk (bei Bedarf über Button).
 
-**OneClick (Star/Hwasung auto; Epson interaktiver Fallback):**
+1.2 Kasse (Desktop-System)
 
-```powershell
-PowerShell -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Printers_Forms.ps1" -Action OneClick `
-  -StarInf   "C:\Tiptorro\packages\printers\star\smjt100.inf" `
+Panel öffnen (Admin).
+
+Reiter Kasse → „OneClick Drucker (Star/Hwasung, sonst Epson)”
+
+Erkennung Star/Hwasung (Treiber aus lokalem Pool), sonst interaktiver Epson-Installer.
+
+Setzt Standarddrucker und druckt Testseite.
+
+TeamViewer Setup (Silent + Reg) (optional)
+
+Desko/Datawin (optional)
+
+LiveTV (ohne Kiosk) – „LiveTV im normalen Edge (ohne Kiosk)“ bei Bedarf.
+
+2) OneClick – Details (Phase 8)
+
+Skript: C:\Tiptorro\scripts\OneClick-Phase8.ps1
+
+2.1 Typische Ausführung (Terminal)
+powershell -NoProfile -ExecutionPolicy Bypass `
+  -File "C:\Tiptorro\scripts\OneClick-Phase8.ps1" `
+  -PromptLiveTV -SetAutostart -MonitorIndex 2
+
+
+Was passiert:
+
+Links laden (C:\Tiptorro\links.json), Auswahl dialogisch, Speichern nach C:\Tiptorro\state\livetv.selected.json.
+
+LiveTV auf Monitor 2 testen (Start-LiveTV.ps1).
+
+Autostart anlegen (User-Startup-Shortcuts „Torro LiveTV Kiosk.lnk“ und „Torro Shop Kiosk.lnk“).
+Hinweis: Es kann alternativ ein Sched.Task Tiptorro-EdgeTV existieren – in aktuellen Builds nutzen wir bevorzugt die Startup-Links.
+
+Edge-First-Run wird über Policies unterdrückt (separates Skript vorhanden).
+
+Keine Speicherung von Shop-Credentials (nur Links/Kiosk).
+
+2.2 Verifikation
+# Auswahl
+Test-Path 'C:\Tiptorro\state\livetv.selected.json'
+Get-Content 'C:\Tiptorro\state\livetv.selected.json' -Raw
+
+# Autostart
+$me  = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
+Get-ChildItem $me -Filter 'Torro *.lnk' | Select Name,FullName
+
+# Kiosk-Probe
+powershell -NoProfile -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Start-LiveTV.ps1" -MonitorIndex 2
+
+3) Drucker-Workflow (Star/Hwasung auto, Epson interaktiv)
+
+Skript: C:\Tiptorro\scripts\Printers_Forms.ps1
+
+3.1 OneClick-Modus
+powershell -NoProfile -ExecutionPolicy Bypass `
+  -File "C:\Tiptorro\scripts\Printers_Forms.ps1" `
+  -Action OneClick `
+  -StarInf "C:\Tiptorro\packages\printers\star\smjt100.inf" `
   -StarDriverName "Star TSP100 Cutter (TSP143)" `
   -HwasungInf "C:\Tiptorro\packages\printers\hwasung\HWASUNG_64bit_v400.INF" `
-  -HwasungDriverName "HWASUNG HMK-072"
-```
+  -HwasungDriverName "HWASUNG HMK-072" `
+  -Verbose
 
-**Verifikation:**
 
-```powershell
-Get-Printer | ft Name,DriverName,PortName,Default -Auto
-Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-PrintService/Operational'; Id=307} -MaxEvents 3 |
-  Select TimeCreated,Message
-```
+Log/Ergebnis: C:\Tiptorro\logs\printers_forms_*.log
 
-> Hinweis: Wenn kein Star/Hwasung erkannt → interaktiver Epson-Installer (TM‑T88V/TM‑T88IV) aus `C:\Tiptorro\packages\printers\epson\installer\*.exe`, danach Testseite & Standarddrucker.
+Erkennt angeschlossene Star/Hwasung via PnP/Win32_Printer.
 
----
+Installiert Treiber via pnputil (Star/Hwasung), legt Queue mit Original-Treibername an.
 
-## Phase 5 – Geldgeräte (Terminal)
+Epson als Fallback: interaktiver Installer aus packages\printers\epson\installer\*.exe.
 
-**Ziel:** Dienst sauber stoppen → `ccTalk Devices.exe` (≈30–45 s) → Dienst starten.
-**Recovery:** Settings löschen → erneut `ccTalk Devices.exe` → Dienst starten.
-**Wichtig (11.09.2025):** Settings-Dateien werden **nach Backend-Setup automatisch neu erzeugt** (kein manuelles Anlegen nötig).
+Setzt Standarddrucker und triggert Testseite.
 
-```powershell
-$svc = 'DeviceManager.Bootstrapper'
-# Rescan (Standard)
-Stop-Service $svc -Force
-Start-Process 'C:\Tiptorro\packages\cctalk\ccTalk Devices.exe'
-Start-Sleep -Seconds 45
-Start-Service $svc
+Hinweise/Tipps:
 
-# Recovery (Settings löschen + Rescan)
-$settings = @(
-  'C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings.xml',
-  'C:\Program Files (x86)\TipTorro\Device Manager Service\moneysystem_settings_save.xml'
-)
-Stop-Service $svc -Force
-Remove-Item -LiteralPath $settings -Force -ErrorAction SilentlyContinue
-Start-Process 'C:\Tiptorro\packages\cctalk\ccTalk Devices.exe'
-Start-Sleep -Seconds 45
-Start-Service $svc
-```
+Bei Star: INF (smjt100.inf) + Dateien müssen vollständig in packages\printers\star\ liegen.
 
----
+Falls pnputil „Datei nicht gefunden“ meldet, trotz vorhandenem Pfad: erneut ausführen; bei Erfolg sieht man Published Name (z. B. oem96.inf).
 
-## Phase 6 – Edge/Policies (Popups aus, Cookies erlaubt)
+Log zeigt Erkennung + Portwahl (USBxxx/ESDPRT).
 
-**Ziel:** Keine FRE-/Signin-/Sync-/Autofill-/Benachrichtigungs-Popups. Cookies für `shop.tiptorro.com` erlaubt.
-**Umsetzung (OneClick-Step):** `scripts\OneClick-Phase8.ps1` setzt Policies in **HKLM** (HKCU-Fallback), räumt Profile und seedet Autostart.
+Bei Problemen mit Erkennung: temporär manuell Queue anlegen, dann OneClick erneut (der OneClick setzt dann Standard/Testseite korrekt).
 
-**Ausführung (einmal pro Gerät, Admin empfohlen):**
+4) Device Manager – Installation, Dienst & Repair
 
-```powershell
-PowerShell -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\OneClick-Phase8.ps1" -PolicyScope Machine -SetAutostart -VerboseLog
-# Optional: -PromptLiveTV für Erstwahl im Support
-```
+Paketpfade:
 
-**Kernwerte (Auszug):**
+C:\Tiptorro\packages\device-manager\DeviceManager.Service.Setup.msi (bevorzugt)
 
-* `HideFirstRunExperience=1`, `BrowserSignin=0`, `SyncDisabled=1`
-* `DefaultNotificationsSetting=2`, `DefaultGeolocationSetting=2`
-* `PasswordManagerEnabled=0`, `AutofillAddressEnabled=0`, `AutofillCreditCardEnabled=0`
-* `PromotionalTabsEnabled=0`, `RestoreOnStartup=0`
-* `CookiesAllowedForUrls = https://shop.tiptorro.com`
+C:\Tiptorro\packages\device-manager\DeviceManager.msi (Fallback, wenn vorhanden)
 
-**Verifikation:** `edge://policy` oder per PowerShell siehe [Anhang](#anhang--verifikation--snapshots).
+C:\Tiptorro\packages\device-manager\setup.exe (als Alternative)
 
----
+Dienstname: DeviceManager.Bootstrapper
+Binärpfad: C:\Program Files (x86)\TipTorro\Device Manager Service\DeviceManager.Service.exe
 
-## Phase 7 – Assigned Access (optional/nicht genutzt)
+4.1 Installation/Update (silent)
+# MSI (bevorzugt)
+Start-Process msiexec.exe -ArgumentList '/i "C:\Tiptorro\packages\device-manager\DeviceManager.Service.Setup.msi" /qn' -Wait -Verb runas
+# Start
+sc.exe start "DeviceManager.Bootstrapper"
 
-**Hinweis:** Assigned Access/Kiosk der Windows-UI wird **nicht** verwendet.
-Wir betreiben Kiosk-Fenster über Edge-Flags und dedizierte Profile (siehe Phase 8).
-Bestehende Geräte mit Assigned Access bleiben funktionsfähig, neue Deployments **ohne**.
+4.2 Service-Steuerung/Diagnose
+# Status
+Get-Service 'DeviceManager.Bootstrapper' | Select Name,Status,StartType
 
----
+# Start/Stop
+sc.exe start "DeviceManager.Bootstrapper"
+sc.exe stop  "DeviceManager.Bootstrapper"
 
-## Phase 8 – Kiosk/Support final (Monitor 2 & LiveTV)
+# ImagePath prüfen
+(Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\DeviceManager.Bootstrapper').ImagePath
 
-**Verhalten (final):**
-
-* **Support:** Shop **Tab** auf Monitor 1; LiveTV **Kiosk** auf Monitor 2; Auswahl via Prompt → Persistenz `C:\Tiptorro\state\livetv.selected.json`.
-* **Betrieb/Neustart:** Shop **Kiosk** (M1), LiveTV **Kiosk** (M2) mit zuletzt gespeicherter Auswahl (keine Nachfrage).
-* **Wartung:** `Start-Maintenance.ps1` öffnet Shop als Tab (M1) und LiveTV-Toolmaske (Link ändern, optional sofort übernehmen).
-
-**Skripte:**
-
-* `Start-ShopKiosk.ps1` – Shop (Support=Tab, Betrieb=Kiosk)
-* `Start-LiveTV.ps1` – LiveTV immer Kiosk; `-Prompt` für Auswahl; Persistenz
-* `LiveTV-SetLink.ps1` – Wartungs-Toolmaske; `-ApplyNow` setzt LiveTV sofort neu
-* `Start-Maintenance.ps1` – kombinierter Wartungsablauf
-* `OneClick-Phase8.ps1` – Policies, Profile, Autostart, optional Erstwahl
-
-**Erstwahl (Support):**
-
-```powershell
-# Shop als Tab (M1)
-PowerShell -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Start-ShopKiosk.ps1" -VerboseLog
-# LiveTV-Auswahl (Kiosk M2) + Speichern
-PowerShell -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Start-LiveTV.ps1" -Prompt -MonitorIndex 2 -VerboseLog
-```
-
-**Neustartbetrieb (Autostart via OneClick-Phase8):**
-
-* `Torro Shop Kiosk.lnk` → `Start-ShopKiosk.ps1 -Mode Kiosk`
-* `Torro LiveTV Kiosk.lnk` → `Start-LiveTV.ps1 -MonitorIndex 2`
-
-**Wartungsmodus:**
-
-```powershell
-PowerShell -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Start-Maintenance.ps1"
-```
-
-**links.json (Format & Pfad):** `C:\Tiptorro\packages\LiveTVLinks\links.json`
-
-```json
-{
-  "items": [
-    { "name": "Fussball S1 Scanner", "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=1&pagecount=1&sports=1&ngoal=true" }
-  ],
-  "defaultMonitorIndex": 2
-}
-```
-
----
-
-## Phase 9 – Shortcuts & Autostart (legacy/optional)
-
-**Ziel (ergänzend, nicht ersetzend):**  
-*Bestehende Phase-8-Logik bleibt unberührt.* Wir liefern nur manuelle Shortcuts nach und stellen Autostart **falls fehlend** sicher.
-
-**Ergebnis:**
-- `LiveTV (Monitor 2).lnk` auf **Public Desktop** und **C:\Tiptorro\livetv.lnk** (Doppelklick startet LiveTV auf M2)
-- `Torro Maintenance.lnk` auf **Public Desktop**
-- Autostart-Shortcuts nur **anlegen, wenn nicht vorhanden**
-
-> **Rollen-Hinweis:**  
-> **Terminal (Kiosk):** Autostart belassen.  
-> **Kasse (Desktop):** Autostart i. d. R. entfernen (nur manuelle Shortcuts verwenden).
-
-### Umsetzung (idempotent)
-
-```powershell
-# Phase 9 – Shortcuts & Autostart (ergänzend)
-$root   = 'C:\Tiptorro'
-$psExe  = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
-$ws     = New-Object -ComObject WScript.Shell
-$desk   = "$env:PUBLIC\Desktop"
-$startu = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup'
-
-function New-Shortcut($Path, $Target, $Arguments, $Icon=$null){
-  if(Test-Path $Path){ return } # nichts überschreiben
-  $sc = $ws.CreateShortcut($Path)
-  $sc.TargetPath       = $Target
-  $sc.Arguments        = [string]$Arguments
-  $sc.WorkingDirectory = Split-Path $Target
-  if($Icon){ $sc.IconLocation = $Icon }
-  try { $sc.Save() }
-  catch [System.UnauthorizedAccessException] {
-    throw "Zugriff verweigert: $Path  (Konsole als Administrator starten oder Fallback auf User-Desktop nutzen)"
-  }
-}
-
-# Arguments
-$argLiveTV = "-ExecutionPolicy Bypass -File `"$root\scripts\Start-LiveTV.ps1`" -MonitorIndex 2"
-$argShop   = "-ExecutionPolicy Bypass -File `"$root\scripts\Start-ShopKiosk.ps1`" -Mode Kiosk"
-$argMaint  = "-ExecutionPolicy Bypass -File `"$root\scripts\Start-Maintenance.ps1`""
-
-# Manuelle Shortcuts
-New-Shortcut (Join-Path $desk 'LiveTV (Monitor 2).lnk') $psExe $argLiveTV
-New-Shortcut (Join-Path $root 'livetv.lnk')             $psExe $argLiveTV
-New-Shortcut (Join-Path $desk 'Torro Maintenance.lnk')  $psExe $argMaint
-
-# Autostart nur sicherstellen (falls Phase 8 nicht bereits gesetzt hat)
-New-Shortcut (Join-Path $startu 'Torro Shop Kiosk.lnk')   $psExe $argShop
-New-Shortcut (Join-Path $startu 'Torro LiveTV Kiosk.lnk') $psExe $argLiveTV
-$userDesk = Join-Path $env:USERPROFILE 'Desktop'
-New-Shortcut (Join-Path $userDesk 'LiveTV (Monitor 2).lnk') $psExe $argLiveTV
-New-Shortcut (Join-Path $userDesk 'Torro Maintenance.lnk')  $psExe $argMaint
-# später mit Adminrechten kopieren:
-Copy-Item (Join-Path $userDesk 'LiveTV (Monitor 2).lnk') "$env:PUBLIC\Desktop\LiveTV (Monitor 2).lnk" -Force
-Copy-Item (Join-Path $userDesk 'Torro Maintenance.lnk')  "$env:PUBLIC\Desktop\Torro Maintenance.lnk" -Force
-@(
-  "$env:PUBLIC\Desktop\LiveTV (Monitor 2).lnk",
-  "C:\Tiptorro\livetv.lnk",
-  "$env:PUBLIC\Desktop\Torro Maintenance.lnk",
-  "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Torro Shop Kiosk.lnk",
-  "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Torro LiveTV Kiosk.lnk"
-) | ForEach-Object { '{0} : {1}' -f $_, (Test-Path $_) }$startup = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup'
-Get-ChildItem $startup -Filter 'Torro *.lnk' -ErrorAction SilentlyContinue | Remove-Item -Force
-
-## Phase 10 – Diagnose/Repair
-
-**HealthCheck (Beispiele anpassen):**
-
-```powershell
-$log = 'C:\Tiptorro\logs\healthcheck_'+(Get-Date -Format yyyyMMdd_HHmmss)+'.log'
-function Log($m){ "$(Get-Date -Format o) $m" | Tee-Object -FilePath $log -Append }
-Log 'Start HealthCheck'
-# Dienst
-$svc = Get-Service -Name 'DeviceManager.Bootstrapper' -ErrorAction SilentlyContinue
-if($svc -and $svc.Status -ne 'Running'){ Start-Service $svc; Log "Dienst neu gestartet" }
-# Drucker
-Get-Printer | ForEach-Object{ Log "Printer: $($_.Name) / $($_.DriverName)" }
-# Edge-Policies
-if(Test-Path 'HKLM:SOFTWARE\Policies\Microsoft\Edge'){ Log 'Edge Policies vorhanden' } else { Log 'WARN: Edge Policies fehlen' }
-# COM/Seriell (Beispiel)
-Get-CimInstance Win32_SerialPort | ForEach-Object{ Log "COM: $($_.DeviceID) $($_.Name)" }
-Log 'HealthCheck Ende'
-```
-
----
-
-## Phase 11 – Sicherheit
-
-* **Keine Credentials** im Klartext in Logs.
-* **Signaturen prüfen**:
-
-```powershell
-Get-ChildItem C:\Tiptorro\packages -Recurse -Include *.exe,*.msi | ForEach-Object {
-  $sig = Get-AuthenticodeSignature $_
-  if($sig.Status -ne 'Valid'){ Write-Warning "Unsigniert: $($_.FullName)" }
-}
-```
-
-* **Benutzerzugriffe**: Wartungs-Tools ggf. mit PIN schützen.
-
----
-
-## Anhang – Verifikation & Snapshots
-
-**Kernchecks (Schnell):**
-
-```powershell
-# Druck-Nachweis
-Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-PrintService/Operational'; Id=307} -MaxEvents 3 |
-  Select TimeCreated,Message
-
-# Edge-Policies (HKLM)
-Get-ItemProperty 'HKLM:\SOFTWARE\Policies\Microsoft\Edge' |
-  Select HideFirstRunExperience,BrowserSignin,SyncDisabled
-
-# Autostart (.lnk)
-Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup" |
-  Where-Object Name -like 'Torro *.lnk' | Select Name
-
-# LiveTV-Auswahl
-Get-Content 'C:\Tiptorro\state\livetv.selected.json'
-```
-
-**Monitor-Snapshot (für Ticket/Log):**
-
-```powershell
-$logDir='C:\Tiptorro\logs'; New-Item -ItemType Directory -Force $logDir | Out-Null
-Add-Type -AssemblyName System.Windows.Forms
-$i=0
-[System.Windows.Forms.Screen]::AllScreens |
-  ForEach-Object { $i++; "{0}: {1}x{2} @ {3},{4} Primary={5}" -f $i, $_.Bounds.Width,$_.Bounds.Height,$_.Bounds.X,$_.Bounds.Y,$_.Primary } |
-  Out-File (Join-Path $logDir ("monitors_{0:yyyyMMdd_HHmmss}.txt" -f (Get-Date))) -Encoding utf8
-```
-
----
-
-### Troubleshooting (Kurz)
-
-* **Doppelte Tabs im Support** → `C:\ttedge\shop_support` löschen; `Start-ShopKiosk.ps1` erneut starten.
-* **Edge-Popups** → `OneClick-Phase8.ps1 -PolicyScope Machine` erneut ausführen (Admin), Profile `C:\ttedge\*` frisch anlegen.
-* **Monitor 2 fehlt** → Script versucht `/extend`; sonst auf Primär positioniert; Logs prüfen.
-
----
-
-**Maintainer:** Torro Tec – Setup & Management Team
-Bitte **Event 307** (Druck) + **Phase‑8 Snapshot** aus `C:\Tiptorro\logs\` bei Tickets beilegen.
+5) Kiosk & Shop
+
+LiveTV Kiosk startet auf Monitor 2 über Start-LiveTV.ps1 und Edge-Flags.
+
+Shop Kiosk (Terminal): Start-ShopKiosk.ps1 -Mode Kiosk
+
+Shop normal (Kasse): Edge normal öffnen, Auto-Login vom Mitarbeiter.
+
+Autostart (aktuell): per User-Startup-Shortcuts
+
+Torro LiveTV Kiosk.lnk, Torro Shop Kiosk.lnk im %APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
+
+Sched.Task Tiptorro-EdgeTV kann vorhanden sein; im aktuellen Stand ist der Startup-Ordner die bevorzugte Methode.
+
+6) Health & Security
+6.1 HealthCheck
+powershell -NoProfile -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\HealthCheck.ps1" -Verbose
+
+
+Log: C:\Tiptorro\logs\healthcheck_*.log
+
+Status-Ampel im Panel: OK/WARN/ERROR + Zeitpunkt letzter Lauf.
+
+6.2 Audit Signatures
+powershell -NoProfile -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Audit-Signatures.ps1" -Verbose
+
+
+CSV: C:\Tiptorro\logs\audit_signatures_*.csv
+
+Panel zeigt Ampel „Security Audit“ inkl. Gesamtanzahl und „Bad (Bin)“.
+
+7) LiveTV – Auswahl ändern & Neustart-Verhalten
+
+Auswahl wird in C:\Tiptorro\state\livetv.selected.json gespeichert (Name/URL/Zeitstempel).
+
+Ändern per Panel (Kasse-Reiter, Bereich „links.json neu laden / Auswahl speichern“), oder Datei austauschen.
+
+Beim Neustart startet der zweite Monitor direkt im gewählten LiveTV-Link, wenn die Autostart-Links aktiv sind.
+
+Nützliche Befehle:
+
+# Auswahl anzeigen
+Get-Content 'C:\Tiptorro\state\livetv.selected.json' -Raw
+
+# Links-Datei öffnen
+start C:\Tiptorro\links.json
+
+8) TeamViewer (optional, Kasse/Terminal)
+
+Installer: C:\Tiptorro\packages\teamviewer\TeamViewer_Setup.exe (Silent: /S)
+
+Konfiguration: TeamViewer_Settings.reg / teamviewer-standard.reg importieren.
+
+Start-Process "C:\Tiptorro\packages\teamviewer\TeamViewer_Setup.exe" -ArgumentList '/S' -Wait
+reg import "C:\Tiptorro\packages\teamviewer\TeamViewer_Settings.reg"
+
+9) Geldgeräte (Terminal)
+
+Button „Geldgeräte-Assistent (ccTalk)“ im Reiter Terminal.
+
+Intern: C:\Tiptorro\packages\MoneyDevices.ps1 oder packages\cctalk\ccTalk Devices.exe
+
+Typischer Ablauf: Service stoppen → Erkennung → ggf. Reset („moneysystemsettings“ löschen) → Service starten → Geräte im Shop neu konfigurieren.
+
+10) Troubleshooting – Kurzreferenz
+
+A) LiveTV startet nach Neustart nicht
+
+Prüfen: state\livetv.selected.json vorhanden & gültig.
+
+Prüfen: %APPDATA%\...\Startup enthält „Torro LiveTV Kiosk.lnk“.
+
+Test: Start-LiveTV.ps1 -MonitorIndex 2 manuell.
+
+B) Zweiter Monitor erkannt, aber falsche Anzeige
+
+Windows Anzeigeeinstellungen: Monitor 2 = 1920×1080 @ 100 %.
+
+Edge-Fenster ggf. minimiert → per Alt+Tab prüfen.
+
+C) DeviceManager Dienst startet nicht
+
+Als Admin neu installieren (MSI).
+
+Eventlog „Service Control Manager“ sichten.
+
+sc.exe query "DeviceManager.Bootstrapper" prüfen.
+
+D) Star/Hwasung nicht erkannt
+
+printers_forms_*.log lesen (zeigt PnP & Win32-Queues).
+
+pnputil /add-driver "<voller INF-Pfad>" /install erneut ausführen.
+
+Danach Get-PrinterDriver | ? Name -match 'Star|Hwasung'.
+
+E) Panel-Log unten leer
+
+Buttons „Health/Audit jetzt“ ausführen → Ampel aktualisieren.
+
+„Status aktualisieren“ klicken (Timer läuft alle 30 s).
+
+11) Abnahmekriterien
+Terminal
+
+LiveTV-Link gewählt, gespeichert, startet nach Neustart auf Monitor 2.
+
+Shop Kiosk startbar.
+
+DeviceManager-Dienst Running, Autostart = Automatic.
+
+Geldgeräte-Assistent öffnet (ccTalk/MoneyDevices).
+
+Health/Audit im Panel Green oder begründete Yellow.
+
+Kasse
+
+Drucker OneClick hat den vorhandenen (Star/Hwasung) installiert, Standard gesetzt, Testseite gedruckt.
+(Falls nur Epson: interaktiver Installer geöffnet, Installation erfolgreich, Testseite möglich.)
+
+TeamViewer optional eingerichtet (Silent+Reg).
+
+LiveTV ohne Kiosk startbar.
+
+Health/Audit OK.
+
+12) Nützliche Befehle (Copy-Paste)
+# Panel starten (Admin)
+Start-Process powershell.exe -Verb runas -ArgumentList `
+ '-NoProfile -ExecutionPolicy Bypass -File "C:\Tiptorro\scripts\Torro-Panel.ps1"'
+
+# OneClick Phase 8 (Terminal)
+powershell -NoProfile -ExecutionPolicy Bypass `
+ -File "C:\Tiptorro\scripts\OneClick-Phase8.ps1" -PromptLiveTV -SetAutostart -MonitorIndex 2
+
+# LiveTV sofort auf Monitor 2
+powershell -NoProfile -ExecutionPolicy Bypass `
+ -File "C:\Tiptorro\scripts\Start-LiveTV.ps1" -MonitorIndex 2
+
+# DeviceManager Dienst
+Get-Service DeviceManager.Bootstrapper | fl Name,Status,StartType
+sc.exe start "DeviceManager.Bootstrapper"
+sc.exe stop  "DeviceManager.Bootstrapper"
+
+# Drucker OneClick
+powershell -NoProfile -ExecutionPolicy Bypass `
+ -File "C:\Tiptorro\scripts\Printers_Forms.ps1" -Action OneClick `
+ -StarInf "C:\Tiptorro\packages\printers\star\smjt100.inf" `
+ -StarDriverName "Star TSP100 Cutter (TSP143)" `
+ -HwasungInf "C:\Tiptorro\packages\printers\hwasung\HWASUNG_64bit_v400.INF" `
+ -HwasungDriverName "HWASUNG HMK-072" -Verbose
+
+13) Struktur & Pfade (Kurz)
+C:\Tiptorro\
+  scripts\
+    Torro-Panel.ps1
+    OneClick-Phase8.ps1
+    Start-LiveTV.ps1
+    Start-ShopKiosk.ps1
+    Start-Maintenance*.ps1
+    Printers_Forms.ps1
+    HealthCheck.ps1
+    Audit-Signatures.ps1
+    ...
+  packages\
+    device-manager\*.msi|setup.exe
+    printers\
+      star\ (smjt100.inf + DLLs)
+      hwasung\ (INF + CAT)
+      epson\installer\*.exe
+    teamviewer\*.exe|*.reg
+    cctalk\*.exe
+    desko\*.exe
+    datawin\*.exe
+  logs\ *.log / *.csv
+  state\ livetv.selected.json
+  links.json  (oder Symlink -> packages\LiveTvLinks\links.json)
+
+14) Bekannte Punkte & Empfehlungen
+
+Star-Treiber (pnputil): Meldung „Datei nicht gefunden“ kann sporadisch auftreten; bei erneutem Aufruf i. d. R. erfolgreich. Danach ist oemXX.inf sichtbar.
+
+Edge First-Run: via bereitgestellter Policies unterdrückt; Popups/Assistenten sind im Normalfall weg.
+
+Autostart-Methode: Startup-Ordner (derzeit bevorzugt) ist durchschaubar und leicht prüfbar.
+
+Admin-Kontext sicherstellen: Panel/OneClick/Driver-Install immer „Als Administrator“.
+
+Ende Playbook.
 

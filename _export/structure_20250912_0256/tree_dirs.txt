@@ -1,0 +1,32 @@
+﻿Auflistung der Ordnerpfade f³r Volume Windows-SSD
+Volumeseriennummer : EC97-D9CF
+C:\TIPTORRO
++---docs
+|   \---handover
++---logs
++---packages
+|   +---cctalk
+|   +---device-manager
+|   +---LiveTvLinks
+|   +---printers
+|   |   +---epson
+|   |   |   +---driver
+|   |   |   |   +---Tm-T 88V
+|   |   |   |   \---Tm-T88IV
+|   |   |   \---installer
+|   |   +---hwasung
+|   |   \---star
+|   \---teamviewer
++---policies
++---profiles
++---scripts
++---shortcuts
++---state
++---_backup
+|   +---pre_reset_20250912_0200
+|   \---pre_reset_20250912_0201
+\---_export
+    +---20250912_0217
+    +---20250912_0219
+    +---structure_20250912_0254
+    \---structure_20250912_0256

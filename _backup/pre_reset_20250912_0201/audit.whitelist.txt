@@ -1,0 +1,3 @@
+﻿# Kommentare erlaubt. Wildcards (*) möglich.
+C:\Tiptorro\docs\*
+C:\Tiptorro\logs\*

@@ -1,0 +1,599 @@
+﻿Auflistung der Ordnerpfade f³r Volume Windows-SSD
+Volumeseriennummer : EC97-D9CF
+C:\TIPTORRO
+|   .gitattributes
+|   .gitignore
+|   CHANGELOG.md
+|   CHANGELOG.md.bak
+|   links.json
+|   LiveTv.txt
+|   README.md
+|   README.md.bak
+|   START-HERE.md
+|   torro_core_20250912_0219.zip
+|   torro_packages_20250912_0219.zip
+|   
++---docs
+|   |   CHANGELOG.md
+|   |   handover-template.md
+|   |   ops-playbook.md
+|   |   ops-playbook.md.bak
+|   |   
+|   \---handover
+|           torro-handover-bundle_2025-09-10.zip
+|           
++---logs
+|       audit_signatures_20250912_020243.csv
+|       audit_signatures_20250912_020243.log
+|       healthcheck_20250912_020240.log
+|       printers_forms_OneClick_20250912_020513.log
+|       reset_20250912_0200.log
+|       reset_20250912_0201.log
+|       
++---packages
+|   |   MoneyDevices.ps1
+|   |   
+|   +---cctalk
+|   |       ccDLL_Test.exe
+|   |       ccTalk Devices.exe
+|   |       CcTalkCommLib.dll
+|   |       ccTalkTest.exe
+|   |       clog.log
+|   |       settings.ini
+|   |       
+|   +---device-manager
+|   |       DeviceManager.Host.exe
+|   |       devicemanager.InstallInfo.txt
+|   |       DeviceManager.Service.Setup.msi
+|   |       DMHCommon.dll
+|   |       setup.exe
+|   |       
+|   +---LiveTvLinks
+|   |       links.json
+|   |       
+|   +---printers
+|   |   +---epson
+|   |   |   +---driver
+|   |   |   |   +---Tm-T 88V
+|   |   |   |   |       EA5Bcd0.dl_
+|   |   |   |   |       EA5BcdR0.dl_
+|   |   |   |   |       EA5EpucInst.ex_
+|   |   |   |   |       ea5instmt88v.cat
+|   |   |   |   |       EA5INSTMT88V.INF
+|   |   |   |   |       EA5LMTM.DL_
+|   |   |   |   |       EA5LMTMT88V.dat
+|   |   |   |   |       EA5MDLTMT88V.GP_
+|   |   |   |   |       EA5PIITMT88V.IN_
+|   |   |   |   |       EA5RDPTM.DL_
+|   |   |   |   |       EA5RESTMT88V.DL_
+|   |   |   |   |       EA5UIPTM.DL_
+|   |   |   |   |       
+|   |   |   |   \---Tm-T88IV
+|   |   |   |           APD4PrinterDriver.ini
+|   |   |   |           EAPBcd0.dll
+|   |   |   |           EAPBcdR0.dll
+|   |   |   |           EAPctled.exe
+|   |   |   |           EAPCtled0e.chm
+|   |   |   |           EAPCtled0j.chm
+|   |   |   |           EAPd027e.DAT
+|   |   |   |           EAPd037e.DAT
+|   |   |   |           EAPd057e.DAT
+|   |   |   |           EAPd067e.DAT
+|   |   |   |           EAPd077e.DAT
+|   |   |   |           EAPd087e.DAT
+|   |   |   |           EAPd127e.DAT
+|   |   |   |           EAPd137e.DAT
+|   |   |   |           EAPd217e.DAT
+|   |   |   |           EAPd217j.DAT
+|   |   |   |           EAPd217s.DAT
+|   |   |   |           EAPd217t.DAT
+|   |   |   |           EAPd227e.DAT
+|   |   |   |           EAPd237e.DAT
+|   |   |   |           EAPd257e.DAT
+|   |   |   |           EAPd267e.DAT
+|   |   |   |           EAPd347e.DAT
+|   |   |   |           EAPd357e.DAT
+|   |   |   |           EAPd387e.DAT
+|   |   |   |           EAPd397e.DAT
+|   |   |   |           EAPd3b7e.DAT
+|   |   |   |           EAPd3C7e.DAT
+|   |   |   |           EAPd3d7e.DAT
+|   |   |   |           EAPd3d7j.DAT
+|   |   |   |           EAPd3d7s.DAT
+|   |   |   |           EAPd3d7sa.DAT
+|   |   |   |           EAPd3d7t.DAT
+|   |   |   |           EAPd3e7e.DAT
+|   |   |   |           EAPd3e7j.DAT
+|   |   |   |           EAPd427e.DAT
+|   |   |   |           EAPd437e.DAT
+|   |   |   |           EAPd447e.DAT
+|   |   |   |           EAPd457e.DAT
+|   |   |   |           EAPd467e.DAT
+|   |   |   |           EAPd477e.DAT
+|   |   |   |           EAPd487e.DAT
+|   |   |   |           EAPd497e.DAT
+|   |   |   |           EAPd4a7e.DAT
+|   |   |   |           EAPd4C7e.DAT
+|   |   |   |           EAPd4d7e.dat
+|   |   |   |           EAPd637e.DAT
+|   |   |   |           EAPd647e.DAT
+|   |   |   |           EAPd647j.DAT
+|   |   |   |           EAPd647s.DAT
+|   |   |   |           EAPd647t.DAT
+|   |   |   |           EAPd717e.DAT
+|   |   |   |           EAPd727e.DAT
+|   |   |   |           EAPd737e.DAT
+|   |   |   |           EAPd747e.DAT
+|   |   |   |           EAPd747j.DAT
+|   |   |   |           EAPd817e.DAT
+|   |   |   |           EAPd837e.DAT
+|   |   |   |           EAPd857e.DAT
+|   |   |   |           EAPd917e.DAT
+|   |   |   |           EAPdA07e.DAT
+|   |   |   |           EAPdA17e.DAT
+|   |   |   |           EAPdA17j.DAT
+|   |   |   |           EAPdAB7e.DAT
+|   |   |   |           EAPdmsg0.exe
+|   |   |   |           EAPDMSG00.EXE
+|   |   |   |           EAPdpc0.DLL
+|   |   |   |           EAPDRV03X.CFG
+|   |   |   |           EAPDRV03X.DAT
+|   |   |   |           EAPDRV03X.VIF
+|   |   |   |           EAPDSP03X.DLL
+|   |   |   |           EAPHLP0.chm
+|   |   |   |           EAPHLP0CSYEndorse.chm
+|   |   |   |           EAPHLP0CSYImpact.chm
+|   |   |   |           EAPHLP0CSYInk.chm
+|   |   |   |           EAPHLP0CSYLabel.chm
+|   |   |   |           EAPHLP0CSYSlip.chm
+|   |   |   |           EAPHLP0CSYSlipRotate.chm
+|   |   |   |           EAPHLP0CSYThermal.chm
+|   |   |   |           EAPHLP0CSYValidation.chm
+|   |   |   |           EAPHLP0DANEndorse.chm
+|   |   |   |           EAPHLP0DANImpact.chm
+|   |   |   |           EAPHLP0DANInk.chm
+|   |   |   |           EAPHLP0DANLabel.chm
+|   |   |   |           EAPHLP0DANSlip.chm
+|   |   |   |           EAPHLP0DANSlipRotate.chm
+|   |   |   |           EAPHLP0DANThermal.chm
+|   |   |   |           EAPHLP0DANValidation.chm
+|   |   |   |           EAPHLP0DEUEndorse.chm
+|   |   |   |           EAPHLP0DEUImpact.chm
+|   |   |   |           EAPHLP0DEUInk.chm
+|   |   |   |           EAPHLP0DEULabel.chm
+|   |   |   |           EAPHLP0DEUSlip.chm
+|   |   |   |           EAPHLP0DEUSlipRotate.chm
+|   |   |   |           EAPHLP0DEUThermal.chm
+|   |   |   |           EAPHLP0DEUValidation.chm
+|   |   |   |           EAPHLP0EEndorse.chm
+|   |   |   |           EAPHLP0EImpact.chm
+|   |   |   |           EAPHLP0EInk.chm
+|   |   |   |           EAPHLP0ELabel.chm
+|   |   |   |           EAPHLP0ESFEndorse.chm
+|   |   |   |           EAPHLP0ESFImpact.chm
+|   |   |   |           EAPHLP0ESFInk.chm
+|   |   |   |           EAPHLP0ESFLabel.chm
+|   |   |   |           EAPHLP0ESFSlip.chm
+|   |   |   |           EAPHLP0ESFSlipRotate.chm
+|   |   |   |           EAPHLP0ESFThermal.chm
+|   |   |   |           EAPHLP0ESFValidation.chm
+|   |   |   |           EAPHLP0ESlip.chm
+|   |   |   |           EAPHLP0ESlipRotate.chm
+|   |   |   |           EAPHLP0EThermal.chm
+|   |   |   |           EAPHLP0EValidation.chm
+|   |   |   |           EAPHLP0FINEndorse.chm
+|   |   |   |           EAPHLP0FINImpact.chm
+|   |   |   |           EAPHLP0FINInk.chm
+|   |   |   |           EAPHLP0FINLabel.chm
+|   |   |   |           EAPHLP0FINSlip.chm
+|   |   |   |           EAPHLP0FINSlipRotate.chm
+|   |   |   |           EAPHLP0FINThermal.chm
+|   |   |   |           EAPHLP0FINValidation.chm
+|   |   |   |           EAPHLP0FRAEndorse.chm
+|   |   |   |           EAPHLP0FRAImpact.chm
+|   |   |   |           EAPHLP0FRAInk.chm
+|   |   |   |           EAPHLP0FRALabel.chm
+|   |   |   |           EAPHLP0FRASlip.chm
+|   |   |   |           EAPHLP0FRASlipRotate.chm
+|   |   |   |           EAPHLP0FRAThermal.chm
+|   |   |   |           EAPHLP0FRAValidation.chm
+|   |   |   |           EAPHLP0HRVEndorse.chm
+|   |   |   |           EAPHLP0HRVImpact.chm
+|   |   |   |           EAPHLP0HRVInk.chm
+|   |   |   |           EAPHLP0HRVLabel.chm
+|   |   |   |           EAPHLP0HRVSlip.chm
+|   |   |   |           EAPHLP0HRVSlipRotate.chm
+|   |   |   |           EAPHLP0HRVThermal.chm
+|   |   |   |           EAPHLP0HRVValidation.chm
+|   |   |   |           EAPHLP0HUNEndorse.chm
+|   |   |   |           EAPHLP0HUNImpact.chm
+|   |   |   |           EAPHLP0HUNInk.chm
+|   |   |   |           EAPHLP0HUNLabel.chm
+|   |   |   |           EAPHLP0HUNSlip.chm
+|   |   |   |           EAPHLP0HUNSlipRotate.chm
+|   |   |   |           EAPHLP0HUNThermal.chm
+|   |   |   |           EAPHLP0HUNValidation.chm
+|   |   |   |           EAPHLP0ITAEndorse.chm
+|   |   |   |           EAPHLP0ITAImpact.chm
+|   |   |   |           EAPHLP0ITAInk.chm
+|   |   |   |           EAPHLP0ITALabel.chm
+|   |   |   |           EAPHLP0ITASlip.chm
+|   |   |   |           EAPHLP0ITASlipRotate.chm
+|   |   |   |           EAPHLP0ITAThermal.chm
+|   |   |   |           EAPHLP0ITAValidation.chm
+|   |   |   |           EAPHLP0JEndorse.chm
+|   |   |   |           EAPHLP0JImpact.chm
+|   |   |   |           EAPHLP0JInk.chm
+|   |   |   |           EAPHLP0JLabel.chm
+|   |   |   |           EAPHLP0JSlip.chm
+|   |   |   |           EAPHLP0JSlipRotate.chm
+|   |   |   |           EAPHLP0JThermal.chm
+|   |   |   |           EAPHLP0JValidation.chm
+|   |   |   |           EAPHLP0KOREndorse.chm
+|   |   |   |           EAPHLP0KORImpact.chm
+|   |   |   |           EAPHLP0KORInk.chm
+|   |   |   |           EAPHLP0KORLabel.chm
+|   |   |   |           EAPHLP0KORSlip.chm
+|   |   |   |           EAPHLP0KORSlipRotate.chm
+|   |   |   |           EAPHLP0KORThermal.chm
+|   |   |   |           EAPHLP0KORValidation.chm
+|   |   |   |           EAPHLP0NLDEndorse.chm
+|   |   |   |           EAPHLP0NLDImpact.chm
+|   |   |   |           EAPHLP0NLDInk.chm
+|   |   |   |           EAPHLP0NLDLabel.chm
+|   |   |   |           EAPHLP0NLDSlip.chm
+|   |   |   |           EAPHLP0NLDSlipRotate.chm
+|   |   |   |           EAPHLP0NLDThermal.chm
+|   |   |   |           EAPHLP0NLDValidation.chm
+|   |   |   |           EAPHLP0NONEndorse.chm
+|   |   |   |           EAPHLP0NONImpact.chm
+|   |   |   |           EAPHLP0NONInk.chm
+|   |   |   |           EAPHLP0NONLabel.chm
+|   |   |   |           EAPHLP0NONSlip.chm
+|   |   |   |           EAPHLP0NONSlipRotate.chm
+|   |   |   |           EAPHLP0NONThermal.chm
+|   |   |   |           EAPHLP0NONValidation.chm
+|   |   |   |           EAPHLP0PTGEndorse.chm
+|   |   |   |           EAPHLP0PTGImpact.chm
+|   |   |   |           EAPHLP0PTGInk.chm
+|   |   |   |           EAPHLP0PTGLabel.chm
+|   |   |   |           EAPHLP0PTGSlip.chm
+|   |   |   |           EAPHLP0PTGSlipRotate.chm
+|   |   |   |           EAPHLP0PTGThermal.chm
+|   |   |   |           EAPHLP0PTGValidation.chm
+|   |   |   |           EAPHLP0RUSEndorse.chm
+|   |   |   |           EAPHLP0RUSImpact.chm
+|   |   |   |           EAPHLP0RUSInk.chm
+|   |   |   |           EAPHLP0RUSLabel.chm
+|   |   |   |           EAPHLP0RUSSlip.chm
+|   |   |   |           EAPHLP0RUSSlipRotate.chm
+|   |   |   |           EAPHLP0RUSThermal.chm
+|   |   |   |           EAPHLP0RUSValidation.chm
+|   |   |   |           EAPHLP0SCEndorse.chm
+|   |   |   |           EAPHLP0SCImpact.chm
+|   |   |   |           EAPHLP0SCInk.chm
+|   |   |   |           EAPHLP0SCLabel.chm
+|   |   |   |           EAPHLP0SCSlip.chm
+|   |   |   |           EAPHLP0SCSlipRotate.chm
+|   |   |   |           EAPHLP0SCThermal.chm
+|   |   |   |           EAPHLP0SCValidation.chm
+|   |   |   |           EAPHLP0SLVEndorse.chm
+|   |   |   |           EAPHLP0SLVImpact.chm
+|   |   |   |           EAPHLP0SLVInk.chm
+|   |   |   |           EAPHLP0SLVLabel.chm
+|   |   |   |           EAPHLP0SLVSlip.chm
+|   |   |   |           EAPHLP0SLVSlipRotate.chm
+|   |   |   |           EAPHLP0SLVThermal.chm
+|   |   |   |           EAPHLP0SLVValidation.chm
+|   |   |   |           EAPHLP0SVEEndorse.chm
+|   |   |   |           EAPHLP0SVEImpact.chm
+|   |   |   |           EAPHLP0SVEInk.chm
+|   |   |   |           EAPHLP0SVELabel.chm
+|   |   |   |           EAPHLP0SVESlip.chm
+|   |   |   |           EAPHLP0SVESlipRotate.chm
+|   |   |   |           EAPHLP0SVEThermal.chm
+|   |   |   |           EAPHLP0SVEValidation.chm
+|   |   |   |           EAPHLP0TCEndorse.chm
+|   |   |   |           EAPHLP0TCImpact.chm
+|   |   |   |           EAPHLP0TCInk.chm
+|   |   |   |           EAPHLP0TCLabel.chm
+|   |   |   |           EAPHLP0TCSlip.chm
+|   |   |   |           EAPHLP0TCSlipRotate.chm
+|   |   |   |           EAPHLP0TCThermal.chm
+|   |   |   |           EAPHLP0TCValidation.chm
+|   |   |   |           EAPHLP0THAEndorse.chm
+|   |   |   |           EAPHLP0THAImpact.chm
+|   |   |   |           EAPHLP0THAInk.chm
+|   |   |   |           EAPHLP0THALabel.chm
+|   |   |   |           EAPHLP0THASlip.chm
+|   |   |   |           EAPHLP0THASlipRotate.chm
+|   |   |   |           EAPHLP0THAThermal.chm
+|   |   |   |           EAPHLP0THAValidation.chm
+|   |   |   |           EAPHLP0TRKEndorse.chm
+|   |   |   |           EAPHLP0TRKImpact.chm
+|   |   |   |           EAPHLP0TRKInk.chm
+|   |   |   |           EAPHLP0TRKLabel.chm
+|   |   |   |           EAPHLP0TRKSlip.chm
+|   |   |   |           EAPHLP0TRKSlipRotate.chm
+|   |   |   |           EAPHLP0TRKThermal.chm
+|   |   |   |           EAPHLP0TRKValidation.chm
+|   |   |   |           EAPHLP0VITEndorse.chm
+|   |   |   |           EAPHLP0VITImpact.chm
+|   |   |   |           EAPHLP0VITInk.chm
+|   |   |   |           EAPHLP0VITLabel.chm
+|   |   |   |           EAPHLP0VITSlip.chm
+|   |   |   |           EAPHLP0VITSlipRotate.chm
+|   |   |   |           EAPHLP0VITThermal.chm
+|   |   |   |           EAPHLP0VITValidation.chm
+|   |   |   |           EAPHLP0ZHHEndorse.chm
+|   |   |   |           EAPHLP0ZHHImpact.chm
+|   |   |   |           EAPHLP0ZHHInk.chm
+|   |   |   |           EAPHLP0ZHHLabel.chm
+|   |   |   |           EAPHLP0ZHHSlip.chm
+|   |   |   |           EAPHLP0ZHHSlipRotate.chm
+|   |   |   |           EAPHLP0ZHHThermal.chm
+|   |   |   |           EAPHLP0ZHHValidation.chm
+|   |   |   |           EAPHT0001.DLL
+|   |   |   |           EAPHT1BP.dll
+|   |   |   |           EAPHT4BP.dll
+|   |   |   |           EAPimc0.DLL
+|   |   |   |           EAPIMGPRC.DLL
+|   |   |   |           EAPIMMD02.DLL
+|   |   |   |           EAPINKVOL.DLL
+|   |   |   |           EAPIPGI10.DLL
+|   |   |   |           EAPjnl7.dll
+|   |   |   |           EAPJOB03X.DLL
+|   |   |   |           EAPMAI03X.DLL
+|   |   |   |           EAPMW0001.DLL
+|   |   |   |           EAPPntPrt.dll
+|   |   |   |           EAPPPE03X.EXE
+|   |   |   |           EAPPUI03X.DLL
+|   |   |   |           EAPR027e.dll
+|   |   |   |           EAPR037e.dll
+|   |   |   |           EAPR057e.dll
+|   |   |   |           EAPR067e.dll
+|   |   |   |           EAPR077e.dll
+|   |   |   |           EAPR087e.dll
+|   |   |   |           EAPR127e.dll
+|   |   |   |           EAPR137e.dll
+|   |   |   |           EAPR217e.dll
+|   |   |   |           EAPR217j.dll
+|   |   |   |           EAPR217s.dll
+|   |   |   |           EAPR217t.dll
+|   |   |   |           EAPR227e.dll
+|   |   |   |           EAPR237e.dll
+|   |   |   |           EAPR257e.dll
+|   |   |   |           EAPR267e.dll
+|   |   |   |           EAPR347e.dll
+|   |   |   |           EAPR357e.dll
+|   |   |   |           EAPr387e.dll
+|   |   |   |           EAPR397E.dll
+|   |   |   |           EAPR3b7e.dll
+|   |   |   |           EAPR3C7e.dll
+|   |   |   |           EAPR3d7e.dll
+|   |   |   |           EAPR3d7j.dll
+|   |   |   |           EAPR3d7s.dll
+|   |   |   |           EAPR3d7sa.dll
+|   |   |   |           EAPR3d7t.dll
+|   |   |   |           EAPR3e7e.dll
+|   |   |   |           EAPR3e7j.dll
+|   |   |   |           EAPR427e.dll
+|   |   |   |           EAPR437e.dll
+|   |   |   |           EAPR447E.dll
+|   |   |   |           EAPR457e.dll
+|   |   |   |           EAPR467e.dll
+|   |   |   |           EAPR477e.dll
+|   |   |   |           EAPR487e.dll
+|   |   |   |           EAPR497e.dll
+|   |   |   |           EAPR4a7e.dll
+|   |   |   |           EAPR4C7e.dll
+|   |   |   |           EAPR4d7e.dll
+|   |   |   |           EAPR637e.dll
+|   |   |   |           EAPR647e.dll
+|   |   |   |           EAPR647j.dll
+|   |   |   |           EAPR647s.dll
+|   |   |   |           EAPR647t.dll
+|   |   |   |           EAPR717e.dll
+|   |   |   |           EAPR727e.dll
+|   |   |   |           EAPR737e.dll
+|   |   |   |           EAPr747e.dll
+|   |   |   |           EAPr747j.dll
+|   |   |   |           EAPR817e.dll
+|   |   |   |           EAPR837e.dll
+|   |   |   |           EAPR857e.dll
+|   |   |   |           EAPr917e.DLL
+|   |   |   |           EAPRA07e.dll
+|   |   |   |           EAPRA17e.dll
+|   |   |   |           EAPrA17j.dll
+|   |   |   |           EAPRab7e.dll
+|   |   |   |           EAPRC0001.DLL
+|   |   |   |           EAPRC0002.DLL
+|   |   |   |           EAPSEST32.DLL
+|   |   |   |           EAPThai3Path.dll
+|   |   |   |           EAPuif7.dll
+|   |   |   |           EAPUIM03X.DLL
+|   |   |   |           EAPUir0.dll
+|   |   |   |           EAPUIR03E.DLL
+|   |   |   |           EAPUIR03J.DLL
+|   |   |   |           EAPurc0.DLL
+|   |   |   |           EAPurn0.dll
+|   |   |   |           EAPUTY03X.DLL
+|   |   |   |           EAP_Package.ini
+|   |   |   |           Epset32.dll
+|   |   |   |           
+|   |   |   \---installer
+|   |   |           APD_459aE.exe
+|   |   |           APD_513_T88V.exe
+|   |   |           
+|   |   +---hwasung
+|   |   |       HMK-054.GPD
+|   |   |       HMK-056.GPD
+|   |   |       HMK-060.GPD
+|   |   |       HMK-072.GPD
+|   |   |       HMK-080.GPD
+|   |   |       HMK-081.GPD
+|   |   |       HMK-825.GPD
+|   |   |       HMK-830_200.GPD
+|   |   |       HMK-830_300.GPD
+|   |   |       HmW2k.dll
+|   |   |       HP-058.GPD
+|   |   |       HP-083.GPD
+|   |   |       HP-283.GPD
+|   |   |       HP-380.GPD
+|   |   |       HPP-250.GPD
+|   |   |       HWASUNG Printer Driver Installer.exe
+|   |   |       hwasung202109.cat
+|   |   |       hwasung202204.cat
+|   |   |       HWASUNG_32bit_v400.INF
+|   |   |       HWASUNG_64bit_v400.INF
+|   |   |       JW-1660.GPD
+|   |   |       uninst.exe
+|   |   |       
+|   |   \---star
+|   |           CommandEmulator.dll
+|   |           Configuration.dll
+|   |           GenericAction.dll
+|   |           Setup.exe
+|   |           setup_x64.exe
+|   |           setup_x86.exe
+|   |           SMJLMHOST.dll
+|   |           smjt100.cat
+|   |           smjt100.inf
+|   |           smjt100.ini
+|   |           smjt100epm.dll
+|   |           smjt100epmrc.dll
+|   |           smjt100epmui.dll
+|   |           smjt100res.dll
+|   |           smjt100res.gpd
+|   |           smjt100ui.dll
+|   |           smjt113.gpd
+|   |           smjt143.gpd
+|   |           StarLineModeSE.dll
+|   |           StarTSPTC.dll
+|   |           TargetAction.dll
+|   |           TSP100BLM.dll
+|   |           TSP100BLMIF.dll
+|   |           TSP100ELM.dll
+|   |           TSP100ELMIF.dll
+|   |           TSP100LM.dll
+|   |           TSP100LMIF.dll
+|   |           xerces-c_2_8.dll
+|   |           
+|   \---teamviewer
+|           TeamViewer_Settings.reg
+|           TeamViewer_Setup.exe
+|           
++---policies
+|       teamviewer-standard.reg
+|       TeamViewer_Settings.reg
+|       
++---profiles
++---scripts
+|       Apply-EdgePolicies.ps1
+|       Audit-Signatures.ps1
+|       Build-Handover.ps1
+|       Create-LiveTV-Shortcut.ps1
+|       DeviceManager.ps1
+|       HealthCheck.ps1
+|       LiveTV-SetLink.ps1
+|       OneClick-Phase8.ps1
+|       Printers_Forms.ps1
+|       Reset-TorroEnv.ps1
+|       Scan-PrinterPackages.ps1
+|       Setup-TeamViewer.ps1
+|       Start-LiveTV.ps1
+|       Start-Maintenance.ps1
+|       Start-ShopKiosk.ps1
+|       Torro-Panel.ps1
+|       Verify-Phase7-8.ps1
+|       
++---shortcuts
++---state
+|       livetv.selected.json
+|       
++---_backup
+|   +---pre_reset_20250912_0200
+|   \---pre_reset_20250912_0201
+|           assigned_access_events.txt
+|           audit.whitelist.txt
+|           audit_signatures_20250912_011116.csv
+|           audit_signatures_20250912_011116.log
+|           audit_signatures_20250912_011508.csv
+|           audit_signatures_20250912_011508.log
+|           audit_signatures_20250912_011720.csv
+|           audit_signatures_20250912_011720.log
+|           audit_signatures_20250912_012132.csv
+|           audit_signatures_20250912_012132.log
+|           audit_signatures_20250912_014725.csv
+|           audit_signatures_20250912_014725.log
+|           audit_signatures_20250912_014756.csv
+|           audit_signatures_20250912_014756.log
+|           CHANGELOG.md
+|           devicemanager_FirstRun_20250910_021744.log
+|           devicemanager_HealthCheck_20250910_022745.log
+|           devicemanager_HealthCheck_20250910_023522.log
+|           devicemanager_Install_20250910_023520.log
+|           devicemanager_Start_20250910_023534.log
+|           devicemanager_Status_20250910_021635.log
+|           devicemanager_Status_20250910_022246.log
+|           devicemanager_Status_20250910_022507.log
+|           devicemanager_Stop_20250910_023534.log
+|           edge-policies.reg
+|           edge-procs_20250911_205108.txt
+|           healthcheck_20250912_004706.log
+|           healthcheck_20250912_004807.log
+|           healthcheck_20250912_005547.log
+|           healthcheck_20250912_014706.log
+|           healthcheck_20250912_014743.log
+|           livetv.selected.json
+|           monitors_20250911_205240.txt
+|           monitors_20250911_221608.txt
+|           ops-playbook.md
+|           phase4-5_printers_snapshot.txt
+|           phase8_20250912_014508.txt
+|           printers_after.csv
+|           printers_before.csv
+|           printers_forms_AddForms_20250910_131940.log
+|           printers_forms_AddForms_20250910_132121.log
+|           printers_forms_Detect_20250910_122211.log
+|           printers_forms_Detect_20250910_131931.log
+|           printers_forms_Install_20250910_132141.log
+|           printers_forms_OneClick_20250911_044432.log
+|           printers_forms_OneClick_20250911_045859.log
+|           printers_forms_SavePrefs_20250910_132633.log
+|           printers_forms_TestASCII_20250910_132143.log
+|           printers_forms_TestASCII_20250910_132540.log
+|           printer_package_scan_20250910_130544.csv
+|           printer_package_scan_20250910_130544.log
+|           printer_package_scan_summary_20250910_130544.txt
+|           README.md
+|           reset_20250912_0200.log
+|           reset_20250912_0201.log
+|           services_after.csv
+|           services_before.csv
+|           teamviewer_id.log
+|           teamviewer_setup_20250910_013630.log
+|           teamviewer_setup_20250910_015633.log
+|           
+\---_export
+    +---20250912_0217
+    |       edge-policies.reg
+    |       manifest_basic.csv
+    |       manifest_hashes.csv
+    |       os.csv
+    |       printers.csv
+    |       services.csv
+    |       
+    +---20250912_0219
+    |       edge-policies.reg
+    |       manifest_basic.csv
+    |       manifest_hashes.csv
+    |       os.csv
+    |       printers.csv
+    |       services.csv
+    |       
+    \---structure_20250912_0254
+            tree_dirs.txt
+            tree_full.txt
+            
+

@@ -1,0 +1,22 @@
+﻿=== Phase8 Snapshot ===
+PolicyBase: HKLM:\SOFTWARE\Policies\Microsoft\Edge
+--- Policies ---
+
+
+HideFirstRunExperience      : 1
+BrowserSignin               : 0
+SyncDisabled                : 1
+DefaultNotificationsSetting : 2
+DefaultGeolocationSetting   : 2
+PasswordManagerEnabled      : 0
+AutofillAddressEnabled      : 0
+AutofillCreditCardEnabled   : 0
+PromotionalTabsEnabled      : 0
+RestoreOnStartup            : 0
+
+
+
+
+--- Monitors ---
+1: 1920x1080 @ 0,0 Primary=True
+2: 1920x1080 @ 1920,0 Primary=False

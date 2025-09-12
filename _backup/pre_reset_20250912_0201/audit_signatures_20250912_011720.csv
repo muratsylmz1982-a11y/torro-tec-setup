@@ -1,0 +1,145 @@
+﻿"Path","Name","Ext","SizeBytes","SHA256","SignStatus","Signer","NotAfter"
+"C:\Tiptorro\packages\cctalk\CcTalkCommLib.dll","CcTalkCommLib.dll",".dll","86016","EC5BA1101049FF2F4470D34F68637B762B3541AF5CAEB6D6202B68E21EA66966","NotSigned",,
+"C:\Tiptorro\packages\printers\star\CommandEmulator.dll","CommandEmulator.dll",".dll","164712","409BA46536F006C35C09730B366BDDDFFBBC8EAD267836A5622EC6396CE1077E","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\Configuration.dll","Configuration.dll",".dll","434512","41ED51F912584FF1CE0CB6C206E96954599842A0709BE732979BDE6BF3DB522C","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\device-manager\DMHCommon.dll","DMHCommon.dll",".dll","50688","9BFD2A3B9CC753BCD4C44FE0C7933A82680437243A8F2B8A54CF0729BAF276DA","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPBcd0.dll","EAPBcd0.dll",".dll","276480","475B7DFE59285E22A5CC9929FA18BB05357B25D6E95012E732CF32F9BC8AF79E","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPBcdR0.dll","EAPBcdR0.dll",".dll","18944","E5AAEA8C5C61752078145AEB474D6A9BBB0D0975C78E181E911D7DC8242A3F18","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPdpc0.DLL","EAPdpc0.DLL",".DLL","270848","B0F4433D601F23B312D1B89CE83F8B207EDC9F58AAF3DEFEF0558E20FE18A40C","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPDSP03X.DLL","EAPDSP03X.DLL",".DLL","68608","D89B9513684C2F80F21CD4459BF6CB935FE74AFE6C4C3436ACA14BD6BB602E67","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPHT0001.DLL","EAPHT0001.DLL",".DLL","82432","20CCB46A87DC64428521B52F23FD9803B249C30282F63E1374F0F083B536BE88","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPHT1BP.dll","EAPHT1BP.dll",".dll","59904","EEABA794A2C0CA7D8BB9FEF385E490BB5142E2BC39EDD084226F4594FF6803EE","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPHT4BP.dll","EAPHT4BP.dll",".dll","48640","9E4806920895524F6322B977961F953C3184218B0FFB3B1B21C065B2029F0DB2","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPimc0.DLL","EAPimc0.DLL",".DLL","438272","6E3DF850D2E9E0EA24981666D004891C8AE5279A4802D6413E03601CBF9C6EC4","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPIMGPRC.DLL","EAPIMGPRC.DLL",".DLL","52736","22AEEE3B7CA1C3CA1AEA38C546B24AAB9B1A4955252D773E442C4D9D283A1038","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPIMMD02.DLL","EAPIMMD02.DLL",".DLL","390144","754C37BC9579039EB4A3D36FFAE81F935875DE5315300B0B1FE70FE759D3CD94","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPINKVOL.DLL","EAPINKVOL.DLL",".DLL","12288","7E72F1B2996EBAEA720D6F638447B444B1017F560AC425CAA63E1BB3C941A6A8","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPIPGI10.DLL","EAPIPGI10.DLL",".DLL","52224","3534651DF6AD990E4311EF49054C6915BF1AFC01EA825522A2FC0C422C4701B3","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPjnl7.dll","EAPjnl7.dll",".dll","515584","A26E24D76C576E7B65FE1EA26C6B020129DEB2B7020E17BA0771BB6EFAB0C2D9","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPJOB03X.DLL","EAPJOB03X.DLL",".DLL","343040","9DDBF1C85BE737CF00EC077FA51F164E07E15F6915071A381AC1DE5A20E006CE","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPMAI03X.DLL","EAPMAI03X.DLL",".DLL","113152","52A7A7731F545AE612366665ED300BDE78243C3B661FDFC66A849F3766328DC0","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPMW0001.DLL","EAPMW0001.DLL",".DLL","58368","381380A31F90332B776A7C615CFDAB3FFD95BDF1D174181BEE84407135466DF2","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPPntPrt.dll","EAPPntPrt.dll",".dll","99840","AD9A6910D7F244FAF1059339D445DB90DE4D22A3C37A03C2681ADB9327CB0221","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPPUI03X.DLL","EAPPUI03X.DLL",".DLL","233984","41D3DE6A563DA7D1D94732F7163C7B24D36AD196D0ECA2A62B8DD48E95D3268B","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR027e.dll","EAPR027e.dll",".dll","200192","D3FD87C36DC695EDB74649BE5E49E8DEBBD13FE59E0A6D2E18A1EE8813F28757","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR037e.dll","EAPR037e.dll",".dll","208384","DA68EE620DD1832AFF9043B3E2846C774D42D8217FCA097E6C135B808817F787","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR057e.dll","EAPR057e.dll",".dll","292864","CD40DC035867CFDE56C1E0E2495580BA9DEFA2A52F7FE3AEA1C3A024FD71203C","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR067e.dll","EAPR067e.dll",".dll","323072","6958BC65E828E5C9130719235753960F99A7D6A2C3C6D2E5339153D7B2D7CAFE","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR077e.dll","EAPR077e.dll",".dll","380416","039E811DC4E7935837419AE93DC450C03EB9B8ADC1CE05F377AC08251FB84AE2","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR087e.dll","EAPR087e.dll",".dll","204800","03D66CA722E9DFAAB2FD8BA6A8A1BABB654B6F6FB777163668F88F5974C7B6F1","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR127e.dll","EAPR127e.dll",".dll","559616","C95C6C259AE3D14F8E774C5956A6B41B2AB89B87A6FA2DFA620B8EB151AA8824","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR137e.dll","EAPR137e.dll",".dll","404480","5EFD9D7E3F5D848090E46F4753D689493881A230D06FA8F05B1B4AB23F343150","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR217e.dll","EAPR217e.dll",".dll","263680","FA12FE7C3D74D0CC47109BA0D0FDD0D0C60AFFC3F674F6C289CB05DFEA117EFE","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR217j.dll","EAPR217j.dll",".dll","417280","57733B8707CD780F565C5AC245D592F4DDF323C66252CF5D00157D2BD678DFC1","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR217s.dll","EAPR217s.dll",".dll","171520","F9C723F67CE766AE382BC920D29DA293D5C6AC7C6DC689CDD03617621FFEB9A1","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR217t.dll","EAPR217t.dll",".dll","289280","B729546E5AE1B6BC9AAB08A6CDD3CC36DFB7CBC654D7CCFDBCAAE4DFBDD8EE9B","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR227e.dll","EAPR227e.dll",".dll","180224","E74FE42B699596CC83A1EE9E0D3662F68762FCCA49D22C4B91CC2AFE4EF54889","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR237e.dll","EAPR237e.dll",".dll","213504","C0ADDD39B55B66B0655B34DD3C861BAF9BC7B1E5CEDEE759C0D7D1A8E1D13E01","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR257e.dll","EAPR257e.dll",".dll","161792","C72E7736B12089C302F7663E3F099A26C74204AE189A6C7ECE76D288D958D248","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR267e.dll","EAPR267e.dll",".dll","541184","52033D6C4E7401EC1F3F67AFBD5EB0C17E4101EAD4FBA222258C146A6675A9CD","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR347e.dll","EAPR347e.dll",".dll","133632","2B84286280541F76D5C841AB8FD48B2AAC8CEA3CA9BB7F7D0DAB742AFEB3EF8C","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR357e.dll","EAPR357e.dll",".dll","141824","61C0C26EC1238C884B30771F19D3459315F366B59FBA406887602B7A4AD75A81","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPr387e.dll","EAPr387e.dll",".dll","145408","D955644A952EFAAF41FA2FE6B182636E4EBAFFC38E1D34DBF9653DEC78CAB560","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR397E.dll","EAPR397E.dll",".dll","142336","0EDA5962D2022530EFAF23B8A2F7E68534E7EB24716A6D13C98145270D8B4499","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR3b7e.dll","EAPR3b7e.dll",".dll","56320","0D1545E94AFCD839AA0763E5A3EAF1C2E41103432C9945FAFBE769C80EC9CF5B","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR3C7e.dll","EAPR3C7e.dll",".dll","178176","84E4F9CE642C1ED9ED1DECDF61C74E7F8FDC8A0ADC637FCD67B94B3FD7244955","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR3d7e.dll","EAPR3d7e.dll",".dll","153088","2BA70B8D381F41882066596DD67FDBA6926B160960947EAA0F4597B01F4A7418","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR3d7j.dll","EAPR3d7j.dll",".dll","172544","84FD187F3D7BD2E47C7417FBC17C82B6470B229117332977B287328CE8827A22","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR3d7s.dll","EAPR3d7s.dll",".dll","160256","76C991C9A3607D8315B17CB517FA2411DCAEF9D561B6E6B8469499FC38EB42DA","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR3d7sa.dll","EAPR3d7sa.dll",".dll","410112","7772668215B23EB07B4400C59A159C80B57C0221005D37C8BBDE87EDE284C042","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR3d7t.dll","EAPR3d7t.dll",".dll","172032","BD54B085F6FFF5F88BD4C264448C9592C7DA506F106F56467F96D80A7A0CF257","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR3e7e.dll","EAPR3e7e.dll",".dll","323072","44E5C958FC27C94EA91030797E7FE0D9708B26B530D4DDE3910AF5E0568A9C7B","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR3e7j.dll","EAPR3e7j.dll",".dll","380928","EF42EDFC6EAF2690D8A461B9E28C2173D34CC7A92FEBDC1F24F463C6D1328827","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR427e.dll","EAPR427e.dll",".dll","89600","9FA26EF266F820BCA3162046347F04801F2769E95ED19DA90A590AD1357F7470","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR437e.dll","EAPR437e.dll",".dll","38912","318C17FE3AACBAC1931562033D9A3B933CF52A85A17A66778CC74D4B82A9288C","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR447E.dll","EAPR447E.dll",".dll","115200","EEF269317EC619898A82766969FD9F01EB2E4294E00DE9D2911EA5510D279B7B","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR457e.dll","EAPR457e.dll",".dll","76800","9897D7FCCE2B60223D4CCB0C8EA0F8A6951EF35D0EF222E89A39149FE7085820","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR467e.dll","EAPR467e.dll",".dll","203776","EE0A00DF84F89CE316269B6CBEB4276531B4A8967EBE2131026D346FF3B164C7","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR477e.dll","EAPR477e.dll",".dll","126976","09C669A9475E930B57DC26F94120E0D6D7458F10DF5DAD20398559949EF088B7","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR487e.dll","EAPR487e.dll",".dll","93696","40C10D6F2537DB6F6B083E0C9E35588DAE494956D09F93772F5DAF8C478680A6","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR497e.dll","EAPR497e.dll",".dll","168960","798C36024EBDC181CF19E307A4F04486FEF4D08ABE7582FFBEE4689EBE2C45D8","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR4a7e.dll","EAPR4a7e.dll",".dll","154112","DB2B2CA86E3E33EF54B9F2B94D0A7D13C250889C7D0F4665FB37C721FF4EC905","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR4C7e.dll","EAPR4C7e.dll",".dll","227840","37ABFFCB520A3334CD1DF529F74E349F4ADB4DD1DE222863D29EE295A1D5D920","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR4d7e.dll","EAPR4d7e.dll",".dll","81408","3835346563AA54D6F4893552C6481BCEA3C12FEB6F359A97B9FC9834B7F575E5","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR637e.dll","EAPR637e.dll",".dll","155648","CF96D8770523E85D9BECF8D3818C780AB2D7D2D22A1BBC5153432F52D96D70FE","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR647e.dll","EAPR647e.dll",".dll","166912","7611F3F0F2E2ECA1ABF21E7DCD928D0AA489BAAC93514C6F82CEDFE114BD9651","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR647j.dll","EAPR647j.dll",".dll","204288","59230A8076BC33D3CC6710FDF4812B8E57984EF2BD495B0B7B6ECBC5E6E13BFF","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR647s.dll","EAPR647s.dll",".dll","174080","7EEA3A6FA707C4EE1CFA6DE262E5437702DA377D1DC7876DC4A8BCB5BCF818F0","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR647t.dll","EAPR647t.dll",".dll","185856","4625AA230ED5A669F0F6C926E8DD7D606B9CBB542CA9FDE3CEB7AABCCF4B183C","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR717e.dll","EAPR717e.dll",".dll","155648","B639E39A3A0889EAB181169C7ECFF6C95590B1FBD00C347AE38C90B6CDA2DFCE","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR727e.dll","EAPR727e.dll",".dll","155648","9AFA599D0E2167598BF746DA711129996C44F2A6F9611D2ACD42E1F9AC30C10D","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR737e.dll","EAPR737e.dll",".dll","155648","379DAD0C16334A32CFB72360DABAB1D278187D06963F30F20498FD3880C6CA70","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPr747e.dll","EAPr747e.dll",".dll","166400","A707BEFAC2634DC867F0EF3A97DDDF6A57B1D41809539F1DB3C1C5B2AB825D1F","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPr747j.dll","EAPr747j.dll",".dll","185856","4DCCFD81E25A95CBE8DEB9505013846313AC27F6CA207F933D25C50985C7EF14","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR817e.dll","EAPR817e.dll",".dll","19968","06C4DE267624B249C50469695A398FD463940517C58E013F2522B18D5761AEC7","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR837e.dll","EAPR837e.dll",".dll","199680","FD62B4331F51CF38B344AC5725121FEF2BC65CC86D1553C0957F0B1DB280D4F6","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPR857e.dll","EAPR857e.dll",".dll","46592","21D7A071214C5670FE7696B850599E03489E7704DC0F7CF7AE4EE69E7889A932","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPr917e.DLL","EAPr917e.DLL",".DLL","146944","F6DE4A1462FB40679C82476045552FC3060F166E36FCF98D205F6DCFFA1FE0EF","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPRA07e.dll","EAPRA07e.dll",".dll","190464","34A78DEC7FB0596B055038E822ACCE520B3EEB302275EE7C8A605F97C3E1D594","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPRA17e.dll","EAPRA17e.dll",".dll","204288","0101246D896F013FD786DB72E9AB6E5780759FAD027670A11A0CCD1C60E70F45","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPrA17j.dll","EAPrA17j.dll",".dll","225280","85A83AF15BADDF53778DD803635F7B8906959E2FECD9F5E888C6FCE4CC7D7A9B","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPRab7e.dll","EAPRab7e.dll",".dll","81920","AD5EAEECB86207693248EF6C81771EDC1FFEEFE59F05AC252908C38FD33252C0","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPRC0001.DLL","EAPRC0001.DLL",".DLL","592384","A60E9A66895796C632DD8821FA68BB0451424C38821C2C5C96D249A817A98854","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPRC0002.DLL","EAPRC0002.DLL",".DLL","633344","D4D426DC01E6A0F76D6F2D73EAA56C819DE9F5A82E8631CD6EE12ADC49A8ED22","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPSEST32.DLL","EAPSEST32.DLL",".DLL","63488","9B01F60732141FE48675504C65FB11ABB1D74697B54E348D6CC922A44715CD16","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPThai3Path.dll","EAPThai3Path.dll",".dll","86528","A6654B32C927DEBA281744D9FE4EED8E76FB03A9EBA55759BEC4022F02ED9E98","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPuif7.dll","EAPuif7.dll",".dll","652288","87F25BF3A4ADAB3E394BF0A7C2BF694C10E8F22386131376D4B9BB77A9F8665F","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPUIM03X.DLL","EAPUIM03X.DLL",".DLL","244736","A7576DE19248502D1BFFA7789768AB8FC36D9261311BA986D435C7D57CE0C6F2","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPUir0.dll","EAPUir0.dll",".dll","5571072","A1EA31E523342AFEBBCD607864EAF6F8E3FE2C3F0F1383B45FD3B0AD5A94BD5E","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPUIR03E.DLL","EAPUIR03E.DLL",".DLL","498176","A62FE40C873E95A0E6D2008DEFE78E01E51ACC188792DC571A52D577039D9094","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPUIR03J.DLL","EAPUIR03J.DLL",".DLL","483840","B773984EC84AB67B0B3F4774B17981F819A2D0D40E6193121328BAD6237C3E9B","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPurc0.DLL","EAPurc0.DLL",".DLL","76800","CAA8D723F3B603B3FF2D5C93D3A4AFDEAE258182F58E5E7171FFFFEFE3FD3104","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPurn0.dll","EAPurn0.dll",".dll","211456","2E9A4640916C5FAB905F9D6A66F013AC8FCEB6AF9D520876B61A8F014586D7E4","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPUTY03X.DLL","EAPUTY03X.DLL",".DLL","521216","2830B9C3DF71AC14ECECDB631E559200E3FFB48A49792BA09CA61B69FCE4F93C","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\Epset32.dll","Epset32.dll",".dll","53248","D896B40CB32BAE75B52D092E9958B278D96884CD2F381477954F1D0C798DFA91","NotSigned",,
+"C:\Tiptorro\packages\printers\star\GenericAction.dll","GenericAction.dll",".dll","352592","C57AA7572E2E8FC76601B42CAA72E0354815095938031904C27D90E23C4BF670","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\hwasung\HmW2k.dll","HmW2k.dll",".dll","4608","807E8891FEFD8841E38B4D39B222C98F8F22DC9184571C01D0990BE44C4CF432","NotSigned",,
+"C:\Tiptorro\packages\printers\star\SMJLMHOST.dll","SMJLMHOST.dll",".dll","31048","6720B47D7464EB2B5CD68D7DC2B7A5D0EBCDEA55B05405BE7865F7643AFCC864","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\smjt100epm.dll","smjt100epm.dll",".dll","192920","3C8FBA0F882ACFBF526617C3A7664F13E04A0F16AD488B4CC9B974BEC11E7FFE","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\smjt100epmrc.dll","smjt100epmrc.dll",".dll","27544","7F87896ACB2520274B3912D64FCBC71E6E23BC9B4564B41A23AF2E0579E74861","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\smjt100epmui.dll","smjt100epmui.dll",".dll","129432","9F7AE874FFAC96888462F7370C064655A2F743229564F16C1472D037DAE86381","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\smjt100res.dll","smjt100res.dll",".dll","181608","73D9AF2758F7C780B32A50DAABB95DF3E9D14E3AEA320A2783F79E8E8743F4E2","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\smjt100ui.dll","smjt100ui.dll",".dll","42368","7F3FF42D0EB297732F7419C1B58C4E49EA361ACDEACF00854F2529521167BD13","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\StarLineModeSE.dll","StarLineModeSE.dll",".dll","6910816","0024F52D77950A13325B853A9CCB730726B1991754499959F180B91EB8A61D34","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\StarTSPTC.dll","StarTSPTC.dll",".dll","162144","D245864A84D92FC81BDC401DC38E3A5361B0AC2D88EF7A0A00E247D81CDDA02F","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\TargetAction.dll","TargetAction.dll",".dll","127864","FB1E55CBE7D304FB6ACC95B2FFCDE465FB378CE51DBB43E976CC7247C7027FF8","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\TSP100BLM.dll","TSP100BLM.dll",".dll","316336","94E839E68536E8830D4D6E081E7738F1531BDA5414E67BC37E5546F6A438C0B7","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\TSP100BLMIF.dll","TSP100BLMIF.dll",".dll","141744","19BF12A0357DC73A1E75F97C924EE077A943ABCB54646001C45BE0C989343388","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\TSP100ELM.dll","TSP100ELM.dll",".dll","315288","E2FE2ED026DD7C8B448871E21B8413BB6CC30E2CE41E0CB0C8BFC230DF6E815F","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\TSP100ELMIF.dll","TSP100ELMIF.dll",".dll","140696","E79B56998B13DF44F90CD3271983A205F020AED508D25AFEF9CFEB4FDCAB4A98","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\TSP100LM.dll","TSP100LM.dll",".dll","335256","AD5AB29715B6ACB849BC2D75DEB40B471CE6E25E0C639F6773DBB67013B4D6F5","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\TSP100LMIF.dll","TSP100LMIF.dll",".dll","163248","29736855799F6E4E769B7AE08AD34D2472E7AFCB0C97F326E6AE6C7794139423","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\star\xerces-c_2_8.dll","xerces-c_2_8.dll",".dll","2842992","6001D3DBE1990E2B5D6F945B3D9B15EC53BBC2BD2F312FF6FC8EBB13E934B5B2","Valid","CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US","02.12.2021 23:15:33"
+"C:\Tiptorro\packages\printers\epson\installer\APD_459aE.exe","APD_459aE.exe",".exe","52971312","9CF854AEA7B91619AE96894307A5885538A5E34839F0654250F43F50BE6D4FD9","Valid","CN=SEIKO EPSON CORPORATION, O=SEIKO EPSON CORPORATION, L=Suwa-Shi, S=Nagano, C=JP","02.10.2024 01:59:59"
+"C:\Tiptorro\packages\printers\epson\installer\APD_513_T88V.exe","APD_513_T88V.exe",".exe","54459816","0CDB07172DD3F40709E1926B7929B35B277AF41A080F3C5EADF24E965909E7E9","Valid","CN=SEIKO EPSON CORPORATION, OU=Information Service & Support Department, O=SEIKO EPSON CORPORATION, L=Suwa-Shi, S=Nagano, C=JP","04.10.2022 01:59:59"
+"C:\Tiptorro\packages\cctalk\ccDLL_Test.exe","ccDLL_Test.exe",".exe","258048","879CF45B94BB4C21DD826DF0E95A8F76652721F6FFA4330117A0CC326891A5EC","NotSigned",,
+"C:\Tiptorro\packages\cctalk\ccTalk Devices.exe","ccTalk Devices.exe",".exe","311296","0004D68243CB8DBCD25CE4D53BF3875DDCB8DDDBCCC641AF8837813BF07C988A","NotSigned",,
+"C:\Tiptorro\packages\cctalk\ccTalkTest.exe","ccTalkTest.exe",".exe","54272","D852F97A969752EB3B6A1599E891E3700A5184E72BE6129621E50ACA84F02768","NotSigned",,
+"C:\Tiptorro\packages\device-manager\DeviceManager.Host.exe","DeviceManager.Host.exe",".exe","700416","15B9CFFC4B0937E6AD602EED0486D63C186F78EC17FA7288639C14B80C1B0018","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPctled.exe","EAPctled.exe",".exe","82120","A48D1D6F84F604A9DE6FA7EE62710503AB199A6A2A0D3E79FD5C3CF96F3BDB1A","Valid","CN=SEIKO EPSON CORPORATION, OU=Information Service & Support Department, O=SEIKO EPSON CORPORATION, L=Suwa-Shi, S=Nagano, C=JP","08.10.2020 01:59:59"
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPdmsg0.exe","EAPdmsg0.exe",".exe","44032","58C6D6F2CF794C14B4FB09D9004E0DE1928F2A2DFE552AB4AA45AB23E5E47C40","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPDMSG00.EXE","EAPDMSG00.EXE",".EXE","148992","97B8014814A0FC95A158FE573F84A885AD137383BC59700B55628046C26893B5","NotSigned",,
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T88IV\EAPPPE03X.EXE","EAPPPE03X.EXE",".EXE","43648","10DAE21B4A2878A8024F4EA8DCCD2728E011E7E7711E36C8B1AEE1371ABD37E5","Valid","CN=SEIKO EPSON CORPORATION, OU=Digital ID Class 3 - Microsoft Software Validation v2, OU=Information Service & Support Department, O=SEIKO EPSON CORPORATION, L=Suwa-shi, S=Nagano, C=JP","01.09.2014 01:59:59"
+"C:\Tiptorro\packages\printers\hwasung\HWASUNG Printer Driver Installer.exe","HWASUNG Printer Driver Installer.exe",".exe","32256","50D711FB519D5C3A25B039072EB12510C95B9365B2FE7B5A4478568727651746","NotSigned",,
+"C:\Tiptorro\packages\device-manager\setup.exe","setup.exe",".exe","533504","73543459DE26E8E471B0FDAA7691BE57DB9DB20127A8EB866FD8FC2C386666D2","NotSigned",,
+"C:\Tiptorro\packages\printers\star\Setup.exe","Setup.exe",".exe","94968","1601532C7F90E6339556F4DBE773FDDA805E75650952533C37E7CE3993642535","Valid","CN=""STAR MICRONICS CO., LTD."", O=""STAR MICRONICS CO., LTD."", L=Shizuoka, S=Shizuoka, C=JP","22.03.2023 00:59:59"
+"C:\Tiptorro\packages\printers\star\setup_x64.exe","setup_x64.exe",".exe","125555432","A2F67704F2057659C4271EE74D3DE5FFFB12241B4E8A0B178F0D1C99D5741DEB","Valid","CN=""STAR MICRONICS CO., LTD."", O=""STAR MICRONICS CO., LTD."", L=Shizuoka, S=Shizuoka, C=JP","22.03.2023 00:59:59"
+"C:\Tiptorro\packages\printers\star\setup_x86.exe","setup_x86.exe",".exe","122199600","C9AD8CA748D2E6623FB6B500678AD40D1D68EE35D05193AE6621CB2AE1504A9E","Valid","CN=""STAR MICRONICS CO., LTD."", O=""STAR MICRONICS CO., LTD."", L=Shizuoka, S=Shizuoka, C=JP","22.03.2023 00:59:59"
+"C:\Tiptorro\packages\teamviewer\TeamViewer_Setup.exe","TeamViewer_Setup.exe",".exe","38459680","906474404B144BBCEA507914BFF3838B9A169E21AD1787739E432AF33B1DC1B7","Valid","CN=TeamViewer Germany GmbH, O=TeamViewer Germany GmbH, L=Göppingen, S=Baden-Württemberg, C=DE","07.05.2026 01:59:59"
+"C:\Tiptorro\packages\printers\hwasung\uninst.exe","uninst.exe",".exe","54866","D60882509D67A82B9758810AEA701C2168CB288535E6B644DC0F637B7CE4547E","NotSigned",,
+"C:\Tiptorro\packages\device-manager\DeviceManager.Service.Setup.msi","DeviceManager.Service.Setup.msi",".msi","2223616","77D03AA7D9668D707AC0458C104500F1A29AF0205270B5B4BD4A636B4AFD02AC","NotSigned",,
+"C:\Tiptorro\scripts\Apply-EdgePolicies.ps1","Apply-EdgePolicies.ps1",".ps1","1313","380C08BB1ABF4858176BA9641DA01A52CB99FFBE5368AA993E7B1E0A8E54FBCD","NotSigned",,
+"C:\Tiptorro\scripts\Audit-Signatures.ps1","Audit-Signatures.ps1",".ps1","1760","3EE1839E000EC7EACFA324642A0B074964AADA592817703220091B747C7C53F5","NotSigned",,
+"C:\Tiptorro\scripts\Create-LiveTV-Shortcut.ps1","Create-LiveTV-Shortcut.ps1",".ps1","828","8291CA5026756E106A256299039CE6894877AE8E1E0E1D58DFF43C04D1A19AA0","NotSigned",,
+"C:\Tiptorro\scripts\DeviceManager.ps1","DeviceManager.ps1",".ps1","8848","4E2A622459A953B807CE7366A658227C891CE0050C06C0C562B29C9E8ADBDE2A","NotSigned",,
+"C:\Tiptorro\scripts\HealthCheck.ps1","HealthCheck.ps1",".ps1","6529","A9799C5B0DDB9698DB93714D2B42F0D104DC93EA3C944FF789898BE4E42B0201","NotSigned",,
+"C:\Tiptorro\scripts\LiveTV-SetLink.ps1","LiveTV-SetLink.ps1",".ps1","2333","5D66B31DFF2787FF1CEBBEC1BB970D9ED770076B5BB1967286F5A6C39E9E9CE5","NotSigned",,
+"C:\Tiptorro\packages\MoneyDevices.ps1","MoneyDevices.ps1",".ps1","2401","4DF3C00AABB3E476764D63C5E13102686909DBB37A69262FD52AD62598B3A7F2","NotSigned",,
+"C:\Tiptorro\scripts\OneClick-Phase8.ps1","OneClick-Phase8.ps1",".ps1","4854","18205B6B1519DF86EA8FA419DFBACE2E448D50DC234A631AA19DC40F304B47E9","NotSigned",,
+"C:\Tiptorro\scripts\Printers_Forms.ps1","Printers_Forms.ps1",".ps1","14370","C93AB78D3BFB0065776FCFACB23F1A8B24C66CF8D3206117CADFD7109E5E4E4E","NotSigned",,
+"C:\Tiptorro\scripts\Scan-PrinterPackages.ps1","Scan-PrinterPackages.ps1",".ps1","4279","C8276C586629098C5F623F4BAAA3BEB7A9A3D701BC3B852B81FB98A1E1C1C7E7","NotSigned",,
+"C:\Tiptorro\scripts\Setup-TeamViewer.ps1","Setup-TeamViewer.ps1",".ps1","2899","8717309C0AE26E8C3B66CBB8EF7F0632192E84195B26A7CCC054E2A3739FAE43","NotSigned",,
+"C:\Tiptorro\scripts\Start-LiveTV.ps1","Start-LiveTV.ps1",".ps1","4959","BCE8EF3D9CA7DF17643DA94355E296A33D75023B5F0C122FE5B61C7EA1C03B9F","NotSigned",,
+"C:\Tiptorro\scripts\Start-Maintenance.ps1","Start-Maintenance.ps1",".ps1","561","05BBD2D5839B164399821421C71B0E689ADC058A3D48ABA52D32532340A19583","NotSigned",,
+"C:\Tiptorro\scripts\Start-ShopKiosk.ps1","Start-ShopKiosk.ps1",".ps1","5792","E3A6E6FBB9AC4BE591FB0FB804F3FFF07587826A41D73919EB3DBC01EA86F3F1","NotSigned",,
+"C:\Tiptorro\scripts\Verify-Phase7-8.ps1","Verify-Phase7-8.ps1",".ps1","3431","519DB2D74422FB17C2E92637BB45266EEB0D2EAB6793A758673ACDFFF0F80622","NotSigned",,

@@ -1,0 +1,5 @@
+﻿"InfPath","InfName","Class","ClassGuid","IsPrinterClass","ArchHasNTamd64","Provider","Manufacturer","DriverVer","CatalogPath","CatalogExists","CatalogSignature"
+"C:\Tiptorro\packages\printers\epson\driver\Tm-T 88V\EA5INSTMT88V.INF","EA5INSTMT88V.INF","Printer","{4D36E979-E325-11CE-BFC1-08002BE10318}","True","True","%EPSON_CORP%",,"02/06/2020, 5.12.0.0","C:\Tiptorro\packages\printers\epson\driver\Tm-T 88V\EA5INSTMT88V.cat","True","Valid"
+"C:\Tiptorro\packages\printers\star\smjt100.inf","smjt100.inf","Printer","{4D36E979-E325-11CE-BFC1-08002BE10318}","True","True","%ST%",,"08/31/2021,3.3.1.0","C:\Tiptorro\packages\printers\star\smjt100.cat","True","Valid"
+"C:\Tiptorro\packages\printers\hwasung\HWASUNG_32bit_v400.INF","HWASUNG_32bit_v400.INF","Printer","{4D36E979-E325-11CE-BFC1-08002BE10318}","True","False","%HW%",,"03/18/2019,4.0.0.3","C:\Tiptorro\packages\printers\hwasung\HWASUNG202109.cat","True","Valid"
+"C:\Tiptorro\packages\printers\hwasung\HWASUNG_64bit_v400.INF","HWASUNG_64bit_v400.INF","Printer","{4D36E979-E325-11CE-BFC1-08002BE10318}","True","True","%HW%",,"04/21/2022,4.0.0.4","C:\Tiptorro\packages\printers\hwasung\HWASUNG202204.cat","True","Valid"

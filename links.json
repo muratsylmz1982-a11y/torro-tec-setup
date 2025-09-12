@@ -1,0 +1,118 @@
+{
+  "defaultMonitorIndex": 2,
+  "items": [
+    {
+    "name": "Ticketchecker",
+    "url": "https://shop.tiptorro.com/ticketchecker"
+  },
+  {
+    "name": "Werbelink",
+    "url": "https://docs.google.com/presentation/d/e/2PACX-1vR7ATNzOGsb50mLDL3WifgGc_873pY400A9yqpyZA_TjKwTfL0ktofZqiAeyCFZf90VCpDrLujpuPNv/pub?start=true&loop=true&delayms=30000"
+  },
+  {
+    "name": "Goalbox",
+    "url": "https://shop.tiptorro.com/livescoretv/?rows=6"
+  },
+  {
+    "name": "Goalbox2",
+    "url": "https://shop.tiptorro.com/livescoretv2/?rows=6"
+  },
+  {
+    "name": "Fussball S1 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=1&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S2 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=2&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S3 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=3&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S4 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=4&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S5 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=5&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S6 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=6&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Tennis S1 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=1&pagecount=1&sports=5&ngoal=true"
+  },
+  {
+    "name": "Tennis S2 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=2&pagecount=1&sports=5&ngoal=true"
+  },
+  {
+    "name": "Basketball S1 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=1&pagecount=1&sports=2&ngoal=true"
+  },
+  {
+    "name": "Basketball S2 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=2&pagecount=1&sports=2&ngoal=true"
+  },
+  {
+    "name": "Alle Sportarten S1 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=1&pagecount=1&sports=1,5,2&ngoal=true"
+  },
+  {
+    "name": "Alle Sportaren S2 Scanner",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=true&page=2&pagecount=1&sports=1,5,2&ngoal=true"
+  },
+  {
+    "name": "Fussball S1 Groß",
+    "url": "https://shop.tiptorro.com/livetv2/?rows=12&tipp=false&pagecount=1&sport=1&page=1"
+  },
+  {
+    "name": "Fussball S2 Groß",
+    "url": "https://shop.tiptorro.com/livetv2/?rows=12&tipp=false&pagecount=1&sport=1&page=2"
+  },
+  {
+    "name": "Fussball S3 Groß",
+    "url": "https://shop.tiptorro.com/livetv2/?rows=12&tipp=false&pagecount=1&sport=1&page=3"
+  },
+  {
+    "name": "Fussball S4 Groß",
+    "url": "https://shop.tiptorro.com/livetv2/?rows=12&tipp=false&pagecount=1&sport=1&page=4"
+  },
+  {
+    "name": "Fussball S5 Groß",
+    "url": "https://shop.tiptorro.com/livetv2/?rows=12&tipp=false&pagecount=1&sport=1&page=5"
+  },
+  {
+    "name": "Fussball S6 Groß",
+    "url": "https://shop.tiptorro.com/livetv2/?rows=12&tipp=false&pagecount=1&sport=1&page=6"
+  },
+  {
+    "name": "Fussball S1",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=false&page=1&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S2",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=false&page=2&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S3",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=false&page=3&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S4",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=false&page=4&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S5",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=false&page=5&pagecount=1&sports=1&ngoal=true"
+  },
+  {
+    "name": "Fussball S6",
+    "url": "https://shop.tiptorro.com/livetv/?rows=12&scan=false&page=6&pagecount=1&sports=1&ngoal=true"
+  }
+
+  ]
+}
