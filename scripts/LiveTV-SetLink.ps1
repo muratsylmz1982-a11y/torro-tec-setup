@@ -1,55 +1,100 @@
-﻿[CmdletBinding()]
+﻿[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact="Low")]
 param(
-  [string]$LinksJson = "C:\Tiptorro\packages\LiveTVLinks\links.json",
-  [switch]$ApplyNow,
-  [int]$MonitorIndex = 2,
-  [switch]$VerboseLog
+  [switch]$Root,
+  [switch]$Desktop,
+  [string]$TipRoot = 'C:\Tiptorro',
+  [string]$IconPath = 'C:\Tiptorro\shortcuts\livetv.ico',
+  [bool]$RequireSecondMonitor = $true,
+  [string]$LogDir = "$env:ProgramData\TipTorro\Logs",
+  [switch]$Replace
 )
-$ErrorActionPreference = "Stop"
-function Log([string]$m){ if($VerboseLog){ Write-Host "[LiveTV-SetLink] $m" } }
 
-$stateDir  = "C:\Tiptorro\state"; New-Item -ItemType Directory -Force $stateDir | Out-Null
-$stateFile = Join-Path $stateDir "livetv.selected.json"
+$ErrorActionPreference = 'Stop'
+$script:LogFile    = $null
+$script:HasFailure = $false
 
-# Links laden
-if(!(Test-Path $LinksJson)){ throw "links.json not found: $LinksJson" }
-$json = Get-Content $LinksJson -Raw | ConvertFrom-Json
-$items = foreach($it in $json.items){ if($it.name -and $it.url){ [pscustomobject]@{Name=$it.name;Url=$it.url} } }
-if(-not $items -or $items.Count -eq 0){ throw "links.json contains no valid entries." }
-
-# Auswahlmaske
-$chosen = $null
-$ogv = Get-Command Out-GridView -EA SilentlyContinue
-if($ogv){
-  $sel = $items | Select-Object Name,Url | Out-GridView -Title "LiveTV-Link wählen (Wartungsmodus)" -OutputMode Single
-  if($sel){ $chosen = $items | Where-Object { $_.Url -eq $sel.Url } | Select-Object -First 1 }
-}
-if(-not $chosen){
-  Write-Host "LiveTV-Link auswählen:"
-  for($i=0; $i -lt $items.Count; $i++){ Write-Host (" [{0}] {1}" -f ($i+1), $items[$i].Name) }
-  do{
-    $choice = Read-Host ("Nummer (1..{0})" -f $items.Count)
-    [int]$n=0
-    if([int]::TryParse($choice,[ref]$n) -and $n -ge 1 -and $n -le $items.Count){ $chosen=$items[$n-1]; break }
-    Write-Host "Ungültig."
-  }while($true)
+function Write-Log {
+  param([string]$Message,[string]$Level='INFO')
+  $ts = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+  $line = "[{0}] [{1}] {2}" -f $ts,$Level,$Message
+  Write-Host $line
+  if($script:LogFile){ Add-Content -Path $script:LogFile -Value $line }
 }
 
-# speichern
-$chosen | ConvertTo-Json -Depth 3 | Set-Content -Path $stateFile -Encoding UTF8
-Log "Gespeichert: $($chosen.Name) -> $($chosen.Url)"
+try {
+  # Defaults: wenn nichts gewählt -> beide
+  if(-not $PSBoundParameters.ContainsKey('Root') -and -not $PSBoundParameters.ContainsKey('Desktop')){
+    $Root = $true; $Desktop = $true
+  }
 
-if($ApplyNow){
-  # laufende LiveTV-Kiosk-Instanz (Profil) beenden & neu starten
-  $profile = "C:\ttedge\livetv_kiosk"
-  try{
-    $esc=[Regex]::Escape($profile)
-    Get-CimInstance Win32_Process -Filter "Name='msedge.exe'" -EA SilentlyContinue |
-      Where-Object { $_.CommandLine -and ($_.CommandLine -match $esc) } |
-      ForEach-Object { try{ Stop-Process -Id $_.ProcessId -Force -EA SilentlyContinue }catch{} }
-  }catch{}
-  Start-Process -FilePath "$env:WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe" `
-    -ArgumentList @("-ExecutionPolicy","Bypass","-File","C:\Tiptorro\scripts\Start-LiveTV.ps1","-MonitorIndex",$MonitorIndex) `
-    -WindowStyle Hidden | Out-Null
-  Log "LiveTV neu gestartet."
+  # Log vorbereiten
+  if(-not (Test-Path $LogDir)){ New-Item -ItemType Directory -Force $LogDir | Out-Null }
+  $script:LogFile = Join-Path $LogDir ("livetv_setlink_{0}.log" -f (Get-Date -Format 'yyyyMMdd_HHmmss'))
+  Write-Log ("Logfile: {0}" -f $script:LogFile)
+
+  # Abhängigkeiten
+  $CreateScript = Join-Path $TipRoot 'scripts\Create-LiveTV-Shortcut.ps1'
+  $StartScript  = Join-Path $TipRoot 'scripts\Start-LiveTV.ps1'
+  if(-not (Test-Path $CreateScript)){ throw "Missing: $CreateScript" }
+  if(-not (Test-Path $StartScript)){  throw "Missing: $StartScript"  }
+
+  # Signaturen nur protokollieren
+  foreach($f in @($CreateScript,$StartScript)){
+    try{
+      $sig = Get-AuthenticodeSignature -FilePath $f
+      Write-Log ("Signature {0}: {1}" -f $f, $sig.Status)
+    }catch{
+      Write-Log ("Signature check failed for {0}: {1}" -f $f,$_.Exception.Message) 'WARN'
+    }
+  }
+
+  # Monitor prüfen
+  Add-Type -AssemblyName System.Windows.Forms | Out-Null
+  $hasSecond = [System.Windows.Forms.Screen]::AllScreens.Count -ge 2
+  Write-Log ("Second monitor present: {0}" -f $hasSecond)
+
+  # Ziele
+  $RootLink = Join-Path $TipRoot 'livetv.lnk'
+  $DeskPath = [Environment]::GetFolderPath('Desktop')
+  $DeskLink = Join-Path $DeskPath 'LiveTV.lnk'
+
+  function Ensure-Link {
+    param([string]$TargetPath)
+    $exists = Test-Path $TargetPath
+    if($exists -and -not $Replace){
+      Write-Log ("Skip (exists): {0}" -f $TargetPath)
+      return
+    }
+    $action = if ($exists) { 'Replace shortcut' } else { 'Create shortcut' }
+    if($PSCmdlet.ShouldProcess($TargetPath,$action)){
+      $p = @{ ShortcutPath = $TargetPath }
+      if(Test-Path $IconPath){ $p.IconPath = $IconPath } else { Write-Log ("Icon missing, continuing: {0}" -f $IconPath) 'WARN' }
+      try{
+        & $CreateScript @p
+        Write-Log ("OK: {0}" -f $TargetPath)
+      }catch{
+        Write-Log ("FAIL {0}: {1}" -f $TargetPath, $_.Exception.Message) 'ERROR'
+        $script:HasFailure = $true
+      }
+    }
+  }
+
+  if($Root){ Ensure-Link -TargetPath $RootLink }
+
+  if($Desktop){
+    if($RequireSecondMonitor -and -not $hasSecond){
+      Write-Log "RequireSecondMonitor=True & only one monitor -> skipping Desktop link." 'WARN'
+    } else {
+      Ensure-Link -TargetPath $DeskLink
+    }
+  }
+
+  # Exitcode: 0 ok, 1 Fehler, 3 nur Skip wg. Monitorbedingung
+  $code = if($script:HasFailure){1} elseif($RequireSecondMonitor -and -not $hasSecond -and $Desktop){3} else {0}
+  Write-Log ("ExitCode: {0}" -f $code)
+  [Environment]::ExitCode = $code
+}
+catch {
+  Write-Log ("Unhandled error: {0}" -f $_.Exception.Message) 'ERROR'
+  [Environment]::ExitCode = 1
 }
