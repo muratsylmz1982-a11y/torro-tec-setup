@@ -1,10 +1,11 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [string]$LinksJson = "C:\Tiptorro\packages\LiveTVLinks\links.json",
     [int]$MonitorIndex = 2,
     [string]$Pick,
     [switch]$Prompt,
     [switch]$VerboseLog
+    [switch]$DryRun
 )
 
 $ErrorActionPreference = "Stop"
@@ -95,7 +96,7 @@ try{
   New-Item -ItemType Directory -Force $dataDir | Out-Null
 
   # Kiosk/App ohne Tabs + explizite Position/Gr??e auf Zielmonitor
-  $args = @(
+$EdgeArgs = @(
     "--kiosk",$sel.Url,
     "--edge-kiosk-type=fullscreen",
     "--window-position=$($b.X),$($b.Y)",
@@ -105,9 +106,9 @@ try{
   )
   Write-Log "Launching Edge kiosk..."
   try{
-    Start-Process -FilePath $edge -ArgumentList $args | Out-Null
+if($DryRun){ Write-Host "[DRYRUN] $edge " + ($EdgeArgs -join ' ') } else { Start-Process -FilePath $edge -ArgumentList $EdgeArgs | Out-Null }
   }catch{
-    $args2 = @(
+$EdgeArgsFallback = @(
       "--app=$($sel.Url)","--start-fullscreen",
       "--window-position=$($b.X),$($b.Y)",
       "--window-size=$($b.Width),$($b.Height)",
@@ -115,7 +116,7 @@ try{
       "--user-data-dir=$dataDir"
     )
     Write-Log ("Kiosk failed: {0} -> fallback --app" -f $_.Exception.Message)
-    Start-Process -FilePath $edge -ArgumentList $args2 | Out-Null
+if($DryRun){ Write-Host "[DRYRUN] $edge " + ($EdgeArgsFallback -join ' ') } else { Start-Process -FilePath $edge -ArgumentList $EdgeArgsFallback | Out-Null }
   }
 }
 catch{
