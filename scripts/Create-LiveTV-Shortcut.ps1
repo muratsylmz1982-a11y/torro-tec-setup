@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 $targetPs1 = 'C:\Tiptorro\scripts\Start-LiveTV.ps1'
 if (!(Test-Path $targetPs1)) { throw "Erwarte $targetPs1 - bitte Datei dorthin kopieren." }
 $target = "$env:WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe"
-$args   = "-ExecutionPolicy Bypass -File `"$targetPs1`""
+$ShortcutArgs   = "-ExecutionPolicy Bypass -File `"$targetPs1`""
 $wsh = New-Object -ComObject WScript.Shell
 $sc = $wsh.CreateShortcut($ShortcutPath)
 $sc.TargetPath  = $target
