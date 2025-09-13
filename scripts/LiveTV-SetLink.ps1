@@ -1,11 +1,14 @@
 ﻿[CmdletBinding()]
 param(
+  [switch]$Preview,
   [string]$LinksJson = "C:\Tiptorro\packages\LiveTVLinks\links.json",
   [switch]$ApplyNow,
   [int]$MonitorIndex = 2,
   [switch]$VerboseLog
 )
 $ErrorActionPreference = "Stop"
+# Honor -Preview as a WhatIf alias for this script
+if ($PSBoundParameters.ContainsKey('Preview')) { $WhatIfPreference = $true }
 function Log([string]$m){ if($VerboseLog){ Write-Host "[LiveTV-SetLink] $m" } }
 
 $stateDir  = "C:\Tiptorro\state"; New-Item -ItemType Directory -Force $stateDir | Out-Null
