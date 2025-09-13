@@ -1,9 +1,9 @@
-<#
-Torro Tec – Device Manager Controller (v1.3)
+﻿<#
+Torro Tec â€“ Device Manager Controller (v1.3)
 -------------------------------------------
 Zweck:
-- Erstinstallation: Wenn nicht installiert → MSI installieren → **Dienst starten** (ServiceController + Fallback **net start devicemanager**) → Health-Check (≤120 s)
-- Reinstall (optional): Deinstallieren → Ordner löschen → Neustart (optional) → Neuinstallieren → **Dienst starten** → Health-Check
+- Erstinstallation: Wenn nicht installiert â†’ MSI installieren â†’ **Dienst starten** (ServiceController + Fallback **net start devicemanager**) â†’ Health-Check (â‰¤120 s)
+- Reinstall (optional): Deinstallieren â†’ Ordner lÃ¶schen â†’ Neustart (optional) â†’ Neuinstallieren â†’ **Dienst starten** â†’ Health-Check
 - Manuelle Steuerung: Start/Stop/Status/HealthCheck/Uninstall/Install
 
 Aufrufbeispiele (als Admin-PowerShell):
@@ -13,12 +13,12 @@ Aufrufbeispiele (als Admin-PowerShell):
 
 Parameter:
   -Action              FirstRun|Install|Reinstall|Uninstall|Start|Stop|Status|HealthCheck
-  -MsiPath             Optional; wenn leer → automatisch aus C:\Tiptorro\packages\device-manager\*.msi gewählt
+  -MsiPath             Optional; wenn leer â†’ automatisch aus C:\Tiptorro\packages\device-manager\*.msi gewÃ¤hlt
   -DisplayNameLike     Muster zum Finden einer bestehenden Installation (Default: *Device*Manager*)
   -AppFolder           Installationsordner zum Bereinigen (Default: C:\Program Files (x86)\TipTorro)
   -ServiceName         Erwarteter Dienstname (Default: DeviceManager.Bootstrapper)
-  -LegacyServiceName   **Name für net start/stop** (Default: DeviceManager)
-  -HealthTimeoutSec    Timeout für Health-Check (Default: 120)
+  -LegacyServiceName   **Name fÃ¼r net start/stop** (Default: DeviceManager)
+  -HealthTimeoutSec    Timeout fÃ¼r Health-Check (Default: 120)
 #>
 
 [CmdletBinding()]
@@ -99,7 +99,7 @@ function Ensure-Service([string]$name){
       return $true
     }
   }
-  Log ("WARN: Service " + $name + " not running or not found → trying legacy net start '")
+  Log ("WARN: Service " + $name + " not running or not found â†’ trying legacy net start '")
   $code = Invoke-LegacyNet -Do 'start' -Name $LegacyServiceName
   if($code -eq 0){ Log ("Legacy start OK for " + $LegacyServiceName); return $true }
   Log ("Legacy start failed (code=" + $code + ") for " + $LegacyServiceName)
@@ -129,7 +129,7 @@ switch($Action){
   "FirstRun" {
     $existing = @(Find-UninstallEntries)
     if($existing.Count -gt 0){
-      Log "Device Manager already installed → skipping automatic install (manual control available)."
+      Log "Device Manager already installed â†’ skipping automatic install (manual control available)."
       [void](Test-HealthCheck)
     } else {
       Install-DM
@@ -144,13 +144,13 @@ switch($Action){
     if(Test-HealthCheck){ Log "Health-Check: OK" } else { Log "Health-Check: FAILED" }
   }
   "Reinstall" {
-    Write-Host "Reinstall führt Deinstall + Ordner löschen durch. Neustart wird empfohlen." -ForegroundColor Yellow
+    Write-Host "Reinstall fÃ¼hrt Deinstall + Ordner lÃ¶schen durch. Neustart wird empfohlen." -ForegroundColor Yellow
     $ans = Read-Host 'Fortfahren? (y/N)'
     if($ans -match '^(y|j)$'){
       $entries = @(Find-UninstallEntries)
       if($entries.Count -gt 0){ foreach($e in $entries){ Uninstall-ByEntry $e } } else { Log 'No existing install found.' }
       Remove-AppFolder
-      $ans2 = Read-Host 'Jetzt Neustart durchführen? (y/N)'
+      $ans2 = Read-Host 'Jetzt Neustart durchfÃ¼hren? (y/N)'
       if($ans2 -match '^(y|j)$'){
         Log 'User opted to reboot now.'
         Restart-Computer -Force
@@ -164,7 +164,7 @@ switch($Action){
   "Uninstall" {
     $entries = @(Find-UninstallEntries)
     if($entries.Count -gt 0){ foreach($e in $entries){ Uninstall-ByEntry $e } } else { Log 'No existing install found.' }
-    $del = Read-Host ("Installationsordner " + $AppFolder + " löschen? (y/N)")
+    $del = Read-Host ("Installationsordner " + $AppFolder + " lÃ¶schen? (y/N)")
     if($del -match '^(y|j)$'){ Remove-AppFolder }
   }
   "Start"   {

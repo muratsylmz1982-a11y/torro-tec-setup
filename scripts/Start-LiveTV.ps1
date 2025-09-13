@@ -4,7 +4,7 @@ param(
     [int]$MonitorIndex = 2,
     [string]$Pick,
     [switch]$Prompt,
-    [switch]$VerboseLog
+    [switch]$VerboseLog,
     [switch]$DryRun
 )
 
@@ -102,21 +102,21 @@ $EdgeArgs = @(
     "--window-position=$($b.X),$($b.Y)",
     "--window-size=$($b.Width),$($b.Height)",
     "--no-first-run","--restore-last-session=false",
-    "--user-data-dir=$dataDir"
+    "--user-data-dir=`"$dataDir`""
   )
   Write-Log "Launching Edge kiosk..."
   try{
-if($DryRun){ Write-Host "[DRYRUN] $edge " + ($EdgeArgs -join ' ') } else { Start-Process -FilePath $edge -ArgumentList $EdgeArgs | Out-Null }
+if($DryRun){ Write-Host ("[DRYRUN] {0} {1}" -f $edge, ($EdgeArgs -join ' ')) } else { Start-Process -FilePath $edge -ArgumentList $EdgeArgs | Out-Null }
   }catch{
 $EdgeArgsFallback = @(
       "--app=$($sel.Url)","--start-fullscreen",
       "--window-position=$($b.X),$($b.Y)",
       "--window-size=$($b.Width),$($b.Height)",
       "--no-first-run","--restore-last-session=false",
-      "--user-data-dir=$dataDir"
+      "--user-data-dir=`"$dataDir`""
     )
     Write-Log ("Kiosk failed: {0} -> fallback --app" -f $_.Exception.Message)
-if($DryRun){ Write-Host "[DRYRUN] $edge " + ($EdgeArgsFallback -join ' ') } else { Start-Process -FilePath $edge -ArgumentList $EdgeArgsFallback | Out-Null }
+if($DryRun){ Write-Host ("[DRYRUN] {0} {1}" -f $edge, ($EdgeArgsFallback -join ' ')) } else { Start-Process -FilePath $edge -ArgumentList $EdgeArgsFallback | Out-Null }
   }
 }
 catch{

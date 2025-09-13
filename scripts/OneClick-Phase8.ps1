@@ -71,6 +71,31 @@ if($SetAutostart){
   $lnk2.WorkingDirectory = 'C:\Tiptorro\scripts'
   $lnk2.Save()
 }
+# --- LiveTV: Management-Verknüpfungen (Root + Desktop) ---
+try{
+  $liveTvSetLink = 'C:\Tiptorro\scripts\LiveTV-SetLink.ps1'
+  if(Test-Path $liveTvSetLink){
+    Write-Host "[OneClick] LiveTV-SetLink: WhatIf (Probe) ..."
+    & $liveTvSetLink -WhatIf -Verbose
+    $code = [Environment]::ExitCode
+    if($code -eq 0){
+      Write-Host "[OneClick] LiveTV-SetLink: Apply (idempotent) ..."
+      & $liveTvSetLink -Verbose
+      if([Environment]::ExitCode -ne 0){
+        Write-Host ("[OneClick][WARN] LiveTV-SetLink Apply ExitCode {0}" -f [Environment]::ExitCode)
+      } else {
+        Write-Host "[OneClick] LiveTV-SetLink: OK"
+      }
+    } else {
+      Write-Host ("[OneClick][WARN] LiveTV-SetLink WhatIf ExitCode {0} -> Apply übersprungen." -f $code)
+    }
+  } else {
+    Write-Host "[OneClick][WARN] LiveTV-SetLink.ps1 nicht gefunden – Schritt übersprungen."
+  }
+}catch{
+  Write-Host ("[OneClick][ERROR] LiveTV-SetLink: {0}" -f $_.Exception.Message)
+}
+# --- Ende LiveTV-SetLink Block ---
 
 # 4) Optional: erste LiveTV-Auswahl im Support, speichert Persistenz
 if($PromptLiveTV){
@@ -89,5 +114,16 @@ $pol = Get-ItemProperty $base | Select-Object HideFirstRunExperience,BrowserSign
 "=== Phase8 Snapshot ===`nPolicyBase: $base`n--- Policies ---`n$($pol | Out-String)`n--- Monitors ---`n$($mon -join "`n")" |
   Out-File $logFile -Encoding utf8
 Log "Snapshot -> $logFile"
+# --- DeviceManager Status Snapshot (read-only) ---
+try {
+  $dm = 'C:\Tiptorro\scripts\DeviceManager.ps1'
+  if (Test-Path $dm) {
+    & $dm -Action Status
+  }
+}
+catch {
+  Write-Host ('[Phase8][WARN] DeviceManager Status snapshot failed: ' + $_.Exception.Message)
+}
+# --- Ende DeviceManager Snapshot ---
 
 Write-Host "✔ Phase8 abgeschlossen."
