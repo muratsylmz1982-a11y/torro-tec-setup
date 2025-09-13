@@ -429,10 +429,20 @@ Add-Button $tabs.Terminal 'DeviceManager installieren/aktualisieren (Admin)' 20 
   }
 }
 Add-Button $tabs.Terminal 'DeviceManager: Start' 340 100 {
-  Run-PS "-Command sc.exe start `"DeviceManager.Bootstrapper`"" -Elevate -tb $log
+  Run-PS "-File `"$root\scripts\DeviceManager.ps1`" -Action Start" -Elevate -tb $log
 }
 Add-Button $tabs.Terminal 'DeviceManager: Stop'  660 100 {
-  Run-PS "-Command sc.exe stop  `"DeviceManager.Bootstrapper`"" -Elevate -tb $log
+  Run-PS "-File `"$root\scripts\DeviceManager.ps1`" -Action Stop" -Elevate -tb $log
+Add-Button $tabs.Terminal 'DeviceManager: Status'  660 140 {
+Add-Button $tabs.Terminal 'DeviceManager: Quick-Test'  660 180 {
+  Run-PS "-File `"$root\scripts\DeviceManager.ps1`" -Action Status" -tb $log
+  Run-PS "-File `"$root\scripts\DeviceManager.ps1`" -Action Stop"   -Elevate -tb $log
+  Start-Sleep -Milliseconds 500
+  Run-PS "-File `"$root\scripts\DeviceManager.ps1`" -Action Start"  -Elevate -tb $log
+  Run-PS "-File `"$root\scripts\DeviceManager.ps1`" -Action Status" -tb $log
+}
+  Run-PS "-File `"$root\scripts\DeviceManager.ps1`" -Action Status" -tb $log
+}
 }
 
 # Reihe 4: HealthCheck | Audit
@@ -445,7 +455,11 @@ Add-Button $tabs.Terminal 'Audit Signatures' 340 140 {
 
 # LiveTV-Auswahlbereich (inkl. „Auswahl speichern“ + „LiveTV jetzt starten“ nebeneinander)
 Build-LiveTVSection -Parent $tabs.Terminal -X 20 -Y 180
-
+Add-Button $tabs.Terminal 'LiveTV-Verknüpfungen (WhatIf)' 20 360 {
+Add-Button $tabs.Terminal 'LiveTV-Verknüpfungen anwenden' 20 400 {
+  Run-PS "-File `"$root\scripts\LiveTV-SetLink.ps1`" -Verbose" -tb $log
+}  Run-PS "-File `"$root\scripts\LiveTV-SetLink.ps1`" -WhatIf -Verbose" -tb $log
+}
 
 # --- Kasse (ohne Kiosk) ---
 Add-Button $tabs.Kasse 'Drucker OneClick (Star/Hwasung, Epson interaktiv)' 20 20 {
