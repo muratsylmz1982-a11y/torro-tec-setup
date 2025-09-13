@@ -10,6 +10,13 @@
 *.7z
 *.iso
 *.lnk
+incoming/
+shortcuts/
+*.bak
+*.swp
+*.log
+*.lnk
+
 # System
 Thumbs.db
 .DS_Store
