@@ -1,5 +1,7 @@
-﻿[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact="Low")]
+﻿# scripts/LiveTV-SetLink.ps1
+[CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact="Low")]
 param(
+  [switch]$Preview,                         # <- Preview-Alias für WhatIf
   [switch]$Root,
   [switch]$Desktop,
   [string]$TipRoot = 'C:\Tiptorro',
@@ -8,6 +10,9 @@ param(
   [string]$LogDir = "$env:ProgramData\TipTorro\Logs",
   [switch]$Replace
 )
+
+# Honor -Preview as WhatIf
+if ($PSBoundParameters.ContainsKey('Preview')) { $WhatIfPreference = $true }
 
 $ErrorActionPreference = 'Stop'
 $script:LogFile    = $null
@@ -65,7 +70,9 @@ try {
       Write-Log ("Skip (exists): {0}" -f $TargetPath)
       return
     }
-    $action = if ($exists) { 'Replace shortcut' } else { 'Create shortcut' }
+    # kein ternärer Operator -> kompatibel
+    if ($exists) { $action = 'Replace shortcut' } else { $action = 'Create shortcut' }
+
     if($PSCmdlet.ShouldProcess($TargetPath,$action)){
       $p = @{ ShortcutPath = $TargetPath }
       if(Test-Path $IconPath){ $p.IconPath = $IconPath } else { Write-Log ("Icon missing, continuing: {0}" -f $IconPath) 'WARN' }
