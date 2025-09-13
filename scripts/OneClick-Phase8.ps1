@@ -76,7 +76,7 @@ try{
   $liveTvSetLink = 'C:\Tiptorro\scripts\LiveTV-SetLink.ps1'
   if(Test-Path $liveTvSetLink){
     Write-Host "[OneClick] LiveTV-SetLink: WhatIf (Probe) ..."
-    & $liveTvSetLink -WhatIf -Verbose
+    & $liveTvSetLink -Preview -Verbose
     $code = [Environment]::ExitCode
     if($code -eq 0){
       Write-Host "[OneClick] LiveTV-SetLink: Apply (idempotent) ..."

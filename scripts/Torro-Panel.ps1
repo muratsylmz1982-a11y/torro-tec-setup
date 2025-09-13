@@ -458,7 +458,7 @@ Build-LiveTVSection -Parent $tabs.Terminal -X 20 -Y 180
 Add-Button $tabs.Terminal 'LiveTV-Verknüpfungen (WhatIf)' 20 360 {
 Add-Button $tabs.Terminal 'LiveTV-Verknüpfungen anwenden' 20 400 {
   Run-PS "-File `"$root\scripts\LiveTV-SetLink.ps1`" -Verbose" -tb $log
-}  Run-PS "-File `"$root\scripts\LiveTV-SetLink.ps1`" -WhatIf -Verbose" -tb $log
+}  Run-PS "-File `"$root\scripts\LiveTV-SetLink.ps1`" -Preview -Verbose" -tb $log
 }
 
 # --- Kasse (ohne Kiosk) ---
